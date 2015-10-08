@@ -4,6 +4,9 @@ plugins {
 
 repositories {
     maven {
+        url "https://raw.github.com/hea3ven/mvn-repo/master"
+    }
+    maven {
         name = "chickenbones"
         url = "http://chickenbones.net/maven/"
     }
@@ -11,7 +14,10 @@ repositories {
 
 version = "1.0.0"
 group = "com.hea3ven.dulcedeleche"
-archivesBaseName = "dulcedeleche"
+archivesBaseName = "DulceDeLeche"
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
 
 minecraft {
     version = "1.8-11.14.3.1513"
@@ -21,6 +27,7 @@ minecraft {
 }
 
 configurations {
+    release
     runmods
 }
 
@@ -28,8 +35,24 @@ dependencies {
     runmods "codechicken:CodeChickenCore:1.8-1.0.5.34:dev"
     runmods "codechicken:NotEnoughItems:1.8-1.0.5.82:dev"
 
+    compile 'com.hea3ven.tools.commonutils:h3nt-commonutils:1.0.0'
+    release('com.hea3ven.tools.commonutils:h3nt-commonutils:1.0.0') {
+        transitive = false
+    }
+
     testCompile "junit:junit:4.12"
 }
+
+sourceSets.main {
+    java {
+        srcDirs 'src/main/java'
+        srcDirs 'src/bootstrap/java'
+    }
+    resources {
+        srcDirs 'src/main/resources'
+    }
+}
+
 
 processResources
 {
@@ -48,6 +71,12 @@ processResources
     // copy everything else, thats not the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
+    }
+}
+
+jar {
+    into ('libs') {
+        from configurations.release
     }
 }
 
