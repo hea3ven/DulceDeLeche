@@ -1,5 +1,5 @@
 {
-    "parent": "dulcedeleche:block/tin_ore",
+    "parent": "dulcedeleche:block/ore",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],

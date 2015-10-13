@@ -9,7 +9,12 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.world.IBlockAccess;
+
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.hea3ven.dulcedeleche.industry.metal.Metal;
 
@@ -27,7 +32,7 @@ public class BlockVariantOre extends BlockOre {
 
 	@Override
 	public int getMetaFromState(IBlockState state) {
-		return Metal.getMetalOre(state).ordinal();
+		return Metal.getMetalOre(state).getOreIndex();
 	}
 
 	@Override
@@ -40,5 +45,15 @@ public class BlockVariantOre extends BlockOre {
 		for (Metal metal : Metal.ORES) {
 			list.add(new ItemStack(this, 1, metal.getOreIndex()));
 		}
+	}
+
+	@SideOnly(Side.CLIENT)
+	public int getRenderColor(IBlockState state) {
+		return Metal.getMetalOre(state).getColor();
+	}
+
+	@Override
+	public int colorMultiplier(IBlockAccess world, BlockPos pos, int renderPass) {
+		return getRenderColor(world.getBlockState(pos));
 	}
 }

@@ -1,25 +1,23 @@
 package com.hea3ven.dulcedeleche.industry.item;
 
+import java.util.List;
+
+import com.google.common.collect.Lists;
+
 import net.minecraft.block.Block;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemColored;
 
 import com.hea3ven.dulcedeleche.industry.metal.Metal;
 
-public class ItemVariantOre extends ItemBlock {
+public class ItemVariantOre extends ItemColored {
 
 	public ItemVariantOre(Block block) {
-		super(block);
-	}
+		super(block, true);
 
-	@Override
-	public int getMetadata(int damage) {
-		return damage;
-	}
-
-	@Override
-	public String getUnlocalizedName(ItemStack stack) {
-		return super.getUnlocalizedName(stack) + "."
-				+ Metal.getOre(stack.getMetadata()).getUnlocalizedName();
+		List<String> names = Lists.newArrayList();
+		for (Metal metal : Metal.ORES) {
+			names.add(metal.getName());
+		}
+		setSubtypeNames(names.toArray(new String[names.size()]));
 	}
 }

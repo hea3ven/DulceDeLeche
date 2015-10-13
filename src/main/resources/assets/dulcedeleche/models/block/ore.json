@@ -2,6 +2,6 @@
     "parent": "dulcedeleche:block/cube_overlay",
     "textures": {
         "all": "blocks/stone",
-        "overlay": "dulcedeleche:blocks/copper_ore_overlay"
+        "overlay": "dulcedeleche:blocks/ore_overlay"
     }
 }

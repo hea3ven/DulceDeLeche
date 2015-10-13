@@ -1,7 +1,0 @@
-{
-    "parent": "dulcedeleche:block/cube_overlay",
-    "textures": {
-        "all": "blocks/stone",
-        "overlay": "dulcedeleche:blocks/tin_ore_overlay"
-    }
-}

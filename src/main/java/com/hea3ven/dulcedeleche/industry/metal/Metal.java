@@ -5,11 +5,13 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.IStringSerializable;
 
 public enum Metal implements IStringSerializable {
-	IRON(-1), COPPER(0), TIN(1), GOLD(-1);
+	IRON(-1, 0),
+	COPPER(0, (200 << 16) + (75 << 8) + 40),
+	TIN(1, (220 << 16) + (225 << 8) + 240),
+	GOLD(-1, 0);
 
 	public static Metal[] ORES = new Metal[] {COPPER, TIN};
-	public static final PropertyEnum METAL_ORE = PropertyEnum.create("metal", Metal.class,
-			ORES);
+	public static final PropertyEnum METAL_ORE = PropertyEnum.create("metal", Metal.class, ORES);
 
 	public static Metal get(int index) {
 		return values()[index];
@@ -28,13 +30,11 @@ public enum Metal implements IStringSerializable {
 	}
 
 	private int oreIndex;
+	private int color;
 
-	private Metal(int oreIndex) {
+	private Metal(int oreIndex, int color) {
 		this.oreIndex = oreIndex;
-	}
-
-	public int getOreIndex() {
-		return oreIndex;
+		this.color = color;
 	}
 
 	@Override
@@ -44,6 +44,14 @@ public enum Metal implements IStringSerializable {
 
 	public String getUnlocalizedName() {
 		return getName();
+	}
+
+	public int getOreIndex() {
+		return oreIndex;
+	}
+
+	public int getColor() {
+		return color;
 	}
 
 }
