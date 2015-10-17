@@ -9,12 +9,14 @@ import com.google.common.collect.Maps;
 import org.apache.commons.lang3.tuple.Pair;
 
 import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 
 import com.hea3ven.dulcedeleche.enchantments.enchantment.EnchantmentArea;
 import com.hea3ven.dulcedeleche.industry.block.BlockVariantOre;
+import com.hea3ven.dulcedeleche.industry.item.ItemVariantIngot;
 import com.hea3ven.dulcedeleche.industry.item.ItemVariantOre;
 import com.hea3ven.dulcedeleche.industry.metal.Metal;
 import com.hea3ven.dulcedeleche.redstone.block.BlockAssembler;
@@ -22,6 +24,7 @@ import com.hea3ven.dulcedeleche.redstone.block.tileentity.TileAssembler;
 import com.hea3ven.dulcedeleche.redstone.client.GuiHandler;
 import com.hea3ven.tools.commonutils.mod.InfoBlock;
 import com.hea3ven.tools.commonutils.mod.InfoBlockVariant;
+import com.hea3ven.tools.commonutils.mod.InfoItem;
 import com.hea3ven.tools.commonutils.mod.InfoTileEntity;
 import com.hea3ven.tools.commonutils.mod.ModInitializerCommon;
 import com.hea3ven.tools.commonutils.mod.ProxyModBase;
@@ -30,6 +33,7 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 
 	private Block assembler;
 	private Block ore;
+	private Item ingot;
 
 	public ProxyCommonDulceDeLeche(ModInitializerCommon modInitializer) {
 		super(modInitializer);
@@ -42,6 +46,7 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 				.setResistance(5.0F)
 				.setStepSound(Block.soundTypePiston)
 				.setUnlocalizedName("ore");
+		ingot = new ItemVariantIngot().setUnlocalizedName("ingot");
 	}
 
 	@Override
@@ -67,6 +72,11 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 	@Override
 	public List<InfoTileEntity> getTileEntities() {
 		return Lists.newArrayList(new InfoTileEntity(TileAssembler.class, "assembler"));
+	}
+
+	@Override
+	public List<InfoItem> getItems() {
+		return Lists.newArrayList(new InfoItem(ingot, "dulcedeleche", "ingot"));
 	}
 
 	@Override
