@@ -9,9 +9,9 @@ import net.minecraft.item.ItemColored;
 
 import com.hea3ven.dulcedeleche.industry.metal.Metal;
 
-public class ItemVariantOre extends ItemColored {
+public class ItemMetalOre extends ItemColored {
 
-	public ItemVariantOre(Block block) {
+	public ItemMetalOre(Block block) {
 		super(block, true);
 
 		List<String> names = Lists.newArrayList();

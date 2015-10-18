@@ -18,7 +18,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.hea3ven.dulcedeleche.industry.metal.Metal;
 
-public class BlockVariantOre extends BlockOre {
+public class BlockMetalOre extends BlockOre {
 
 	@Override
 	public EnumWorldBlockLayer getBlockLayer() {

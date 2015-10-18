@@ -8,9 +8,9 @@ import net.minecraft.item.ItemStack;
 
 import com.hea3ven.dulcedeleche.industry.metal.Metal;
 
-public class ItemVariantIngot extends Item {
+public class ItemMetalIngot extends Item {
 
-	public ItemVariantIngot() {
+	public ItemMetalIngot() {
 		setCreativeTab(CreativeTabs.tabMaterials);
 	}
 

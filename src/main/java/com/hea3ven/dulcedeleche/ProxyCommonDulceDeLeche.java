@@ -15,9 +15,9 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 
 import com.hea3ven.dulcedeleche.enchantments.enchantment.EnchantmentArea;
-import com.hea3ven.dulcedeleche.industry.block.BlockVariantOre;
-import com.hea3ven.dulcedeleche.industry.item.ItemVariantIngot;
-import com.hea3ven.dulcedeleche.industry.item.ItemVariantOre;
+import com.hea3ven.dulcedeleche.industry.block.BlockMetalOre;
+import com.hea3ven.dulcedeleche.industry.item.ItemMetalIngot;
+import com.hea3ven.dulcedeleche.industry.item.ItemMetalOre;
 import com.hea3ven.dulcedeleche.industry.metal.Metal;
 import com.hea3ven.dulcedeleche.redstone.block.BlockAssembler;
 import com.hea3ven.dulcedeleche.redstone.block.tileentity.TileAssembler;
@@ -41,12 +41,12 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 				.setUnlocalizedName("assembler")
 				.setHardness(3.5F)
 				.setStepSound(Block.soundTypePiston);
-		ore = new BlockVariantOre()
+		ore = new BlockMetalOre()
 				.setHardness(3.0F)
 				.setResistance(5.0F)
 				.setStepSound(Block.soundTypePiston)
 				.setUnlocalizedName("ore");
-		ingot = new ItemVariantIngot().setUnlocalizedName("ingot");
+		ingot = new ItemMetalIngot().setUnlocalizedName("ingot");
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 			metalOreMetas.put(metal, metal.getOreIndex());
 		}
 		return Lists.newArrayList(new InfoBlockVariant(ore, "dulcedeleche", "ore",
-				ItemVariantOre.class, Metal.METAL_ORE, "_ore", metalOreMetas));
+				ItemMetalOre.class, Metal.METAL_ORE, "_ore", metalOreMetas));
 	}
 
 	@Override
