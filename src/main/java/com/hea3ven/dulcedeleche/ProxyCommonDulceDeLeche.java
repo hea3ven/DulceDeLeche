@@ -1,10 +1,8 @@
 package com.hea3ven.dulcedeleche;
 
 import java.util.List;
-import java.util.Map;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -19,12 +17,10 @@ import com.hea3ven.dulcedeleche.industry.block.BlockMetalBlock;
 import com.hea3ven.dulcedeleche.industry.block.BlockMetalOre;
 import com.hea3ven.dulcedeleche.industry.item.ItemMetal;
 import com.hea3ven.dulcedeleche.industry.item.ItemMetalBlock;
-import com.hea3ven.dulcedeleche.industry.metal.Metal;
 import com.hea3ven.dulcedeleche.redstone.block.BlockAssembler;
 import com.hea3ven.dulcedeleche.redstone.block.tileentity.TileAssembler;
 import com.hea3ven.dulcedeleche.redstone.client.GuiHandler;
 import com.hea3ven.tools.commonutils.mod.InfoBlock;
-import com.hea3ven.tools.commonutils.mod.InfoBlockVariant;
 import com.hea3ven.tools.commonutils.mod.InfoItem;
 import com.hea3ven.tools.commonutils.mod.InfoTileEntity;
 import com.hea3ven.tools.commonutils.mod.ModInitializerCommon;
@@ -66,18 +62,10 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 	@Override
 	public List<InfoBlock> getBlocks() {
 		return Lists.newArrayList(new InfoBlock(assembler, "dulcedeleche", "assembler"),
+				new InfoBlock(ore, "dulcedeleche", "ore", ItemMetalBlock.class,
+						new Object[] {BlockMetalOre.ORES}),
 				new InfoBlock(metalBlock, "dulcedeleche", "block_metal", ItemMetalBlock.class,
 						new Object[] {BlockMetalBlock.BLOCKS}));
-	}
-
-	@Override
-	public List<InfoBlockVariant> getVariantBlocks() {
-		Map<Object, Integer> metalOreMetas = Maps.newHashMap();
-		metalOreMetas.put(Metal.COPPER, 0);
-		metalOreMetas.put(Metal.TIN, 1);
-		return Lists.newArrayList(new InfoBlockVariant(ore, "dulcedeleche", "ore",
-				ItemMetalBlock.class, new Object[] {BlockMetalOre.ORES}, BlockMetalOre.METAL_ORE,
-				"_ore", metalOreMetas));
 	}
 
 	@Override

@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "metal=copper": { "model": "dulcedeleche:ore" },
+        "metal=tin": { "model": "dulcedeleche:ore" }
+    }
+}
