@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 
 import com.hea3ven.dulcedeleche.enchantments.enchantment.EnchantmentArea;
 import com.hea3ven.dulcedeleche.industry.block.BlockMetalOre;
-import com.hea3ven.dulcedeleche.industry.item.ItemMetalIngot;
+import com.hea3ven.dulcedeleche.industry.item.ItemMetal;
 import com.hea3ven.dulcedeleche.industry.item.ItemMetalOre;
 import com.hea3ven.dulcedeleche.industry.metal.Metal;
 import com.hea3ven.dulcedeleche.redstone.block.BlockAssembler;
@@ -33,6 +33,7 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 
 	private Block assembler;
 	private Block ore;
+	private Item nugget;
 	private Item ingot;
 
 	public ProxyCommonDulceDeLeche(ModInitializerCommon modInitializer) {
@@ -46,7 +47,8 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 				.setResistance(5.0F)
 				.setStepSound(Block.soundTypePiston)
 				.setUnlocalizedName("ore");
-		ingot = new ItemMetalIngot().setUnlocalizedName("ingot");
+		nugget = new ItemMetal(ItemMetal.NUGGETS).setUnlocalizedName("nugget");
+		ingot = new ItemMetal(ItemMetal.INGOTS).setUnlocalizedName("ingot");
 	}
 
 	@Override
@@ -62,11 +64,10 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 	@Override
 	public List<InfoBlockVariant> getVariantBlocks() {
 		Map<Object, Integer> metalOreMetas = Maps.newHashMap();
-		for (Metal metal : Metal.ORES) {
-			metalOreMetas.put(metal, metal.getOreIndex());
-		}
+		metalOreMetas.put(Metal.COPPER, 0);
+		metalOreMetas.put(Metal.TIN, 1);
 		return Lists.newArrayList(new InfoBlockVariant(ore, "dulcedeleche", "ore",
-				ItemMetalOre.class, Metal.METAL_ORE, "_ore", metalOreMetas));
+				ItemMetalOre.class, BlockMetalOre.METAL_ORE, "_ore", metalOreMetas));
 	}
 
 	@Override
@@ -76,7 +77,8 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 
 	@Override
 	public List<InfoItem> getItems() {
-		return Lists.newArrayList(new InfoItem(ingot, "dulcedeleche", "ingot"));
+		return Lists.newArrayList(new InfoItem(nugget, "dulcedeleche", "nugget"),
+				new InfoItem(ingot, "dulcedeleche", "ingot"));
 	}
 
 	@Override
