@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "metal=copper": { "model": "dulcedeleche:block_metal" },
+        "metal=tin": { "model": "dulcedeleche:block_metal" }
+    }
+}

@@ -15,9 +15,10 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 
 import com.hea3ven.dulcedeleche.enchantments.enchantment.EnchantmentArea;
+import com.hea3ven.dulcedeleche.industry.block.BlockMetalBlock;
 import com.hea3ven.dulcedeleche.industry.block.BlockMetalOre;
 import com.hea3ven.dulcedeleche.industry.item.ItemMetal;
-import com.hea3ven.dulcedeleche.industry.item.ItemMetalOre;
+import com.hea3ven.dulcedeleche.industry.item.ItemMetalBlock;
 import com.hea3ven.dulcedeleche.industry.metal.Metal;
 import com.hea3ven.dulcedeleche.redstone.block.BlockAssembler;
 import com.hea3ven.dulcedeleche.redstone.block.tileentity.TileAssembler;
@@ -33,6 +34,7 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 
 	private Block assembler;
 	private Block ore;
+	private Block metalBlock;
 	private Item nugget;
 	private Item ingot;
 
@@ -43,10 +45,15 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 				.setHardness(3.5F)
 				.setStepSound(Block.soundTypePiston);
 		ore = new BlockMetalOre()
+				.setUnlocalizedName("ore")
 				.setHardness(3.0F)
 				.setResistance(5.0F)
-				.setStepSound(Block.soundTypePiston)
-				.setUnlocalizedName("ore");
+				.setStepSound(Block.soundTypePiston);
+		metalBlock = new BlockMetalBlock()
+				.setUnlocalizedName("blockMetal")
+				.setHardness(5.0F)
+				.setResistance(10.0F)
+				.setStepSound(Block.soundTypeMetal);
 		nugget = new ItemMetal(ItemMetal.NUGGETS).setUnlocalizedName("nugget");
 		ingot = new ItemMetal(ItemMetal.INGOTS).setUnlocalizedName("ingot");
 	}
@@ -58,7 +65,9 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 
 	@Override
 	public List<InfoBlock> getBlocks() {
-		return Lists.newArrayList(new InfoBlock(assembler, "dulcedeleche", "assembler"));
+		return Lists.newArrayList(new InfoBlock(assembler, "dulcedeleche", "assembler"),
+				new InfoBlock(metalBlock, "dulcedeleche", "block_metal", ItemMetalBlock.class,
+						new Object[] {BlockMetalBlock.BLOCKS}));
 	}
 
 	@Override
@@ -67,7 +76,8 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 		metalOreMetas.put(Metal.COPPER, 0);
 		metalOreMetas.put(Metal.TIN, 1);
 		return Lists.newArrayList(new InfoBlockVariant(ore, "dulcedeleche", "ore",
-				ItemMetalOre.class, BlockMetalOre.METAL_ORE, "_ore", metalOreMetas));
+				ItemMetalBlock.class, new Object[] {BlockMetalOre.ORES}, BlockMetalOre.METAL_ORE,
+				"_ore", metalOreMetas));
 	}
 
 	@Override
