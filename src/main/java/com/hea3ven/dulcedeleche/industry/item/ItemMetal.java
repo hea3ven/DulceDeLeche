@@ -36,15 +36,23 @@ public class ItemMetal extends Item {
 		}
 	}
 
+	public int getMetaForMetal(Metal metal) {
+		return metaByIndex[metal.ordinal()];
+	}
+
+	public Metal getMetalForMeta(int meta) {
+		return metals[meta];
+	}
+
 	@Override
 	public int getColorFromItemStack(ItemStack stack, int renderPass) {
-		return Metal.get(indexByMeta[stack.getMetadata()]).getColor();
+		return getMetalForMeta(stack.getMetadata()).getColor();
 	}
 
 	@Override
 	public void getSubItems(Item itemIn, CreativeTabs tab, List subItems) {
 		for (Metal metal : metals) {
-			subItems.add(new ItemStack(itemIn, 1, metaByIndex[metal.ordinal()]));
+			subItems.add(new ItemStack(itemIn, 1, getMetaForMetal(metal)));
 		}
 	}
 
@@ -52,7 +60,7 @@ public class ItemMetal extends Item {
 	public String getUnlocalizedName(ItemStack stack) {
 		int meta = stack.getMetadata();
 		if (meta < metals.length)
-			return super.getUnlocalizedName(stack) + "." + Metal.get(indexByMeta[meta]);
+			return super.getUnlocalizedName(stack) + "." + getMetalForMeta(meta).getName();
 		else
 			return super.getUnlocalizedName(stack);
 	}

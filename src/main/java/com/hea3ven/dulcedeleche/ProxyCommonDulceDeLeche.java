@@ -1,13 +1,18 @@
 package com.hea3ven.dulcedeleche;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 import org.apache.commons.lang3.tuple.Pair;
 
 import net.minecraft.block.Block;
-import net.minecraft.item.Item;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.network.IGuiHandler;
@@ -31,8 +36,8 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 	private Block assembler;
 	private Block ore;
 	private Block metalBlock;
-	private Item nugget;
-	private Item ingot;
+	private ItemMetal nugget;
+	private ItemMetal ingot;
 
 	public ProxyCommonDulceDeLeche(ModInitializerCommon modInitializer) {
 		super(modInitializer);
@@ -50,8 +55,8 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 				.setHardness(5.0F)
 				.setResistance(10.0F)
 				.setStepSound(Block.soundTypeMetal);
-		nugget = new ItemMetal(ItemMetal.NUGGETS).setUnlocalizedName("nugget");
-		ingot = new ItemMetal(ItemMetal.INGOTS).setUnlocalizedName("ingot");
+		nugget = (ItemMetal) new ItemMetal(ItemMetal.NUGGETS).setUnlocalizedName("nugget");
+		ingot = (ItemMetal) new ItemMetal(ItemMetal.INGOTS).setUnlocalizedName("ingot");
 	}
 
 	@Override
@@ -84,9 +89,27 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 		return Lists.newArrayList(Pair.of(ModDulceDeLeche.MODID, (IGuiHandler) new GuiHandler()));
 	}
 
+	@Override
+	public void onPostInitEvent() {
+		super.onPostInitEvent();
+
+		removeIngotSmeltingRecipes();
+	}
+
 	private void registerEnchantmentArea() {
 		EnchantmentArea.instance = new EnchantmentArea(100);
 		MinecraftForge.EVENT_BUS.register(EnchantmentArea.instance);
+	}
+
+	private void removeIngotSmeltingRecipes() {
+		Map<ItemStack, ItemStack> recipes = FurnaceRecipes.instance().getSmeltingList();
+		for (Entry<ItemStack, ItemStack> entry : Sets.newHashSet(recipes.entrySet())) {
+			if (entry.getValue().getItem() == Items.iron_ingot) {
+				recipes.remove(entry.getKey());
+			} else if (entry.getValue().getItem() == Items.gold_ingot) {
+				recipes.remove(entry.getKey());
+			}
+		}
 	}
 
 }
