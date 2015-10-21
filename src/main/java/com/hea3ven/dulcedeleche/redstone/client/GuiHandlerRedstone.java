@@ -11,7 +11,7 @@ import com.hea3ven.dulcedeleche.redstone.client.gui.GuiAssembler;
 import com.hea3ven.dulcedeleche.redstone.inventory.ContainerAssembler;
 import com.hea3ven.tools.commonutils.util.WorldHelper;
 
-public class GuiHandler implements IGuiHandler {
+public class GuiHandlerRedstone implements IGuiHandler {
 
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y,
