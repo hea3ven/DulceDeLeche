@@ -17,6 +17,7 @@ import net.minecraft.item.crafting.FurnaceRecipes;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.network.IGuiHandler;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import com.hea3ven.dulcedeleche.enchantments.enchantment.EnchantmentArea;
 import com.hea3ven.dulcedeleche.industry.block.BlockMetalBlock;
@@ -28,6 +29,7 @@ import com.hea3ven.dulcedeleche.industry.crafting.MetalFurnaceRecipes;
 import com.hea3ven.dulcedeleche.industry.item.ItemMetal;
 import com.hea3ven.dulcedeleche.industry.item.ItemMetalBlock;
 import com.hea3ven.dulcedeleche.industry.metal.Metal;
+import com.hea3ven.dulcedeleche.industry.world.WorldGeneratorOre;
 import com.hea3ven.dulcedeleche.redstone.block.BlockAssembler;
 import com.hea3ven.dulcedeleche.redstone.block.tileentity.TileAssembler;
 import com.hea3ven.dulcedeleche.redstone.client.GuiHandlerRedstone;
@@ -125,6 +127,8 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 				new ItemStack(nugget, 3, nugget.getMetaForMetal(Metal.COPPER)),
 				new ItemStack(nugget, 1, nugget.getMetaForMetal(Metal.TIN)),
 				new ItemStack(nugget, 1, nugget.getMetaForMetal(Metal.BRONZE)));
+
+		GameRegistry.registerWorldGenerator(new WorldGeneratorOre(), 1);
 	}
 
 	private void registerEnchantmentArea() {

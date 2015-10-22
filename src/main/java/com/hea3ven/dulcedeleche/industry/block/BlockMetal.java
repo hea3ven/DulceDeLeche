@@ -61,6 +61,10 @@ public abstract class BlockMetal extends Block {
 		return setMetal(getDefaultState(), Metal.get(indexByMeta[meta]));
 	}
 
+	public Metal[] getMetals() {
+		return metals;
+	}
+
 	public int getMetaForMetal(Metal metal) {
 		return metaByIndex[metal.ordinal()];
 	}
