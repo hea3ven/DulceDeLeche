@@ -10,8 +10,8 @@ import com.hea3ven.dulcedeleche.industry.metal.Metal;
 
 public class ItemMetal extends Item {
 
-	public static Metal[] NUGGETS = new Metal[] {Metal.COPPER, Metal.TIN, Metal.IRON};
-	public static Metal[] INGOTS = new Metal[] {Metal.COPPER, Metal.TIN};
+	public static Metal[] NUGGETS = new Metal[] {Metal.COPPER, Metal.TIN, Metal.IRON, Metal.BRONZE};
+	public static Metal[] INGOTS = new Metal[] {Metal.COPPER, Metal.TIN, Metal.BRONZE};
 
 	private Metal[] metals;
 	private int[] metaByIndex;

@@ -4,8 +4,8 @@
         - Add assembler block that can automatically craft recipes.
     * Industry module:
         - Add copper and tin ore.
-        - Add copper and tin ingots.
-        - Add copper, tin and iron nuggets.
-        - Add copper and tin blocks.
+        - Add copper, tin and bronze ingots.
+        - Add copper, tin, bronze and iron nuggets.
+        - Add copper, tin and bronze blocks.
         - Remove furnace recipes for smelting iron and gold ore.
         - Add metal furnace to smelt metals.

@@ -4,9 +4,10 @@ import net.minecraft.util.IStringSerializable;
 
 public enum Metal implements IStringSerializable {
 	IRON((216 << 16) + (216 << 8) + 216),
-	COPPER((200 << 16) + (75 << 8) + 40),
+	COPPER((210 << 16) + (80 << 8) + 50),
 	TIN((185 << 16) + (210 << 8) + 230),
-	GOLD(0);
+	GOLD(0),
+	BRONZE((225 << 16) + (170 << 8) + 80);
 
 	public static Metal get(int index) {
 		return values()[index];

@@ -191,7 +191,7 @@ public class TileMetalFurnace extends TileMachine implements IInventory, IUpdate
 			return stack.getItem() == Item.getItemFromBlock(Blocks.iron_ore)
 					|| stack.getItem() == Item.getItemFromBlock(Blocks.gold_ore);
 		else if (index < 3)
-			return stack.getItem() == Items.coal;
+			return stack.getItem() == Items.coal && stack.getMetadata() == 0;
 		else
 			return false;
 	}

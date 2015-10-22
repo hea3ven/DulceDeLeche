@@ -120,7 +120,11 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 		MetalFurnaceRecipes.instance().addRecipe(
 				new ItemStack(ore, 1, ore.getMetaForMetal(Metal.COPPER)),
 				new ItemStack(ore, 1, ore.getMetaForMetal(Metal.TIN)),
-				new ItemStack(Items.gold_nugget));
+				new ItemStack(nugget, 1, nugget.getMetaForMetal(Metal.BRONZE)));
+		MetalFurnaceRecipes.instance().addRecipe(
+				new ItemStack(nugget, 3, nugget.getMetaForMetal(Metal.COPPER)),
+				new ItemStack(nugget, 1, nugget.getMetaForMetal(Metal.TIN)),
+				new ItemStack(nugget, 1, nugget.getMetaForMetal(Metal.BRONZE)));
 	}
 
 	private void registerEnchantmentArea() {
