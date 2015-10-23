@@ -27,7 +27,13 @@ import com.hea3ven.dulcedeleche.industry.block.tileentity.TileMetalFurnace;
 import com.hea3ven.dulcedeleche.industry.client.GuiHandlerIndustry;
 import com.hea3ven.dulcedeleche.industry.crafting.MetalFurnaceRecipes;
 import com.hea3ven.dulcedeleche.industry.item.ItemMetal;
+import com.hea3ven.dulcedeleche.industry.item.ItemMetalArmor;
+import com.hea3ven.dulcedeleche.industry.item.ItemMetalAxe;
 import com.hea3ven.dulcedeleche.industry.item.ItemMetalBlock;
+import com.hea3ven.dulcedeleche.industry.item.ItemMetalHoe;
+import com.hea3ven.dulcedeleche.industry.item.ItemMetalPickaxe;
+import com.hea3ven.dulcedeleche.industry.item.ItemMetalShovel;
+import com.hea3ven.dulcedeleche.industry.item.ItemMetalSword;
 import com.hea3ven.dulcedeleche.industry.metal.Metal;
 import com.hea3ven.dulcedeleche.industry.world.WorldGeneratorOre;
 import com.hea3ven.dulcedeleche.redstone.block.BlockAssembler;
@@ -47,6 +53,12 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 	private ItemMetal nugget;
 	private ItemMetal ingot;
 	private BlockMetalFurnace metalFurnace;
+	private ItemMetalPickaxe[] pickaxes;
+	private ItemMetalShovel[] shovels;
+	private ItemMetalAxe[] axes;
+	private ItemMetalHoe[] hoes;
+	private ItemMetalSword[] swords;
+	private ItemMetalArmor[] armors;
 
 	public ProxyCommonDulceDeLeche(ModInitializerCommon modInitializer) {
 		super(modInitializer);
@@ -70,6 +82,29 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 				.setUnlocalizedName("metalFurnace")
 				.setHardness(3.5F)
 				.setStepSound(Block.soundTypeMetal);
+
+		pickaxes = new ItemMetalPickaxe[1];
+		pickaxes[0] = (ItemMetalPickaxe) new ItemMetalPickaxe(Metal.BRONZE)
+				.setUnlocalizedName("pickaxeBronze");
+		shovels = new ItemMetalShovel[1];
+		shovels[0] = (ItemMetalShovel) new ItemMetalShovel(Metal.BRONZE)
+				.setUnlocalizedName("shovelBronze");
+		axes = new ItemMetalAxe[1];
+		axes[0] = (ItemMetalAxe) new ItemMetalAxe(Metal.BRONZE).setUnlocalizedName("axeBronze");
+		hoes = new ItemMetalHoe[1];
+		hoes[0] = (ItemMetalHoe) new ItemMetalHoe(Metal.BRONZE).setUnlocalizedName("hoeBronze");
+		swords = new ItemMetalSword[1];
+		swords[0] = (ItemMetalSword) new ItemMetalSword(Metal.BRONZE)
+				.setUnlocalizedName("swordBronze");
+		armors = new ItemMetalArmor[4];
+		armors[0] = (ItemMetalArmor) new ItemMetalArmor(Metal.BRONZE, 0)
+				.setUnlocalizedName("helmetBronze");
+		armors[1] = (ItemMetalArmor) new ItemMetalArmor(Metal.BRONZE, 1)
+				.setUnlocalizedName("chestplateBronze");
+		armors[2] = (ItemMetalArmor) new ItemMetalArmor(Metal.BRONZE, 2)
+				.setUnlocalizedName("leggingsBronze");
+		armors[3] = (ItemMetalArmor) new ItemMetalArmor(Metal.BRONZE, 3)
+				.setUnlocalizedName("bootsBronze");
 	}
 
 	@Override
@@ -95,8 +130,34 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 
 	@Override
 	public List<InfoItem> getItems() {
-		return Lists.newArrayList(new InfoItem(nugget, "dulcedeleche", "nugget"),
+		List<InfoItem> items = Lists.newArrayList(new InfoItem(nugget, "dulcedeleche", "nugget"),
 				new InfoItem(ingot, "dulcedeleche", "ingot"));
+		for (ItemMetalPickaxe item : pickaxes) {
+			items.add(new InfoItem(item, "dulcedeleche", item.getMetal().getName() + "_pickaxe"));
+		}
+		for (ItemMetalShovel item : shovels) {
+			items.add(new InfoItem(item, "dulcedeleche", item.getMetal().getName() + "_shovel"));
+		}
+		for (ItemMetalAxe item : axes) {
+			items.add(new InfoItem(item, "dulcedeleche", item.getMetal().getName() + "_axe"));
+		}
+		for (ItemMetalHoe item : hoes) {
+			items.add(new InfoItem(item, "dulcedeleche", item.getMetal().getName() + "_hoe"));
+		}
+		for (ItemMetalSword item : swords) {
+			items.add(new InfoItem(item, "dulcedeleche", item.getMetal().getName() + "_sword"));
+		}
+		for (int i = 0; i < 1; i++) {
+			items.add(new InfoItem(armors[i], "dulcedeleche",
+					armors[i * 4].getMetal().getName() + "_helmet"));
+			items.add(new InfoItem(armors[i + 1], "dulcedeleche",
+					armors[i * 4 + 1].getMetal().getName() + "_chestplate"));
+			items.add(new InfoItem(armors[i + 2], "dulcedeleche",
+					armors[i * 4 + 2].getMetal().getName() + "_leggings"));
+			items.add(new InfoItem(armors[i + 3], "dulcedeleche",
+					armors[i * 4 + 3].getMetal().getName() + "_boots"));
+		}
+		return items;
 	}
 
 	@Override
