@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north,metal=bronze": { "model": "dulcedeleche:metal_furnace" },
+        "facing=south,metal=bronze": { "model": "dulcedeleche:metal_furnace", "y": 180 },
+        "facing=west,metal=bronze":  { "model": "dulcedeleche:metal_furnace", "y": 270 },
+        "facing=east,metal=bronze":  { "model": "dulcedeleche:metal_furnace", "y": 90 }
+    }
+}

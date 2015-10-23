@@ -25,7 +25,7 @@ public class WorldGeneratorOre implements IWorldGenerator {
 	public void generate(Random rand, int chunkX, int chunkZ, World world,
 			IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
 		if (minables == null) {
-			Metal[] metals = ore.getMetals();
+			Metal[] metals = ore.getMetalComponent().getMetals();
 			minables = new WorldGenMinable[metals.length];
 			minLevels = new int[metals.length];
 			maxLevels = new int[metals.length];

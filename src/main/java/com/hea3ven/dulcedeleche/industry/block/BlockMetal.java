@@ -20,28 +20,12 @@ import com.hea3ven.dulcedeleche.industry.metal.Metal;
 
 public abstract class BlockMetal extends Block {
 
-	private Metal[] metals;
-	private int[] metaByIndex;
-	private int[] indexByMeta;
+	private MetalComponent metalComponent;
 
 	public BlockMetal(Material material, Metal[] metals) {
 		super(material);
 		setCreativeTab(CreativeTabs.tabBlock);
-		this.metals = metals;
-		metaByIndex = new int[Metal.values().length];
-		for (int i = 0; i < Metal.values().length; i++) {
-			Metal idxMetal = Metal.get(i);
-			metaByIndex[i] = -1;
-			for (int j = 0; j < metals.length; j++) {
-				if (idxMetal == metals[j]) {
-					metaByIndex[i] = j;
-				}
-			}
-		}
-		indexByMeta = new int[metals.length];
-		for (int i = 0; i < metals.length; i++) {
-			indexByMeta[i] = metals[i].ordinal();
-		}
+		metalComponent = new MetalComponent(metals);
 	}
 
 	public abstract IProperty getMetalProp();
@@ -53,24 +37,16 @@ public abstract class BlockMetal extends Block {
 
 	@Override
 	public int getMetaFromState(IBlockState state) {
-		return metaByIndex[getMetal(state).ordinal()];
+		return metalComponent.getMetaForMetal(getMetal(state));
 	}
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return setMetal(getDefaultState(), Metal.get(indexByMeta[meta]));
+		return setMetal(getDefaultState(), metalComponent.getMetalForMeta(meta));
 	}
 
-	public Metal[] getMetals() {
-		return metals;
-	}
-
-	public int getMetaForMetal(Metal metal) {
-		return metaByIndex[metal.ordinal()];
-	}
-
-	public Metal getMetalForMeta(int meta) {
-		return metals[meta];
+	public MetalComponent getMetalComponent() {
+		return metalComponent;
 	}
 
 	public Metal getMetal(IBlockState state) {
@@ -83,9 +59,13 @@ public abstract class BlockMetal extends Block {
 
 	@Override
 	public void getSubBlocks(Item itemIn, CreativeTabs tab, List list) {
-		for (Metal metal : metals) {
-			list.add(new ItemStack(this, 1, metaByIndex[metal.ordinal()]));
+		for (Metal metal : metalComponent.getMetals()) {
+			list.add(createStack(metal));
 		}
+	}
+
+	public ItemStack createStack(Metal metal) {
+		return new ItemStack(this, 1, metalComponent.getMetaForMetal(metal));
 	}
 
 	@SideOnly(Side.CLIENT)

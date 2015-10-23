@@ -119,7 +119,8 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 						new Object[] {BlockMetalOre.ORES}),
 				new InfoBlock(metalBlock, "dulcedeleche", "block_metal", ItemMetalBlock.class,
 						new Object[] {BlockMetalBlock.BLOCKS}),
-				new InfoBlock(metalFurnace, "dulcedeleche", "metal_furnace"));
+				new InfoBlock(metalFurnace, "dulcedeleche", "metal_furnace", ItemMetalBlock.class,
+						new Object[] {BlockMetalFurnace.METALS}));
 	}
 
 	@Override
@@ -173,21 +174,15 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 
 		removeIngotSmeltingRecipes();
 		MetalFurnaceRecipes.instance().addRecipe(new ItemStack(Blocks.iron_ore),
-				new ItemStack(nugget, 1, nugget.getMetaForMetal(Metal.IRON)));
-		MetalFurnaceRecipes.instance().addRecipe(
-				new ItemStack(ore, 1, ore.getMetaForMetal(Metal.COPPER)),
-				new ItemStack(nugget, 1, nugget.getMetaForMetal(Metal.COPPER)));
-		MetalFurnaceRecipes.instance().addRecipe(
-				new ItemStack(ore, 1, ore.getMetaForMetal(Metal.TIN)),
-				new ItemStack(nugget, 1, nugget.getMetaForMetal(Metal.TIN)));
-		MetalFurnaceRecipes.instance().addRecipe(
-				new ItemStack(ore, 1, ore.getMetaForMetal(Metal.COPPER)),
-				new ItemStack(ore, 1, ore.getMetaForMetal(Metal.TIN)),
-				new ItemStack(nugget, 1, nugget.getMetaForMetal(Metal.BRONZE)));
-		MetalFurnaceRecipes.instance().addRecipe(
-				new ItemStack(nugget, 3, nugget.getMetaForMetal(Metal.COPPER)),
-				new ItemStack(nugget, 1, nugget.getMetaForMetal(Metal.TIN)),
-				new ItemStack(nugget, 1, nugget.getMetaForMetal(Metal.BRONZE)));
+				nugget.createStack(Metal.IRON));
+		MetalFurnaceRecipes.instance().addRecipe(ore.createStack(Metal.COPPER),
+				nugget.createStack(Metal.COPPER));
+		MetalFurnaceRecipes.instance().addRecipe(ore.createStack(Metal.TIN),
+				nugget.createStack(Metal.TIN));
+		MetalFurnaceRecipes.instance().addRecipe(ore.createStack(Metal.COPPER),
+				ore.createStack(Metal.TIN), nugget.createStack(Metal.BRONZE));
+		MetalFurnaceRecipes.instance().addRecipe(nugget.createStack(Metal.COPPER),
+				nugget.createStack(Metal.TIN), nugget.createStack(Metal.BRONZE));
 
 		GameRegistry.registerWorldGenerator(new WorldGeneratorOre(), 1);
 	}
