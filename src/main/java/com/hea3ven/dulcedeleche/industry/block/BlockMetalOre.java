@@ -9,7 +9,8 @@ import com.hea3ven.dulcedeleche.industry.metal.Metal;
 
 public class BlockMetalOre extends BlockMetal {
 
-	public static Metal[] ORES = new Metal[] {Metal.COPPER, Metal.TIN};
+	public static Metal[] ORES = new Metal[] {Metal.COPPER, Metal.TIN, Metal.COBALT,
+			Metal.TUNGSTEN};
 	public static final PropertyEnum METAL_ORE = PropertyEnum.create("metal", Metal.class, ORES);
 
 	public BlockMetalOre() {

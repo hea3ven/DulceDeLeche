@@ -8,7 +8,8 @@ import com.hea3ven.dulcedeleche.industry.metal.Metal;
 
 public class BlockMetalBlock extends BlockMetal {
 
-	public static Metal[] BLOCKS = new Metal[] {Metal.COPPER, Metal.TIN, Metal.BRONZE};
+	public static Metal[] BLOCKS = new Metal[] {Metal.COPPER, Metal.TIN, Metal.BRONZE, Metal.STEEL,
+			Metal.COBALT, Metal.FERCO_STEEL, Metal.TUNGSTEN, Metal.MUSHET_STEEL};
 	public static final PropertyEnum METAL_BLOCK = PropertyEnum.create("metal", Metal.class,
 			BLOCKS);
 

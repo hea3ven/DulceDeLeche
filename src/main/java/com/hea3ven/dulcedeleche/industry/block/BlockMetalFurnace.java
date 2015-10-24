@@ -1,11 +1,16 @@
 package com.hea3ven.dulcedeleche.industry.block;
 
+import java.util.List;
+
 import net.minecraft.block.BlockFurnace;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
@@ -20,13 +25,14 @@ import com.hea3ven.tools.commonutils.block.base.BlockMachine;
 
 public class BlockMetalFurnace extends BlockMachine {
 
-	public static final Metal[] METALS = new Metal[] {Metal.BRONZE};
+	public static final Metal[] METALS = new Metal[] {Metal.BRONZE, Metal.STEEL, Metal.COBALT};
 	public static final PropertyEnum METAL = PropertyEnum.create("metal", Metal.class, METALS);
 
 	private MetalComponent metalComponent;
 
 	public BlockMetalFurnace() {
 		super(Material.iron, ModDulceDeLeche.MODID, GuiMetalFurnace.id);
+		setCreativeTab(CreativeTabs.tabDecorations);
 
 		metalComponent = new MetalComponent(METALS);
 	}
@@ -70,6 +76,17 @@ public class BlockMetalFurnace extends BlockMachine {
 
 	private IBlockState setMetal(IBlockState state, Metal metal) {
 		return state.withProperty(METAL, metal);
+	}
+
+	@Override
+	public void getSubBlocks(Item itemIn, CreativeTabs tab, List list) {
+		for (Metal metal : metalComponent.getMetals()) {
+			list.add(createStack(metal));
+		}
+	}
+
+	private ItemStack createStack(Metal metal) {
+		return new ItemStack(this, 1, metalComponent.getMetaForMetal(metal) << 2);
 	}
 
 	@Override

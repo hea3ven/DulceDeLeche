@@ -2,6 +2,11 @@
     "variants": {
         "metal=copper": { "model": "dulcedeleche:block_metal" },
         "metal=tin": { "model": "dulcedeleche:block_metal" },
-        "metal=bronze": { "model": "dulcedeleche:block_metal" }
+        "metal=bronze": { "model": "dulcedeleche:block_metal" },
+        "metal=steel": { "model": "dulcedeleche:block_metal" },
+        "metal=cobalt": { "model": "dulcedeleche:block_metal" },
+        "metal=ferco_steel": { "model": "dulcedeleche:block_metal" },
+        "metal=tungsten": { "model": "dulcedeleche:block_metal" },
+        "metal=mushet_steel": { "model": "dulcedeleche:block_metal" }
     }
 }

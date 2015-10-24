@@ -3,10 +3,10 @@
     * Redstone module:
         - Add assembler block that can automatically craft recipes.
     * Industry module:
-        - Add copper and tin ore.
-        - Add copper, tin and bronze ingots.
-        - Add copper, tin, bronze and iron nuggets.
-        - Add copper, tin and bronze blocks.
-        - Add bronze tools and armor.
+        - Add copper, tin, coablt and tungsten ore.
+        - Add copper, tin, bronze, steel, cobalt, ferco steel, tungsten and mushet steel ingots.
+        - Add copper, tin, bronze, iron, steel, cobalt, ferco steel, tungsten and mushet steel nuggets.
+        - Add copper, tin, bronze, steel, cobalt, ferco steel, tungsten and mushet steel blocks.
+        - Add bronze, steel, cobalt, ferco steel, tungsten and mushet steel tools and armor.
         - Remove furnace recipes for smelting iron and gold ore.
         - Add metal furnace to smelt metals.

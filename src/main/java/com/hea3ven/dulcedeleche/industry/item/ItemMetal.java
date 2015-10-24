@@ -11,8 +11,10 @@ import com.hea3ven.dulcedeleche.industry.metal.Metal;
 
 public class ItemMetal extends Item {
 
-	public static Metal[] NUGGETS = new Metal[] {Metal.COPPER, Metal.TIN, Metal.IRON, Metal.BRONZE};
-	public static Metal[] INGOTS = new Metal[] {Metal.COPPER, Metal.TIN, Metal.BRONZE};
+	public static Metal[] NUGGETS = new Metal[] {Metal.COPPER, Metal.TIN, Metal.BRONZE, Metal.IRON,
+			Metal.STEEL, Metal.COBALT, Metal.FERCO_STEEL, Metal.TUNGSTEN, Metal.MUSHET_STEEL};
+	public static Metal[] INGOTS = new Metal[] {Metal.COPPER, Metal.TIN, Metal.BRONZE, Metal.STEEL,
+			Metal.COBALT, Metal.FERCO_STEEL, Metal.TUNGSTEN, Metal.MUSHET_STEEL};
 
 	private MetalComponent metalComponent;
 

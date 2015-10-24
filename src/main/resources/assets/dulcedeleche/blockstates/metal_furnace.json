@@ -3,6 +3,14 @@
         "facing=north,metal=bronze": { "model": "dulcedeleche:metal_furnace" },
         "facing=south,metal=bronze": { "model": "dulcedeleche:metal_furnace", "y": 180 },
         "facing=west,metal=bronze":  { "model": "dulcedeleche:metal_furnace", "y": 270 },
-        "facing=east,metal=bronze":  { "model": "dulcedeleche:metal_furnace", "y": 90 }
+        "facing=east,metal=bronze":  { "model": "dulcedeleche:metal_furnace", "y": 90 },
+        "facing=north,metal=steel": { "model": "dulcedeleche:metal_furnace" },
+        "facing=south,metal=steel": { "model": "dulcedeleche:metal_furnace", "y": 180 },
+        "facing=west,metal=steel":  { "model": "dulcedeleche:metal_furnace", "y": 270 },
+        "facing=east,metal=steel":  { "model": "dulcedeleche:metal_furnace", "y": 90 },
+        "facing=north,metal=cobalt": { "model": "dulcedeleche:metal_furnace" },
+        "facing=south,metal=cobalt": { "model": "dulcedeleche:metal_furnace", "y": 180 },
+        "facing=west,metal=cobalt":  { "model": "dulcedeleche:metal_furnace", "y": 270 },
+        "facing=east,metal=cobalt":  { "model": "dulcedeleche:metal_furnace", "y": 90 }
     }
 }

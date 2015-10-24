@@ -83,28 +83,39 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 				.setHardness(3.5F)
 				.setStepSound(Block.soundTypeMetal);
 
-		pickaxes = new ItemMetalPickaxe[1];
-		pickaxes[0] = (ItemMetalPickaxe) new ItemMetalPickaxe(Metal.BRONZE)
-				.setUnlocalizedName("pickaxeBronze");
-		shovels = new ItemMetalShovel[1];
-		shovels[0] = (ItemMetalShovel) new ItemMetalShovel(Metal.BRONZE)
-				.setUnlocalizedName("shovelBronze");
-		axes = new ItemMetalAxe[1];
-		axes[0] = (ItemMetalAxe) new ItemMetalAxe(Metal.BRONZE).setUnlocalizedName("axeBronze");
-		hoes = new ItemMetalHoe[1];
-		hoes[0] = (ItemMetalHoe) new ItemMetalHoe(Metal.BRONZE).setUnlocalizedName("hoeBronze");
-		swords = new ItemMetalSword[1];
-		swords[0] = (ItemMetalSword) new ItemMetalSword(Metal.BRONZE)
-				.setUnlocalizedName("swordBronze");
-		armors = new ItemMetalArmor[4];
-		armors[0] = (ItemMetalArmor) new ItemMetalArmor(Metal.BRONZE, 0)
-				.setUnlocalizedName("helmetBronze");
-		armors[1] = (ItemMetalArmor) new ItemMetalArmor(Metal.BRONZE, 1)
-				.setUnlocalizedName("chestplateBronze");
-		armors[2] = (ItemMetalArmor) new ItemMetalArmor(Metal.BRONZE, 2)
-				.setUnlocalizedName("leggingsBronze");
-		armors[3] = (ItemMetalArmor) new ItemMetalArmor(Metal.BRONZE, 3)
-				.setUnlocalizedName("bootsBronze");
+		pickaxes = new ItemMetalPickaxe[6];
+		shovels = new ItemMetalShovel[6];
+		axes = new ItemMetalAxe[6];
+		hoes = new ItemMetalHoe[6];
+		swords = new ItemMetalSword[6];
+		armors = new ItemMetalArmor[6 * 4];
+		createArmorsAndTools(Metal.BRONZE, 0);
+		createArmorsAndTools(Metal.STEEL, 1);
+		createArmorsAndTools(Metal.COBALT, 2);
+		createArmorsAndTools(Metal.FERCO_STEEL, 3);
+		createArmorsAndTools(Metal.TUNGSTEN, 4);
+		createArmorsAndTools(Metal.MUSHET_STEEL, 5);
+	}
+
+	private void createArmorsAndTools(Metal metal, int index) {
+		pickaxes[index] = (ItemMetalPickaxe) new ItemMetalPickaxe(metal)
+				.setUnlocalizedName("pickaxe" + metal.getName());
+		shovels[index] = (ItemMetalShovel) new ItemMetalShovel(metal)
+				.setUnlocalizedName("shovel" + metal.getName());
+		axes[index] = (ItemMetalAxe) new ItemMetalAxe(metal)
+				.setUnlocalizedName("axe" + metal.getName());
+		hoes[index] = (ItemMetalHoe) new ItemMetalHoe(metal)
+				.setUnlocalizedName("hoe" + metal.getName());
+		swords[index] = (ItemMetalSword) new ItemMetalSword(metal)
+				.setUnlocalizedName("sword" + metal.getName());
+		armors[index * 4] = (ItemMetalArmor) new ItemMetalArmor(metal, 0)
+				.setUnlocalizedName("helmet" + metal.getName());
+		armors[index * 4 + 1] = (ItemMetalArmor) new ItemMetalArmor(metal, 1)
+				.setUnlocalizedName("chestplate" + metal.getName());
+		armors[index * 4 + 2] = (ItemMetalArmor) new ItemMetalArmor(metal, 2)
+				.setUnlocalizedName("leggings" + metal.getName());
+		armors[index * 4 + 3] = (ItemMetalArmor) new ItemMetalArmor(metal, 3)
+				.setUnlocalizedName("boots" + metal.getName());
 	}
 
 	@Override
@@ -133,29 +144,22 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 	public List<InfoItem> getItems() {
 		List<InfoItem> items = Lists.newArrayList(new InfoItem(nugget, "dulcedeleche", "nugget"),
 				new InfoItem(ingot, "dulcedeleche", "ingot"));
-		for (ItemMetalPickaxe item : pickaxes) {
-			items.add(new InfoItem(item, "dulcedeleche", item.getMetal().getName() + "_pickaxe"));
-		}
-		for (ItemMetalShovel item : shovels) {
-			items.add(new InfoItem(item, "dulcedeleche", item.getMetal().getName() + "_shovel"));
-		}
-		for (ItemMetalAxe item : axes) {
-			items.add(new InfoItem(item, "dulcedeleche", item.getMetal().getName() + "_axe"));
-		}
-		for (ItemMetalHoe item : hoes) {
-			items.add(new InfoItem(item, "dulcedeleche", item.getMetal().getName() + "_hoe"));
-		}
-		for (ItemMetalSword item : swords) {
-			items.add(new InfoItem(item, "dulcedeleche", item.getMetal().getName() + "_sword"));
-		}
-		for (int i = 0; i < 1; i++) {
-			items.add(new InfoItem(armors[i], "dulcedeleche",
+		for (int i = 0; i < 6; i++) {
+			items.add(new InfoItem(pickaxes[i], "dulcedeleche",
+					pickaxes[i].getMetal().getName() + "_pickaxe"));
+			items.add(new InfoItem(shovels[i], "dulcedeleche",
+					shovels[i].getMetal().getName() + "_shovel"));
+			items.add(new InfoItem(axes[i], "dulcedeleche", axes[i].getMetal().getName() + "_axe"));
+			items.add(new InfoItem(hoes[i], "dulcedeleche", hoes[i].getMetal().getName() + "_hoe"));
+			items.add(new InfoItem(swords[i], "dulcedeleche",
+					swords[i].getMetal().getName() + "_sword"));
+			items.add(new InfoItem(armors[i * 4], "dulcedeleche",
 					armors[i * 4].getMetal().getName() + "_helmet"));
-			items.add(new InfoItem(armors[i + 1], "dulcedeleche",
+			items.add(new InfoItem(armors[i * 4 + 1], "dulcedeleche",
 					armors[i * 4 + 1].getMetal().getName() + "_chestplate"));
-			items.add(new InfoItem(armors[i + 2], "dulcedeleche",
+			items.add(new InfoItem(armors[i * 4 + 2], "dulcedeleche",
 					armors[i * 4 + 2].getMetal().getName() + "_leggings"));
-			items.add(new InfoItem(armors[i + 3], "dulcedeleche",
+			items.add(new InfoItem(armors[i * 4 + 3], "dulcedeleche",
 					armors[i * 4 + 3].getMetal().getName() + "_boots"));
 		}
 		return items;
