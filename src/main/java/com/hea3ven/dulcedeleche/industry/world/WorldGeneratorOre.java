@@ -49,7 +49,7 @@ public class WorldGeneratorOre implements IWorldGenerator {
 	}
 
 	private void generateSurface(World world, Random rand, int x, int z) {
-		for (int i = 0; i < minables.length; i++) {
+		for (int i = 0; i < 2; i++) {
 			for (int k = 0; k < 16; k++) {
 				int veinX = x + rand.nextInt(16);
 				int veinZ = z + rand.nextInt(16);

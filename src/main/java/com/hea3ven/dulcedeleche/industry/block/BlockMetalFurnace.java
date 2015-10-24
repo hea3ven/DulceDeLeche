@@ -85,7 +85,7 @@ public class BlockMetalFurnace extends BlockMachine {
 		}
 	}
 
-	private ItemStack createStack(Metal metal) {
+	public ItemStack createStack(Metal metal) {
 		return new ItemStack(this, 1, metalComponent.getMetaForMetal(metal) << 2);
 	}
 

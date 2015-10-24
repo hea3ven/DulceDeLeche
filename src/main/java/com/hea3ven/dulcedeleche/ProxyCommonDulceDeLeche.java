@@ -19,6 +19,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import com.hea3ven.dulcedeleche.enchantments.enchantment.EnchantmentArea;
 import com.hea3ven.dulcedeleche.industry.block.BlockBrickFurnace;
@@ -192,10 +193,10 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 			OreDictionary.registerOre(metal.getBlockName(), metalBlock.createStack(metal));
 		}
 		for (Metal metal : ingot.getMetalComponent().getMetals()) {
-			OreDictionary.registerOre(metal.getBlockName(), ingot.createStack(metal));
+			OreDictionary.registerOre(metal.getIngotName(), ingot.createStack(metal));
 		}
 		for (Metal metal : nugget.getMetalComponent().getMetals()) {
-			OreDictionary.registerOre(metal.getBlockName(), nugget.createStack(metal));
+			OreDictionary.registerOre(metal.getNuggetName(), nugget.createStack(metal));
 		}
 
 		removeIngotSmeltingRecipes();
@@ -232,6 +233,15 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 				Metal.FERCO_STEEL);
 		MetalFurnaceRecipes.instance().addAlloyRecipe(3, Metal.STEEL, 2, Metal.TUNGSTEN, 1,
 				Metal.MUSHET_STEEL);
+
+		GameRegistry.addShapedRecipe(new ItemStack(brickFurnace), "xxx", "x x", "xxx", 'x',
+				new ItemStack(Blocks.brick_block));
+		GameRegistry.addRecipe(new ShapedOreRecipe(metalFurnace.createStack(Metal.BRONZE), "xxx",
+				"x x", "xxx", 'x', "blockBronze"));
+		GameRegistry.addRecipe(new ShapedOreRecipe(metalFurnace.createStack(Metal.STEEL), "xxx",
+				"x x", "xxx", 'x', "blockSteel"));
+		GameRegistry.addRecipe(new ShapedOreRecipe(metalFurnace.createStack(Metal.COBALT), "xxx",
+				"x x", "xxx", 'x', "blockCobalt"));
 
 		GameRegistry.registerWorldGenerator(new WorldGeneratorOre(), 1);
 	}
