@@ -23,6 +23,10 @@ public class ItemMetal extends Item {
 		metalComponent = new MetalComponent(metals);
 	}
 
+	public MetalComponent getMetalComponent() {
+		return metalComponent;
+	}
+
 	@Override
 	public int getColorFromItemStack(ItemStack stack, int renderPass) {
 		return metalComponent.getMetalForMeta(stack.getMetadata()).getColor();

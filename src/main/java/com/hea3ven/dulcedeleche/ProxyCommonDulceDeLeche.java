@@ -18,6 +18,7 @@ import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.OreDictionary;
 
 import com.hea3ven.dulcedeleche.enchantments.enchantment.EnchantmentArea;
 import com.hea3ven.dulcedeleche.industry.block.BlockBrickFurnace;
@@ -48,19 +49,19 @@ import com.hea3ven.tools.commonutils.mod.ProxyModBase;
 
 public class ProxyCommonDulceDeLeche extends ProxyModBase {
 
-	private Block assembler;
-	private BlockMetalOre ore;
-	private Block metalBlock;
-	private ItemMetal nugget;
-	private ItemMetal ingot;
-	private BlockBrickFurnace brickFurnace;
-	private BlockMetalFurnace metalFurnace;
-	private ItemMetalPickaxe[] pickaxes;
-	private ItemMetalShovel[] shovels;
-	private ItemMetalAxe[] axes;
-	private ItemMetalHoe[] hoes;
-	private ItemMetalSword[] swords;
-	private ItemMetalArmor[] armors;
+	public static Block assembler;
+	public static BlockMetalOre ore;
+	public static BlockMetalBlock metalBlock;
+	public static ItemMetal nugget;
+	public static ItemMetal ingot;
+	public static BlockBrickFurnace brickFurnace;
+	public static BlockMetalFurnace metalFurnace;
+	public static ItemMetalPickaxe[] pickaxes;
+	public static ItemMetalShovel[] shovels;
+	public static ItemMetalAxe[] axes;
+	public static ItemMetalHoe[] hoes;
+	public static ItemMetalSword[] swords;
+	public static ItemMetalArmor[] armors;
 
 	public ProxyCommonDulceDeLeche(ModInitializerCommon modInitializer) {
 		super(modInitializer);
@@ -73,7 +74,7 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 				.setHardness(3.0F)
 				.setResistance(5.0F)
 				.setStepSound(Block.soundTypePiston);
-		metalBlock = new BlockMetalBlock()
+		metalBlock = (BlockMetalBlock) new BlockMetalBlock()
 				.setUnlocalizedName("blockMetal")
 				.setHardness(5.0F)
 				.setResistance(10.0F)
@@ -184,17 +185,53 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 	public void onPostInitEvent() {
 		super.onPostInitEvent();
 
+		for (Metal metal : ore.getMetalComponent().getMetals()) {
+			OreDictionary.registerOre(metal.getOreName(), ore.createStack(metal));
+		}
+		for (Metal metal : metalBlock.getMetalComponent().getMetals()) {
+			OreDictionary.registerOre(metal.getBlockName(), metalBlock.createStack(metal));
+		}
+		for (Metal metal : ingot.getMetalComponent().getMetals()) {
+			OreDictionary.registerOre(metal.getBlockName(), ingot.createStack(metal));
+		}
+		for (Metal metal : nugget.getMetalComponent().getMetals()) {
+			OreDictionary.registerOre(metal.getBlockName(), nugget.createStack(metal));
+		}
+
 		removeIngotSmeltingRecipes();
-		MetalFurnaceRecipes.instance().addRecipe(1, new ItemStack(Blocks.iron_ore),
-				nugget.createStack(Metal.IRON));
-		MetalFurnaceRecipes.instance().addRecipe(0, ore.createStack(Metal.COPPER),
-				nugget.createStack(Metal.COPPER));
-		MetalFurnaceRecipes.instance().addRecipe(0, ore.createStack(Metal.TIN),
-				nugget.createStack(Metal.TIN));
-		MetalFurnaceRecipes.instance().addRecipe(0, ore.createStack(Metal.COPPER),
-				ore.createStack(Metal.TIN), nugget.createStack(Metal.BRONZE));
-		MetalFurnaceRecipes.instance().addRecipe(0, nugget.createStack(Metal.COPPER),
-				nugget.createStack(Metal.TIN), nugget.createStack(Metal.BRONZE));
+
+		MetalFurnaceRecipes.instance().addMetalRecipe(0, Metal.GOLD);
+		MetalFurnaceRecipes.instance().addMetalRecipe(0, Metal.TIN);
+		MetalFurnaceRecipes.instance().addMetalRecipe(0, Metal.COPPER);
+		MetalFurnaceRecipes.instance().addAlloyRecipe(0, Metal.COPPER, 3, Metal.TIN, 1,
+				Metal.BRONZE);
+		MetalFurnaceRecipes.instance().addMetalRecipe(1, Metal.IRON);
+		for (ItemStack stack : OreDictionary.getOres("oreIron")) {
+			MetalFurnaceRecipes.instance().addRecipe(1, stack, new ItemStack(Items.coal),
+					nugget.createStack(Metal.IRON));
+		}
+		for (ItemStack stack : OreDictionary.getOres("blockIron")) {
+			MetalFurnaceRecipes.instance().addRecipe(1, stack, new ItemStack(Blocks.coal_block),
+					metalBlock.createStack(Metal.STEEL));
+			MetalFurnaceRecipes.instance().addRecipe(1, stack, new ItemStack(Items.coal, 9),
+					metalBlock.createStack(Metal.STEEL));
+		}
+		for (ItemStack stack : OreDictionary.getOres("ingotIron")) {
+			MetalFurnaceRecipes.instance().addRecipe(1, stack, new ItemStack(Items.coal),
+					ingot.createStack(Metal.STEEL));
+		}
+		for (ItemStack stack : OreDictionary.getOres("nuggetIron")) {
+			stack = stack.copy();
+			stack.stackSize = 9;
+			MetalFurnaceRecipes.instance().addRecipe(1, stack, new ItemStack(Items.coal),
+					nugget.createStack(Metal.STEEL));
+		}
+		MetalFurnaceRecipes.instance().addMetalRecipe(2, Metal.COBALT);
+		MetalFurnaceRecipes.instance().addMetalRecipe(2, Metal.TUNGSTEN);
+		MetalFurnaceRecipes.instance().addAlloyRecipe(3, Metal.STEEL, 3, Metal.COBALT, 1,
+				Metal.FERCO_STEEL);
+		MetalFurnaceRecipes.instance().addAlloyRecipe(3, Metal.STEEL, 2, Metal.TUNGSTEN, 1,
+				Metal.MUSHET_STEEL);
 
 		GameRegistry.registerWorldGenerator(new WorldGeneratorOre(), 1);
 	}
