@@ -98,4 +98,17 @@ public class BlockMetalFurnace extends BlockMachine {
 	public int colorMultiplier(IBlockAccess world, BlockPos pos, int renderPass) {
 		return getRenderColor(world.getBlockState(pos));
 	}
+
+	public int getTier(IBlockState state) {
+		switch (getMetal(state)) {
+			case BRONZE:
+				return 1;
+			case STEEL:
+				return 2;
+			case COBALT:
+				return 3;
+			default:
+				return -1;
+		}
+	}
 }

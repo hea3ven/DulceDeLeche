@@ -1,5 +1,6 @@
 package com.hea3ven.dulcedeleche.industry.block.tileentity;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
@@ -17,7 +18,9 @@ import net.minecraft.util.IChatComponent;
 
 import net.minecraftforge.common.util.Constants.NBT;
 
+import com.hea3ven.dulcedeleche.industry.block.BlockMetalFurnace;
 import com.hea3ven.dulcedeleche.industry.crafting.MetalFurnaceRecipes;
+import com.hea3ven.dulcedeleche.industry.crafting.MetalFurnaceRecipes.MetalFurnaceRecipe;
 import com.hea3ven.tools.commonutils.inventory.GenericContainer;
 import com.hea3ven.tools.commonutils.tileentity.TileMachine;
 
@@ -31,9 +34,22 @@ public class TileMetalFurnace extends TileMachine implements IInventory, IUpdate
 
 	private ItemStack[] slots = new ItemStack[4];
 
+	private int tier = -1;
+
 	private int progress = 0;
 	private int fuel = 0;
 	private int fuelCapacity = 1;
+
+	public int getTier() {
+		if (tier == -1) {
+			IBlockState state = getWorld().getBlockState(pos);
+			if (state.getBlock() instanceof BlockMetalFurnace)
+				tier = ((BlockMetalFurnace) state.getBlock()).getTier(state);
+			else
+				tier = 0;
+		}
+		return tier;
+	}
 
 	public int getProgress() {
 		return progress;
@@ -72,14 +88,16 @@ public class TileMetalFurnace extends TileMachine implements IInventory, IUpdate
 		if (slots[0] == null && slots[1] == null)
 			return false;
 
-		ItemStack result = MetalFurnaceRecipes.instance().getSmeltingResult(slots[0], slots[1]);
-		if (result == null)
+		MetalFurnaceRecipe recipe = MetalFurnaceRecipes.instance().getRecipe(slots[0], slots[1]);
+		if (recipe == null)
+			return false;
+		if (recipe.getTier() > getTier())
 			return false;
 		if (slots[3] == null)
 			return true;
-		if (!slots[3].isItemEqual(result))
+		if (!slots[3].isItemEqual(recipe.getOutput()))
 			return false;
-		int resultSize = slots[3].stackSize + result.stackSize;
+		int resultSize = slots[3].stackSize + recipe.getOutput().stackSize;
 		return resultSize <= getInventoryStackLimit() && resultSize <= slots[3].getMaxStackSize();
 	}
 
@@ -189,7 +207,9 @@ public class TileMetalFurnace extends TileMachine implements IInventory, IUpdate
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
 		if (index < 2)
 			return stack.getItem() == Item.getItemFromBlock(Blocks.iron_ore)
-					|| stack.getItem() == Item.getItemFromBlock(Blocks.gold_ore);
+					|| stack.getItem() == Item.getItemFromBlock(Blocks.gold_ore)
+					|| stack.getItem() == Item.getByNameOrId("dulcedeleche:ore")
+					|| (stack.getItem() == Items.coal && stack.getMetadata() == 0);
 		else if (index < 3)
 			return stack.getItem() == Items.coal && stack.getMetadata() == 0;
 		else

@@ -21,12 +21,13 @@ public class MetalFurnaceRecipes {
 		return instance;
 	}
 
-	public void addRecipe(ItemStack input, ItemStack output) {
-		recipes.put(Pair.of(input, (ItemStack) null), new MetalFurnaceRecipe(input, null, output));
+	public void addRecipe(int tier, ItemStack input, ItemStack output) {
+		recipes.put(Pair.of(input, (ItemStack) null),
+				new MetalFurnaceRecipe(tier, input, null, output));
 	}
 
-	public void addRecipe(ItemStack input1, ItemStack input2, ItemStack output) {
-		recipes.put(Pair.of(input1, input2), new MetalFurnaceRecipe(input1, input2, output));
+	public void addRecipe(int tier, ItemStack input1, ItemStack input2, ItemStack output) {
+		recipes.put(Pair.of(input1, input2), new MetalFurnaceRecipe(tier, input1, input2, output));
 	}
 
 	public ItemStack getSmeltingResult(ItemStack stack1, ItemStack stack2) {
@@ -39,7 +40,7 @@ public class MetalFurnaceRecipes {
 		return recipe.smelt(stack1, stack2);
 	}
 
-	private MetalFurnaceRecipe getRecipe(ItemStack stack1, ItemStack stack2) {
+	public MetalFurnaceRecipe getRecipe(ItemStack stack1, ItemStack stack2) {
 		if (stack1 == null && stack2 == null)
 			return null;
 		if (stack1 == null) {
@@ -64,11 +65,13 @@ public class MetalFurnaceRecipes {
 
 	public static class MetalFurnaceRecipe {
 
+		private int tier;
 		private ItemStack input1;
 		private ItemStack input2;
 		private ItemStack output;
 
-		public MetalFurnaceRecipe(ItemStack input1, ItemStack input2, ItemStack output) {
+		public MetalFurnaceRecipe(int tier, ItemStack input1, ItemStack input2, ItemStack output) {
+			this.tier = tier;
 			this.input1 = input1;
 			this.input2 = input2;
 			this.output = output;
@@ -83,6 +86,10 @@ public class MetalFurnaceRecipes {
 			if (input2 != null)
 				stack2.stackSize -= input2.stackSize;
 			return output.copy();
+		}
+
+		public int getTier() {
+			return tier;
 		}
 	}
 }

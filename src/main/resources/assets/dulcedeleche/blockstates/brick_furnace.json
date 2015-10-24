@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "dulcedeleche:brick_furnace" },
+        "facing=south": { "model": "dulcedeleche:brick_furnace", "y": 180 },
+        "facing=west":  { "model": "dulcedeleche:brick_furnace", "y": 270 },
+        "facing=east":  { "model": "dulcedeleche:brick_furnace", "y": 90 }
+    }
+}

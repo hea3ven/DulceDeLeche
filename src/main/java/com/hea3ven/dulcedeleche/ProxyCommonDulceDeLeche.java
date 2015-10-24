@@ -20,6 +20,7 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import com.hea3ven.dulcedeleche.enchantments.enchantment.EnchantmentArea;
+import com.hea3ven.dulcedeleche.industry.block.BlockBrickFurnace;
 import com.hea3ven.dulcedeleche.industry.block.BlockMetalBlock;
 import com.hea3ven.dulcedeleche.industry.block.BlockMetalFurnace;
 import com.hea3ven.dulcedeleche.industry.block.BlockMetalOre;
@@ -52,6 +53,7 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 	private Block metalBlock;
 	private ItemMetal nugget;
 	private ItemMetal ingot;
+	private BlockBrickFurnace brickFurnace;
 	private BlockMetalFurnace metalFurnace;
 	private ItemMetalPickaxe[] pickaxes;
 	private ItemMetalShovel[] shovels;
@@ -78,6 +80,11 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 				.setStepSound(Block.soundTypeMetal);
 		nugget = (ItemMetal) new ItemMetal(ItemMetal.NUGGETS).setUnlocalizedName("nugget");
 		ingot = (ItemMetal) new ItemMetal(ItemMetal.INGOTS).setUnlocalizedName("ingot");
+		brickFurnace = (BlockBrickFurnace) new BlockBrickFurnace()
+				.setUnlocalizedName("brickFurnace")
+				.setHardness(2.0F)
+				.setResistance(10.0F)
+				.setStepSound(Block.soundTypePiston);
 		metalFurnace = (BlockMetalFurnace) new BlockMetalFurnace()
 				.setUnlocalizedName("metalFurnace")
 				.setHardness(3.5F)
@@ -130,6 +137,7 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 						new Object[] {BlockMetalOre.ORES}),
 				new InfoBlock(metalBlock, "dulcedeleche", "block_metal", ItemMetalBlock.class,
 						new Object[] {BlockMetalBlock.BLOCKS}),
+				new InfoBlock(brickFurnace, "dulcedeleche", "brick_furnace"),
 				new InfoBlock(metalFurnace, "dulcedeleche", "metal_furnace", ItemMetalBlock.class,
 						new Object[] {BlockMetalFurnace.METALS}));
 	}
@@ -177,15 +185,15 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 		super.onPostInitEvent();
 
 		removeIngotSmeltingRecipes();
-		MetalFurnaceRecipes.instance().addRecipe(new ItemStack(Blocks.iron_ore),
+		MetalFurnaceRecipes.instance().addRecipe(1, new ItemStack(Blocks.iron_ore),
 				nugget.createStack(Metal.IRON));
-		MetalFurnaceRecipes.instance().addRecipe(ore.createStack(Metal.COPPER),
+		MetalFurnaceRecipes.instance().addRecipe(0, ore.createStack(Metal.COPPER),
 				nugget.createStack(Metal.COPPER));
-		MetalFurnaceRecipes.instance().addRecipe(ore.createStack(Metal.TIN),
+		MetalFurnaceRecipes.instance().addRecipe(0, ore.createStack(Metal.TIN),
 				nugget.createStack(Metal.TIN));
-		MetalFurnaceRecipes.instance().addRecipe(ore.createStack(Metal.COPPER),
+		MetalFurnaceRecipes.instance().addRecipe(0, ore.createStack(Metal.COPPER),
 				ore.createStack(Metal.TIN), nugget.createStack(Metal.BRONZE));
-		MetalFurnaceRecipes.instance().addRecipe(nugget.createStack(Metal.COPPER),
+		MetalFurnaceRecipes.instance().addRecipe(0, nugget.createStack(Metal.COPPER),
 				nugget.createStack(Metal.TIN), nugget.createStack(Metal.BRONZE));
 
 		GameRegistry.registerWorldGenerator(new WorldGeneratorOre(), 1);
