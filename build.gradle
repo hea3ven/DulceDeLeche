@@ -35,8 +35,8 @@ dependencies {
     runmods "codechicken:CodeChickenCore:1.8-1.0.5.34:dev"
     runmods "codechicken:NotEnoughItems:1.8-1.0.5.82:dev"
 
-    compile 'com.hea3ven.tools.commonutils:h3nt-commonutils:1.0.0'
-    release('com.hea3ven.tools.commonutils:h3nt-commonutils:1.0.0') {
+    compile 'com.hea3ven.tools.commonutils:h3nt-commonutils:1.0.1'
+    release('com.hea3ven.tools.commonutils:h3nt-commonutils:1.0.1') {
         transitive = false
     }
 

@@ -12,6 +12,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -76,6 +77,16 @@ public abstract class BlockMetal extends Block {
 	@Override
 	public int colorMultiplier(IBlockAccess world, BlockPos pos, int renderPass) {
 		return getRenderColor(world.getBlockState(pos));
+	}
+
+	@Override
+	public int getDamageValue(World world, BlockPos pos) {
+		return getMetaFromState(world.getBlockState(pos));
+	}
+
+	@Override
+	public int damageDropped(IBlockState state) {
+		return getMetaFromState(state);
 	}
 
 }

@@ -111,4 +111,15 @@ public class BlockMetalFurnace extends BlockMachine {
 				return -1;
 		}
 	}
+
+	@Override
+	public int getDamageValue(World world, BlockPos pos) {
+		return getMetaFromState(world.getBlockState(pos)) & 0xc;
+	}
+
+	@Override
+	public int damageDropped(IBlockState state) {
+		return getMetaFromState(state) & 0xc;
+	}
+
 }

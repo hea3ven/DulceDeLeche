@@ -22,7 +22,7 @@ public class ModDulceDeLeche {
 
 	static {
 		Bootstrap.require(MODID, "1.0.x");
-		Bootstrap.initLib(MODID, "h3nt-commonutils", "1.0.0", "1.0.x");
+		Bootstrap.initLib(MODID, "h3nt-commonutils", "1.0.1", "1.0.1");
 	}
 
 	@EventHandler
