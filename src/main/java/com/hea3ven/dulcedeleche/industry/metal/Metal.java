@@ -13,7 +13,7 @@ public enum Metal implements IStringSerializable {
 	COPPER(null, null, (210 << 16) + (80 << 8) + 50, "oreCopper", "blockCopper", "ingotCopper",
 			"nuggetCopper", 32, 64),
 	TIN(null, null, (185 << 16) + (210 << 8) + 230, "oreTin", "blockTin", "ingotTin", "nuggetTin",
-			64, 128),
+			58, 90),
 	GOLD(ToolMaterial.GOLD, ArmorMaterial.GOLD, 0, "oreGold", "blockGold", "ingotGold",
 			"nuggetGold", 0, 32),
 	BRONZE(EnumHelper.addToolMaterial("bronze", 0, 1024, 6.0F, 2.0F, 16),

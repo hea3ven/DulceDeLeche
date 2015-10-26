@@ -3,11 +3,9 @@ package com.hea3ven.dulcedeleche.industry.block.tileentity;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -206,10 +204,7 @@ public class TileMetalFurnace extends TileMachine implements IInventory, IUpdate
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
 		if (index < 2)
-			return stack.getItem() == Item.getItemFromBlock(Blocks.iron_ore)
-					|| stack.getItem() == Item.getItemFromBlock(Blocks.gold_ore)
-					|| stack.getItem() == Item.getByNameOrId("dulcedeleche:ore")
-					|| (stack.getItem() == Items.coal && stack.getMetadata() == 0);
+			return MetalFurnaceRecipes.instance().isInput(stack);
 		else if (index < 3)
 			return stack.getItem() == Items.coal && stack.getMetadata() == 0;
 		else
