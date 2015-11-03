@@ -205,7 +205,7 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 		MetalFurnaceRecipes.instance().addMetalRecipe(0, Metal.TIN);
 		MetalFurnaceRecipes.instance().addMetalRecipe(0, Metal.COPPER);
 		MetalFurnaceRecipes.instance().addAlloyRecipe(0, Metal.COPPER, 3, Metal.TIN, 1,
-				Metal.BRONZE);
+				Metal.BRONZE, 2);
 		MetalFurnaceRecipes.instance().addMetalRecipe(1, Metal.IRON);
 		for (ItemStack stack : OreDictionary.getOres("oreIron")) {
 			MetalFurnaceRecipes.instance().addRecipe(1, stack, new ItemStack(Items.coal),
@@ -230,9 +230,9 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 		MetalFurnaceRecipes.instance().addMetalRecipe(2, Metal.COBALT);
 		MetalFurnaceRecipes.instance().addMetalRecipe(2, Metal.TUNGSTEN);
 		MetalFurnaceRecipes.instance().addAlloyRecipe(3, Metal.STEEL, 3, Metal.COBALT, 1,
-				Metal.FERCO_STEEL);
+				Metal.FERCO_STEEL, 2);
 		MetalFurnaceRecipes.instance().addAlloyRecipe(3, Metal.STEEL, 2, Metal.TUNGSTEN, 1,
-				Metal.MUSHET_STEEL);
+				Metal.MUSHET_STEEL, 1);
 
 		GameRegistry.addShapedRecipe(new ItemStack(brickFurnace), "xxx", "x x", "xxx", 'x',
 				new ItemStack(Blocks.brick_block));

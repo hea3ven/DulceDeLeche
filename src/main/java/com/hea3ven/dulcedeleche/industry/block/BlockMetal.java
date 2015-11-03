@@ -66,7 +66,11 @@ public abstract class BlockMetal extends Block {
 	}
 
 	public ItemStack createStack(Metal metal) {
-		return new ItemStack(this, 1, metalComponent.getMetaForMetal(metal));
+		return createStack(metal, 1);
+	}
+
+	public ItemStack createStack(Metal metal, int size) {
+		return new ItemStack(this, size, metalComponent.getMetaForMetal(metal));
 	}
 
 	@SideOnly(Side.CLIENT)
