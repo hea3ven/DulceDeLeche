@@ -12,3 +12,4 @@ scratchpad.txt
 *.launch
 /bin
 *.iml
+/classes
