@@ -224,9 +224,40 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 				new ShapedOreRecipe(metalFurnace.createStack(Metal.COBALT), "xxx", "x x", "xxx", 'x',
 						"blockCobalt"));
 
+		addMetalRecipe(new ItemStack(Blocks.rail, 16), "X X", "X#X", "X X", 'X', null, '#', "stickWood");
+		addMetalRecipe(new ItemStack(Blocks.activator_rail, 6), "XSX", "X#X", "XSX", 'X', null, '#',
+				Blocks.redstone_torch, 'S', "stickWood");
+		addMetalRecipe(new ItemStack(Blocks.detector_rail, 6), "X X", "X#X", "XRX", 'X', null, 'R',
+				"dustRedstone", '#', Blocks.stone_pressure_plate);
+		addMetalRecipe(new ItemStack(Items.minecart, 1), "# #", "###", '#', null);
+		addMetalRecipe(new ItemStack(Items.cauldron, 1), "# #", "# #", "###", '#', null);
+		addMetalRecipe(new ItemStack(Items.bucket, 1), "# #", " # ", '#', null);
+		addMetalRecipe(new ItemStack(Blocks.tripwire_hook, 2), "I", "S", "#", '#', "plankWood", 'S',
+				"stickWood", 'I', null);
+		addMetalRecipe(new ItemStack(Items.compass, 1), " # ", "#X#", " # ", '#', null, 'X', "dustRedstone");
+		addMetalRecipe(new ItemStack(Blocks.piston, 1), "TTT", "#X#", "#R#", '#', "cobblestone", 'X', null,
+				'R', "dustRedstone", 'T', "planksWood");
+		addMetalRecipe(new ItemStack(Blocks.hopper), "I I", "ICI", " I ", 'I', null, 'C', "chest");
+
 		addToolsRecipes();
 
 		GameRegistry.registerWorldGenerator(new WorldGeneratorOre(), 1);
+	}
+
+	private static final String[] recipeMetals =
+			new String[] {Metal.BRONZE.getIngotName(), Metal.COBALT.getNuggetName()};
+
+	private void addMetalRecipe(ItemStack itemStack, Object... recipe) {
+		for (String recipeMetal : recipeMetals) {
+			Object[] newRecipe = new Object[recipe.length];
+			for (int i = 0; i < recipe.length; i++) {
+				if (recipe[i] == null)
+					newRecipe[i] = recipeMetal;
+				else
+					newRecipe[i] = recipe[i];
+			}
+			GameRegistry.addRecipe(new ShapedOreRecipe(itemStack, newRecipe));
+		}
 	}
 
 	private void registerEnchantmentArea() {
