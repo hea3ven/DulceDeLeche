@@ -9,7 +9,6 @@ scratchpad.txt
 /tags
 /logs
 /build
-DulceDeLeche_Client.launch
-DulceDeLeche_Server.launch
+*.launch
 /bin
-
+*.iml

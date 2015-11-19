@@ -6,7 +6,6 @@ import java.util.Map.Entry;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-
 import org.apache.commons.lang3.tuple.Pair;
 
 import net.minecraft.block.Block;
@@ -14,7 +13,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
-
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -30,24 +28,13 @@ import com.hea3ven.dulcedeleche.industry.block.BlockMetalOre;
 import com.hea3ven.dulcedeleche.industry.block.tileentity.TileMetalFurnace;
 import com.hea3ven.dulcedeleche.industry.client.GuiHandlerIndustry;
 import com.hea3ven.dulcedeleche.industry.crafting.MetalFurnaceRecipes;
-import com.hea3ven.dulcedeleche.industry.item.ItemMetal;
-import com.hea3ven.dulcedeleche.industry.item.ItemMetalArmor;
-import com.hea3ven.dulcedeleche.industry.item.ItemMetalAxe;
-import com.hea3ven.dulcedeleche.industry.item.ItemMetalBlock;
-import com.hea3ven.dulcedeleche.industry.item.ItemMetalHoe;
-import com.hea3ven.dulcedeleche.industry.item.ItemMetalPickaxe;
-import com.hea3ven.dulcedeleche.industry.item.ItemMetalShovel;
-import com.hea3ven.dulcedeleche.industry.item.ItemMetalSword;
+import com.hea3ven.dulcedeleche.industry.item.*;
 import com.hea3ven.dulcedeleche.industry.metal.Metal;
 import com.hea3ven.dulcedeleche.industry.world.WorldGeneratorOre;
 import com.hea3ven.dulcedeleche.redstone.block.BlockAssembler;
 import com.hea3ven.dulcedeleche.redstone.block.tileentity.TileAssembler;
 import com.hea3ven.dulcedeleche.redstone.client.GuiHandlerRedstone;
-import com.hea3ven.tools.commonutils.mod.InfoBlock;
-import com.hea3ven.tools.commonutils.mod.InfoItem;
-import com.hea3ven.tools.commonutils.mod.InfoTileEntity;
-import com.hea3ven.tools.commonutils.mod.ModInitializerCommon;
-import com.hea3ven.tools.commonutils.mod.ProxyModBase;
+import com.hea3ven.tools.commonutils.mod.*;
 
 public class ProxyCommonDulceDeLeche extends ProxyModBase {
 
