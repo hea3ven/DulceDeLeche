@@ -87,7 +87,7 @@ public class TileMetalFurnace extends TileMachine implements ISidedInventory, IU
 		if (slots[0] == null && slots[1] == null)
 			return false;
 
-		MetalFurnaceRecipe recipe = MetalFurnaceRecipes.instance().getRecipe(slots[0], slots[1]);
+		MetalFurnaceRecipe recipe = MetalFurnaceRecipes.instance().getRecipe(slots[0], slots[1], true);
 		if (recipe == null)
 			return false;
 		if (recipe.getTier() > getTier())
@@ -221,9 +221,9 @@ public class TileMetalFurnace extends TileMachine implements ISidedInventory, IU
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
 		if (index < 2) {
 			if (slots[0] == null)
-				return MetalFurnaceRecipes.instance().getRecipe(stack, slots[1]) != null;
+				return MetalFurnaceRecipes.instance().getRecipe(stack, slots[1], false) != null;
 			else if (slots[1] == null)
-				return MetalFurnaceRecipes.instance().getRecipe(slots[0], stack) != null;
+				return MetalFurnaceRecipes.instance().getRecipe(slots[0], stack, false) != null;
 			else
 				return (ItemStack.areItemsEqual(slots[0], stack)) || (ItemStack.areItemsEqual(slots[1],
 						stack));
