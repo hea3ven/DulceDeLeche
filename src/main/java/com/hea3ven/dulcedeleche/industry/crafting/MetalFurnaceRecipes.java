@@ -105,7 +105,7 @@ public class MetalFurnaceRecipes {
 				input2 = input2.copy();
 				input2.stackSize = sizeInput2;
 				MetalFurnaceRecipes.instance().addRecipe(tier, input1, input2,
-						ProxyCommonDulceDeLeche.nugget.createStack(outputMetal, sizeOutput));
+						ProxyCommonDulceDeLeche.nugget.createStack(outputMetal, sizeOutput * 3));
 			}
 		}
 		for (ItemStack input1 : OreDictionary.getOres(inputMetal1.getBlockName())) {
