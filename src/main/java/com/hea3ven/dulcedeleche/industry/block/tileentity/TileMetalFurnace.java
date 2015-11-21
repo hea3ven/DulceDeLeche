@@ -5,13 +5,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IChatComponent;
 
 import net.minecraftforge.common.util.Constants.NBT;
@@ -22,7 +23,7 @@ import com.hea3ven.dulcedeleche.industry.crafting.MetalFurnaceRecipes.MetalFurna
 import com.hea3ven.tools.commonutils.inventory.GenericContainer;
 import com.hea3ven.tools.commonutils.tileentity.TileMachine;
 
-public class TileMetalFurnace extends TileMachine implements IInventory, IUpdatePlayerListBox {
+public class TileMetalFurnace extends TileMachine implements ISidedInventory, IUpdatePlayerListBox {
 
 	public static final int MAX_PROGRESS = 400;
 
@@ -135,8 +136,8 @@ public class TileMetalFurnace extends TileMachine implements IInventory, IUpdate
 
 	@Override
 	public IChatComponent getDisplayName() {
-		return this.hasCustomName() ? new ChatComponentText(this.getName())
-				: new ChatComponentTranslation(this.getName(), new Object[0]);
+		return this.hasCustomName() ? new ChatComponentText(this.getName()) :
+				new ChatComponentTranslation(this.getName());
 	}
 
 	@Override
@@ -145,8 +146,18 @@ public class TileMetalFurnace extends TileMachine implements IInventory, IUpdate
 	}
 
 	@Override
+	public int[] getSlotsForFace(EnumFacing side) {
+		return new int[] {0, 1, 2, 3};
+	}
+
+	@Override
 	public ItemStack getStackInSlot(int index) {
 		return slots[index];
+	}
+
+	@Override
+	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
+		return index == 3;
 	}
 
 	@Override
@@ -172,6 +183,11 @@ public class TileMetalFurnace extends TileMachine implements IInventory, IUpdate
 		} else {
 			return null;
 		}
+	}
+
+	@Override
+	public boolean canInsertItem(int index, ItemStack stack, EnumFacing direction) {
+		return isItemValidForSlot(index, stack);
 	}
 
 	@Override
@@ -203,9 +219,15 @@ public class TileMetalFurnace extends TileMachine implements IInventory, IUpdate
 
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
-		if (index < 2)
-			return MetalFurnaceRecipes.instance().isInput(stack);
-		else if (index < 3)
+		if (index < 2) {
+			if (slots[0] == null)
+				return MetalFurnaceRecipes.instance().getRecipe(stack, slots[1]) != null;
+			else if (slots[1] == null)
+				return MetalFurnaceRecipes.instance().getRecipe(slots[0], stack) != null;
+			else
+				return (ItemStack.areItemsEqual(slots[0], stack)) || (ItemStack.areItemsEqual(slots[1],
+						stack));
+		} else if (index < 3)
 			return stack.getItem() == Items.coal && stack.getMetadata() == 0;
 		else
 			return false;
@@ -250,8 +272,7 @@ public class TileMetalFurnace extends TileMachine implements IInventory, IUpdate
 	}
 
 	public Container getContainer(InventoryPlayer playerInv) {
-		return new GenericContainer()
-				.addInputSlots(this, 0, 38, 17, 2, 1)
+		return new GenericContainer().addInputSlots(this, 0, 38, 17, 2, 1)
 				.addInputSlots(this, 2, 47, 53, 1, 1)
 				.addOutputSlots(this, 3, 116, 35, 1, 1)
 				.addPlayerSlots(playerInv)
@@ -287,5 +308,4 @@ public class TileMetalFurnace extends TileMachine implements IInventory, IUpdate
 			}
 		}
 	}
-
 }
