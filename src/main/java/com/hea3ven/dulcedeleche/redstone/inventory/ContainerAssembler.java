@@ -19,7 +19,7 @@ public class ContainerAssembler extends ContainerBase {
 
 		addSlotToContainer(new SlotCraftingAssembler(playerInv.player, te, 9, 102, 35));
 
-		addInventoryGrid(te.getExtraOutputInventory(), 0, 131, 26, 2, 2, SlotOutput.class);
+		addInventoryGrid(0, 131, 26, 2, 2, SlotOutput.class, te.getExtraOutputInventory());
 
 		addInventoryGrid(playerInv, 9, 8, 84, 3, 9);
 

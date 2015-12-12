@@ -99,7 +99,7 @@ public class TileAssembler extends TileMachine implements ISidedInventory {
 	// Inventory implementation
 
 	@Override
-	public String getName() {
+	public String getCommandSenderName() {
 		return "container.assembler";
 	}
 

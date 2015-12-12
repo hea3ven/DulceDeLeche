@@ -9,11 +9,7 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.server.gui.IUpdatePlayerListBox;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.*;
 
 import net.minecraftforge.common.util.Constants.NBT;
 
@@ -23,7 +19,7 @@ import com.hea3ven.dulcedeleche.industry.crafting.MetalFurnaceRecipes.MetalFurna
 import com.hea3ven.tools.commonutils.inventory.GenericContainer;
 import com.hea3ven.tools.commonutils.tileentity.TileMachine;
 
-public class TileMetalFurnace extends TileMachine implements ISidedInventory, IUpdatePlayerListBox {
+public class TileMetalFurnace extends TileMachine implements ISidedInventory, ITickable {
 
 	public static final int MAX_PROGRESS = 400;
 
@@ -130,14 +126,14 @@ public class TileMetalFurnace extends TileMachine implements ISidedInventory, IU
 	}
 
 	@Override
-	public String getName() {
+	public String getCommandSenderName() {
 		return hasCustomName() ? getCustomName() : "container.metalFurnace";
 	}
 
 	@Override
 	public IChatComponent getDisplayName() {
-		return this.hasCustomName() ? new ChatComponentText(this.getName()) :
-				new ChatComponentTranslation(this.getName());
+		return this.hasCustomName() ? new ChatComponentText(this.getCommandSenderName()) :
+				new ChatComponentTranslation(this.getCommandSenderName());
 	}
 
 	@Override
