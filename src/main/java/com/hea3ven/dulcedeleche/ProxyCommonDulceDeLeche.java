@@ -13,6 +13,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -203,7 +204,7 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 			stack = stack.copy();
 			stack.stackSize = 9;
 			MetalFurnaceRecipes.instance()
-					.addRecipe(1, stack, new ItemStack(Items.coal), nugget.createStack(Metal.STEEL));
+					.addRecipe(1, stack, new ItemStack(Items.coal), ingot.createStack(Metal.STEEL));
 		}
 		MetalFurnaceRecipes.instance().addMetalRecipe(2, Metal.COBALT);
 		MetalFurnaceRecipes.instance().addMetalRecipe(2, Metal.TUNGSTEN);
@@ -241,6 +242,9 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 
 		addToolsRecipes();
 
+		GameRegistry.addRecipe(
+				new ShapedOreRecipe(new ItemStack(Block.getBlockFromName("dulcedeleche:assembler")), "xxx",
+						"xyx", "xxx", 'x', "cobblestone", 'y', new ItemStack(Blocks.crafting_table)));
 		GameRegistry.registerWorldGenerator(new WorldGeneratorOre(), 1);
 	}
 
@@ -287,6 +291,8 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 					metal.getNuggetName()));
 			GameRegistry.addRecipe(new ShapelessOreRecipe(ingot.createStack(metal, 9), metal.getBlockName()));
 		}
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.iron_ingot), "xxx", "xxx", "xxx", 'x',
+				Metal.IRON.getNuggetName()));
 		for (Metal metal : nugget.getMetalComponent().getMetals()) {
 			GameRegistry.addRecipe(
 					new ShapelessOreRecipe(nugget.createStack(metal, 9), metal.getIngotName()));
