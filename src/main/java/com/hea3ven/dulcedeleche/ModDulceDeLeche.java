@@ -16,9 +16,7 @@ public class ModDulceDeLeche {
 	public static final String MODID = "dulcedeleche";
 	public static final String VERSION = "1.0.0";
 
-	@SidedProxy(serverSide = "com.hea3ven.dulcedeleche.ProxyServerDulceDeLeche",
-			clientSide = "com.hea3ven.dulcedeleche.ProxyClientDulceDeLeche")
-	private static ProxyCommonDulceDeLeche proxy;
+	private final ProxyCommonDulceDeLeche proxy = new ProxyCommonDulceDeLeche();
 
 	static {
 		Bootstrap.require(MODID, "1.0.x");

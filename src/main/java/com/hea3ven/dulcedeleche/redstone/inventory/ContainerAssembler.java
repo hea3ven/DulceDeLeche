@@ -4,6 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.play.server.S38PacketPlayerListItem.AddPlayerData;
 
 import com.hea3ven.dulcedeleche.redstone.block.tileentity.TileAssembler;
 import com.hea3ven.tools.commonutils.inventory.ContainerBase;
@@ -21,9 +22,9 @@ public class ContainerAssembler extends ContainerBase {
 
 		addInventoryGrid(0, 131, 26, 2, 2, SlotOutput.class, te.getExtraOutputInventory());
 
-		addInventoryGrid(playerInv, 9, 8, 84, 3, 9);
+		addInventoryGrid(playerInv, 9, 8, 84, 9, 3);
 
-		addInventoryGrid(playerInv, 0, 8, 142, 1, 9);
+		addInventoryGrid(playerInv, 0, 8, 142, 9, 1);
 	}
 
 	@Override
@@ -34,7 +35,7 @@ public class ContainerAssembler extends ContainerBase {
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
 		ItemStack extraStack = null;
-		Slot slot = (Slot) this.inventorySlots.get(index);
+		Slot slot = this.inventorySlots.get(index);
 
 		if (slot != null && slot.getHasStack()) {
 			ItemStack slotStack = slot.getStack();
@@ -49,7 +50,7 @@ public class ContainerAssembler extends ContainerBase {
 			}
 
 			if (slotStack.stackSize == 0) {
-				slot.putStack((ItemStack) null);
+				slot.putStack(null);
 			} else {
 				slot.onSlotChanged();
 			}

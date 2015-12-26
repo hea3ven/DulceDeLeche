@@ -126,14 +126,14 @@ public class TileMetalFurnace extends TileMachine implements ISidedInventory, IT
 	}
 
 	@Override
-	public String getCommandSenderName() {
+	public String getName() {
 		return hasCustomName() ? getCustomName() : "container.metalFurnace";
 	}
 
 	@Override
 	public IChatComponent getDisplayName() {
-		return this.hasCustomName() ? new ChatComponentText(this.getCommandSenderName()) :
-				new ChatComponentTranslation(this.getCommandSenderName());
+		return this.hasCustomName() ? new ChatComponentText(this.getName()) :
+				new ChatComponentTranslation(this.getName());
 	}
 
 	@Override
@@ -171,7 +171,7 @@ public class TileMetalFurnace extends TileMachine implements ISidedInventory, IT
 	}
 
 	@Override
-	public ItemStack getStackInSlotOnClosing(int index) {
+	public ItemStack removeStackFromSlot(int index) {
 		if (slots[index] != null) {
 			ItemStack stack = slots[index];
 			slots[index] = null;

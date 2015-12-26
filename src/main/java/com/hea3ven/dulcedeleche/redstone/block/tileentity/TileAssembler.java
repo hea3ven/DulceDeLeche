@@ -30,7 +30,7 @@ public class TileAssembler extends TileMachine implements ISidedInventory {
 		public void onCraftMatrixChanged(net.minecraft.inventory.IInventory inventoryIn) {
 			result = CraftingManager.getInstance().findMatchingRecipe(inv, getWorld());
 
-		};
+		}
 	}, 3, 3);
 
 	private ItemStack result = null;
@@ -99,14 +99,13 @@ public class TileAssembler extends TileMachine implements ISidedInventory {
 	// Inventory implementation
 
 	@Override
-	public String getCommandSenderName() {
+	public String getName() {
 		return "container.assembler";
 	}
 
 	@Override
 	public IChatComponent getDisplayName() {
-		return new ChatComponentTranslation(getBlockType().getUnlocalizedName() + ".name",
-				new Object[0]);
+		return new ChatComponentTranslation(getBlockType().getUnlocalizedName() + ".name");
 	}
 
 	@Override
@@ -182,7 +181,7 @@ public class TileAssembler extends TileMachine implements ISidedInventory {
 	}
 
 	@Override
-	public ItemStack getStackInSlotOnClosing(int index) {
+	public ItemStack removeStackFromSlot(int index) {
 		return null;
 	}
 
@@ -248,18 +247,12 @@ public class TileAssembler extends TileMachine implements ISidedInventory {
 
 	@Override
 	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
-		if (direction != EnumFacing.DOWN)
-			return true;
-		else
-			return false;
+		return direction != EnumFacing.DOWN;
 	}
 
 	@Override
 	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
-		if (direction != EnumFacing.DOWN)
-			return false;
-		else
-			return true;
+		return direction == EnumFacing.DOWN;
 	}
 
 }

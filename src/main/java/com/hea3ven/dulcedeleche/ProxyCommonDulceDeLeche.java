@@ -1,21 +1,22 @@
 package com.hea3ven.dulcedeleche;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import org.apache.commons.lang3.tuple.Pair;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.util.BlockPos;
+import net.minecraft.world.World;
 
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -27,15 +28,18 @@ import com.hea3ven.dulcedeleche.industry.block.BlockMetalBlock;
 import com.hea3ven.dulcedeleche.industry.block.BlockMetalFurnace;
 import com.hea3ven.dulcedeleche.industry.block.BlockMetalOre;
 import com.hea3ven.dulcedeleche.industry.block.tileentity.TileMetalFurnace;
-import com.hea3ven.dulcedeleche.industry.client.GuiHandlerIndustry;
+import com.hea3ven.dulcedeleche.industry.client.gui.GuiMetalFurnace;
 import com.hea3ven.dulcedeleche.industry.crafting.MetalFurnaceRecipes;
 import com.hea3ven.dulcedeleche.industry.item.*;
 import com.hea3ven.dulcedeleche.industry.metal.Metal;
 import com.hea3ven.dulcedeleche.industry.world.WorldGeneratorOre;
 import com.hea3ven.dulcedeleche.redstone.block.BlockAssembler;
 import com.hea3ven.dulcedeleche.redstone.block.tileentity.TileAssembler;
-import com.hea3ven.dulcedeleche.redstone.client.GuiHandlerRedstone;
-import com.hea3ven.tools.commonutils.mod.*;
+import com.hea3ven.dulcedeleche.redstone.client.gui.GuiAssembler;
+import com.hea3ven.dulcedeleche.redstone.inventory.ContainerAssembler;
+import com.hea3ven.tools.commonutils.inventory.ISimpleGuiHandler;
+import com.hea3ven.tools.commonutils.mod.ProxyModBase;
+import com.hea3ven.tools.commonutils.util.WorldHelper;
 
 public class ProxyCommonDulceDeLeche extends ProxyModBase {
 
@@ -53,8 +57,9 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 	public static ItemMetalSword[] swords;
 	public static ItemMetalArmor[] armors;
 
-	public ProxyCommonDulceDeLeche(ModInitializerCommon modInitializer) {
-		super(modInitializer);
+	public ProxyCommonDulceDeLeche() {
+		super("dulcedeleche");
+
 		assembler = new BlockAssembler().setUnlocalizedName("assembler")
 				.setHardness(3.5F)
 				.setStepSound(Block.soundTypePiston);
@@ -88,6 +93,55 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 		createArmorsAndTools(Metal.FERCO_STEEL, 3);
 		createArmorsAndTools(Metal.TUNGSTEN, 4);
 		createArmorsAndTools(Metal.MUSHET_STEEL, 5);
+
+		addBlock(assembler, "assembler");
+		addBlock(ore, "ore", ItemMetalBlock.class, new Object[] {BlockMetalOre.ORES});
+		addBlock(metalBlock, "block_metal", ItemMetalBlock.class, new Object[] {BlockMetalBlock.BLOCKS});
+		addBlock(brickFurnace, "brick_furnace");
+		addBlock(metalFurnace, "metal_furnace", ItemMetalBlock.class,
+				new Object[] {BlockMetalFurnace.METALS});
+
+		addTileEntity(TileAssembler.class, "assembler");
+		addTileEntity(TileMetalFurnace.class, "metal_furnace");
+
+		addItem(nugget, "nugget");
+		addItem(ingot, "ingot");
+		for (int i = 0; i < 6; i++) {
+			addItem(pickaxes[i], pickaxes[i].getMetal().getName() + "_pickaxe");
+			addItem(shovels[i], shovels[i].getMetal().getName() + "_shovel");
+			addItem(axes[i], axes[i].getMetal().getName() + "_axe");
+			addItem(hoes[i], hoes[i].getMetal().getName() + "_hoe");
+			addItem(swords[i], swords[i].getMetal().getName() + "_sword");
+			addItem(armors[i * 4], armors[i * 4].getMetal().getName() + "_helmet");
+			addItem(armors[i * 4 + 1], armors[i * 4 + 1].getMetal().getName() + "_chestplate");
+			addItem(armors[i * 4 + 2], armors[i * 4 + 2].getMetal().getName() + "_leggings");
+			addItem(armors[i * 4 + 3], armors[i * 4 + 3].getMetal().getName() + "_boots");
+		}
+
+		addGui(GuiAssembler.id, new ISimpleGuiHandler() {
+			@Override
+			public Container createContainer(EntityPlayer player, World world, BlockPos pos) {
+				return new ContainerAssembler(player.inventory,
+						WorldHelper.<TileAssembler>getTile(world, pos));
+			}
+
+			@Override
+			public Gui createGui(EntityPlayer player, World world, BlockPos pos) {
+				return new GuiAssembler(player.inventory, WorldHelper.<TileAssembler>getTile(world, pos));
+			}
+		});
+		addGui(GuiMetalFurnace.id, new ISimpleGuiHandler() {
+			@Override
+			public Container createContainer(EntityPlayer player, World world, BlockPos pos) {
+				return WorldHelper.<TileMetalFurnace>getTile(world, pos).getContainer(player.inventory);
+			}
+
+			@Override
+			public Gui createGui(EntityPlayer player, World world, BlockPos pos) {
+				return new GuiMetalFurnace(player.inventory,
+						WorldHelper.<TileMetalFurnace>getTile(world, pos));
+			}
+		});
 	}
 
 	private void createArmorsAndTools(Metal metal, int index) {
@@ -110,58 +164,6 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 	}
 
 	@Override
-	public void registerEnchantments() {
-		registerEnchantmentArea();
-	}
-
-	@Override
-	public List<InfoBlock> getBlocks() {
-		return Lists.newArrayList(new InfoBlock(assembler, "dulcedeleche", "assembler"),
-				new InfoBlock(ore, "dulcedeleche", "ore", ItemMetalBlock.class,
-						new Object[] {BlockMetalOre.ORES}),
-				new InfoBlock(metalBlock, "dulcedeleche", "block_metal", ItemMetalBlock.class,
-						new Object[] {BlockMetalBlock.BLOCKS}),
-				new InfoBlock(brickFurnace, "dulcedeleche", "brick_furnace"),
-				new InfoBlock(metalFurnace, "dulcedeleche", "metal_furnace", ItemMetalBlock.class,
-						new Object[] {BlockMetalFurnace.METALS}));
-	}
-
-	@Override
-	public List<InfoTileEntity> getTileEntities() {
-		return Lists.newArrayList(new InfoTileEntity(TileAssembler.class, "assembler"),
-				new InfoTileEntity(TileMetalFurnace.class, "metal_furnace"));
-	}
-
-	@Override
-	public List<InfoItem> getItems() {
-		List<InfoItem> items = Lists.newArrayList(new InfoItem(nugget, "dulcedeleche", "nugget"),
-				new InfoItem(ingot, "dulcedeleche", "ingot"));
-		for (int i = 0; i < 6; i++) {
-			items.add(
-					new InfoItem(pickaxes[i], "dulcedeleche", pickaxes[i].getMetal().getName() + "_pickaxe"));
-			items.add(new InfoItem(shovels[i], "dulcedeleche", shovels[i].getMetal().getName() + "_shovel"));
-			items.add(new InfoItem(axes[i], "dulcedeleche", axes[i].getMetal().getName() + "_axe"));
-			items.add(new InfoItem(hoes[i], "dulcedeleche", hoes[i].getMetal().getName() + "_hoe"));
-			items.add(new InfoItem(swords[i], "dulcedeleche", swords[i].getMetal().getName() + "_sword"));
-			items.add(new InfoItem(armors[i * 4], "dulcedeleche",
-					armors[i * 4].getMetal().getName() + "_helmet"));
-			items.add(new InfoItem(armors[i * 4 + 1], "dulcedeleche",
-					armors[i * 4 + 1].getMetal().getName() + "_chestplate"));
-			items.add(new InfoItem(armors[i * 4 + 2], "dulcedeleche",
-					armors[i * 4 + 2].getMetal().getName() + "_leggings"));
-			items.add(new InfoItem(armors[i * 4 + 3], "dulcedeleche",
-					armors[i * 4 + 3].getMetal().getName() + "_boots"));
-		}
-		return items;
-	}
-
-	@Override
-	public List<Pair<String, IGuiHandler>> getGuiHandlers() {
-		return Lists.newArrayList(Pair.of(ModDulceDeLeche.MODID, (IGuiHandler) new GuiHandlerRedstone()),
-				Pair.of(ModDulceDeLeche.MODID, (IGuiHandler) new GuiHandlerIndustry()));
-	}
-
-	@Override
 	public void onPostInitEvent() {
 		super.onPostInitEvent();
 
@@ -178,8 +180,72 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 			OreDictionary.registerOre(metal.getNuggetName(), nugget.createStack(metal));
 		}
 
+		MinecraftForge.EVENT_BUS.register(EnchantmentArea.instance);
+
+		GameRegistry.registerWorldGenerator(new WorldGeneratorOre(), 1);
+	}
+
+	@Override
+	public void registerEnchantments() {
+		EnchantmentArea.instance = new EnchantmentArea(100);
+	}
+
+	@Override
+	public void registerRecipes() {
 		removeIngotSmeltingRecipes();
 
+		addMetalFurnaceRecipes();
+
+		addMetalSmeltingRecipes();
+
+		addMetalRecipes();
+
+		addToolsRecipes();
+
+		GameRegistry.addRecipe(
+				new ShapedOreRecipe(Block.getBlockFromName("dulcedeleche:assembler"), "xxx", "xyx", "xxx",
+						'x', "cobblestone", 'y', new ItemStack(Blocks.crafting_table)));
+	}
+
+	private void addMetalRecipe(ItemStack itemStack, Object... recipe) {
+		for (String recipeMetal : recipeMetals) {
+			Object[] newRecipe = new Object[recipe.length];
+			for (int i = 0; i < recipe.length; i++) {
+				if (recipe[i] == null)
+					newRecipe[i] = recipeMetal;
+				else
+					newRecipe[i] = recipe[i];
+			}
+			GameRegistry.addRecipe(new ShapedOreRecipe(itemStack, newRecipe));
+		}
+	}
+
+	private void removeIngotSmeltingRecipes() {
+		Map<ItemStack, ItemStack> recipes = FurnaceRecipes.instance().getSmeltingList();
+		for (Entry<ItemStack, ItemStack> entry : Sets.newHashSet(recipes.entrySet())) {
+			if (entry.getValue().getItem() == Items.iron_ingot) {
+				recipes.remove(entry.getKey());
+			} else if (entry.getValue().getItem() == Items.gold_ingot) {
+				recipes.remove(entry.getKey());
+			}
+		}
+	}
+
+	private void addMetalFurnaceRecipes() {
+		GameRegistry.addShapedRecipe(new ItemStack(brickFurnace), "xxx", "x x", "xxx", 'x',
+				new ItemStack(Blocks.brick_block));
+		GameRegistry.addRecipe(
+				new ShapedOreRecipe(metalFurnace.createStack(Metal.BRONZE), "xxx", "x x", "xxx", 'x',
+						"blockBronze"));
+		GameRegistry.addRecipe(
+				new ShapedOreRecipe(metalFurnace.createStack(Metal.STEEL), "xxx", "x x", "xxx", 'x',
+						"blockSteel"));
+		GameRegistry.addRecipe(
+				new ShapedOreRecipe(metalFurnace.createStack(Metal.COBALT), "xxx", "x x", "xxx", 'x',
+						"blockCobalt"));
+	}
+
+	private void addMetalSmeltingRecipes() {
 		MetalFurnaceRecipes.instance().addMetalRecipe(0, Metal.GOLD);
 		MetalFurnaceRecipes.instance().addMetalRecipe(0, Metal.TIN);
 		MetalFurnaceRecipes.instance().addMetalRecipe(0, Metal.COPPER);
@@ -212,18 +278,28 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 				.addAlloyRecipe(3, Metal.STEEL, 3, Metal.COBALT, 1, Metal.FERCO_STEEL, 2);
 		MetalFurnaceRecipes.instance()
 				.addAlloyRecipe(3, Metal.STEEL, 2, Metal.TUNGSTEN, 1, Metal.MUSHET_STEEL, 1);
+	}
 
-		GameRegistry.addShapedRecipe(new ItemStack(brickFurnace), "xxx", "x x", "xxx", 'x',
-				new ItemStack(Blocks.brick_block));
+	private static final String[] recipeMetals =
+			new String[] {Metal.BRONZE.getIngotName(), Metal.COBALT.getNuggetName()};
+
+	private void addMetalRecipes() {
+		for (Metal metal : metalBlock.getMetalComponent().getMetals()) {
+			GameRegistry.addRecipe(
+					new ShapedOreRecipe(metalBlock.createStack(metal), "xxx", "xxx", "xxx", 'x',
+							metal.getIngotName()));
+		}
+		for (Metal metal : ingot.getMetalComponent().getMetals()) {
+			GameRegistry.addRecipe(new ShapedOreRecipe(ingot.createStack(metal), "xxx", "xxx", "xxx", 'x',
+					metal.getNuggetName()));
+			GameRegistry.addRecipe(new ShapelessOreRecipe(ingot.createStack(metal, 9), metal.getBlockName()));
+		}
 		GameRegistry.addRecipe(
-				new ShapedOreRecipe(metalFurnace.createStack(Metal.BRONZE), "xxx", "x x", "xxx", 'x',
-						"blockBronze"));
-		GameRegistry.addRecipe(
-				new ShapedOreRecipe(metalFurnace.createStack(Metal.STEEL), "xxx", "x x", "xxx", 'x',
-						"blockSteel"));
-		GameRegistry.addRecipe(
-				new ShapedOreRecipe(metalFurnace.createStack(Metal.COBALT), "xxx", "x x", "xxx", 'x',
-						"blockCobalt"));
+				new ShapedOreRecipe(Items.iron_ingot, "xxx", "xxx", "xxx", 'x', Metal.IRON.getNuggetName()));
+		for (Metal metal : nugget.getMetalComponent().getMetals()) {
+			GameRegistry.addRecipe(
+					new ShapelessOreRecipe(nugget.createStack(metal, 9), metal.getIngotName()));
+		}
 
 		addMetalRecipe(new ItemStack(Blocks.rail, 16), "X X", "X#X", "X X", 'X', null, '#', "stickWood");
 		addMetalRecipe(new ItemStack(Blocks.activator_rail, 6), "XSX", "X#X", "XSX", 'X', null, '#',
@@ -239,83 +315,30 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 		addMetalRecipe(new ItemStack(Blocks.piston, 1), "TTT", "#X#", "#R#", '#', "cobblestone", 'X', null,
 				'R', "dustRedstone", 'T', "planksWood");
 		addMetalRecipe(new ItemStack(Blocks.hopper), "I I", "ICI", " I ", 'I', null, 'C', "chest");
-
-		addToolsRecipes();
-
-		GameRegistry.addRecipe(
-				new ShapedOreRecipe(new ItemStack(Block.getBlockFromName("dulcedeleche:assembler")), "xxx",
-						"xyx", "xxx", 'x', "cobblestone", 'y', new ItemStack(Blocks.crafting_table)));
-		GameRegistry.registerWorldGenerator(new WorldGeneratorOre(), 1);
-	}
-
-	private static final String[] recipeMetals =
-			new String[] {Metal.BRONZE.getIngotName(), Metal.COBALT.getNuggetName()};
-
-	private void addMetalRecipe(ItemStack itemStack, Object... recipe) {
-		for (String recipeMetal : recipeMetals) {
-			Object[] newRecipe = new Object[recipe.length];
-			for (int i = 0; i < recipe.length; i++) {
-				if (recipe[i] == null)
-					newRecipe[i] = recipeMetal;
-				else
-					newRecipe[i] = recipe[i];
-			}
-			GameRegistry.addRecipe(new ShapedOreRecipe(itemStack, newRecipe));
-		}
-	}
-
-	private void registerEnchantmentArea() {
-		EnchantmentArea.instance = new EnchantmentArea(100);
-		MinecraftForge.EVENT_BUS.register(EnchantmentArea.instance);
-	}
-
-	private void removeIngotSmeltingRecipes() {
-		Map<ItemStack, ItemStack> recipes = FurnaceRecipes.instance().getSmeltingList();
-		for (Entry<ItemStack, ItemStack> entry : Sets.newHashSet(recipes.entrySet())) {
-			if (entry.getValue().getItem() == Items.iron_ingot) {
-				recipes.remove(entry.getKey());
-			} else if (entry.getValue().getItem() == Items.gold_ingot) {
-				recipes.remove(entry.getKey());
-			}
-		}
 	}
 
 	private void addToolsRecipes() {
-		for (Metal metal : metalBlock.getMetalComponent().getMetals()) {
-			GameRegistry.addRecipe(
-					new ShapedOreRecipe(metalBlock.createStack(metal), "xxx", "xxx", "xxx", 'x',
-							metal.getIngotName()));
-		}
-		for (Metal metal : ingot.getMetalComponent().getMetals()) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(ingot.createStack(metal), "xxx", "xxx", "xxx", 'x',
-					metal.getNuggetName()));
-			GameRegistry.addRecipe(new ShapelessOreRecipe(ingot.createStack(metal, 9), metal.getBlockName()));
-		}
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.iron_ingot), "xxx", "xxx", "xxx", 'x',
-				Metal.IRON.getNuggetName()));
-		for (Metal metal : nugget.getMetalComponent().getMetals()) {
-			GameRegistry.addRecipe(
-					new ShapelessOreRecipe(nugget.createStack(metal, 9), metal.getIngotName()));
-		}
 		for (int i = 0; i < 6; i++) {
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(pickaxes[i]), "xxx", " y ", " y ", 'x',
+			GameRegistry.addRecipe(new ShapedOreRecipe(pickaxes[i], "xxx", " y ", " y ", 'x',
 					pickaxes[i].getMetal().getIngotName(), 'y', "stickWood"));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(shovels[i]), " x ", " y ", " y ", 'x',
+			GameRegistry.addRecipe(new ShapedOreRecipe(shovels[i], " x ", " y ", " y ", 'x',
 					shovels[i].getMetal().getIngotName(), 'y', "stickWood"));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(axes[i]), "xx ", "xy ", " y ", 'x',
-					axes[i].getMetal().getIngotName(), 'y', "stickWood"));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(hoes[i]), "xx ", " y ", " y ", 'x',
-					hoes[i].getMetal().getIngotName(), 'y', "stickWood"));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(swords[i]), " x ", " x ", " y ", 'x',
+			GameRegistry.addRecipe(
+					new ShapedOreRecipe(axes[i], "xx ", "xy ", " y ", 'x', axes[i].getMetal().getIngotName(),
+							'y', "stickWood"));
+			GameRegistry.addRecipe(
+					new ShapedOreRecipe(hoes[i], "xx ", " y ", " y ", 'x', hoes[i].getMetal().getIngotName(),
+							'y', "stickWood"));
+			GameRegistry.addRecipe(new ShapedOreRecipe(swords[i], " x ", " x ", " y ", 'x',
 					swords[i].getMetal().getIngotName(), 'y', "stickWood"));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(armors[i]), "xxx", "x x", 'x',
+			GameRegistry.addRecipe(
+					new ShapedOreRecipe(armors[i], "xxx", "x x", 'x', armors[i].getMetal().getIngotName()));
+			GameRegistry.addRecipe(new ShapedOreRecipe(armors[i], "x x", "xxx", "xxx", 'x',
 					armors[i].getMetal().getIngotName()));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(armors[i]), "x x", "xxx", "xxx", 'x',
+			GameRegistry.addRecipe(new ShapedOreRecipe(armors[i], "xxx", "x x", "x x", 'x',
 					armors[i].getMetal().getIngotName()));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(armors[i]), "xxx", "x x", "x x", 'x',
-					armors[i].getMetal().getIngotName()));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(armors[i]), "x x", "x x", 'x',
-					armors[i].getMetal().getIngotName()));
+			GameRegistry.addRecipe(
+					new ShapedOreRecipe(armors[i], "x x", "x x", 'x', armors[i].getMetal().getIngotName()));
 		}
 	}
 }
