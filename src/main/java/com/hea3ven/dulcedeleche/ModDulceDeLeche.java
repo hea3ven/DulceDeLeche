@@ -2,7 +2,6 @@ package com.hea3ven.dulcedeleche;
 
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -19,8 +18,7 @@ public class ModDulceDeLeche {
 	private final ProxyCommonDulceDeLeche proxy = new ProxyCommonDulceDeLeche();
 
 	static {
-		Bootstrap.require(MODID, "1.0.x");
-		Bootstrap.initLib(MODID, "h3nt-commonutils", "1.0.1", "1.0.1");
+		Bootstrap.init();
 	}
 
 	@EventHandler
@@ -37,5 +35,4 @@ public class ModDulceDeLeche {
 	public void onPostInitEvent(FMLPostInitializationEvent event) {
 		proxy.onPostInitEvent();
 	}
-
 }

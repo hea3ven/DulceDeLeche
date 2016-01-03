@@ -1,0 +1,10 @@
+{
+	"modid": "dulcedeleche",
+	"required": "1.1.x",
+	"libs": {
+		"h3nt-commonutils": {
+			"version": "1.0.2",
+			"required": "1.0.x"
+		}
+	}
+}
