@@ -164,9 +164,7 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 	}
 
 	@Override
-	public void onPostInitEvent() {
-		super.onPostInitEvent();
-
+	public void onInitEvent() {
 		for (Metal metal : ore.getMetalComponent().getMetals()) {
 			OreDictionary.registerOre(metal.getOreName(), ore.createStack(metal));
 		}
@@ -179,6 +177,13 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 		for (Metal metal : nugget.getMetalComponent().getMetals()) {
 			OreDictionary.registerOre(metal.getNuggetName(), nugget.createStack(metal));
 		}
+
+		super.onInitEvent();
+	}
+
+	@Override
+	public void onPostInitEvent() {
+		super.onPostInitEvent();
 
 		MinecraftForge.EVENT_BUS.register(EnchantmentArea.instance);
 
