@@ -4,6 +4,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.util.IStringSerializable;
+
 import net.minecraftforge.common.util.EnumHelper;
 
 public enum Metal implements IStringSerializable {
@@ -15,25 +16,25 @@ public enum Metal implements IStringSerializable {
 			7),
 	GOLD(ToolMaterial.GOLD, ArmorMaterial.GOLD, 0, "oreGold", "blockGold", "ingotGold", "nuggetGold", 0, 32,
 			2, 9),
-	BRONZE(EnumHelper.addToolMaterial("bronze", 1, 1024, 6.0F, 2.0F, 16),
+	BRONZE(EnumHelper.addToolMaterial("bronze", 1, 1024, 6.0F, 2.0F, 22),
 			EnumHelper.addArmorMaterial("bronze", "armor", 15, new int[] {1, 5, 3, 2}, 10),
 			(225 << 16) + (170 << 8) + 80, null, "blockBronze", "ingotBronze", "nuggetBronze", 0, 0, 0, 0),
 	STEEL(EnumHelper.addToolMaterial("steel", 3, 3072, 7.0F, 2.5F, 14),
 			EnumHelper.addArmorMaterial("steel", "armor", 28, new int[] {2, 6, 5, 2}, 10),
 			(100 << 16) + (100 << 8) + 110, null, "blockSteel", "ingotSteel", "nuggetSteel", 0, 0, 0, 0),
-	COBALT(EnumHelper.addToolMaterial("cobalt", 3, 2048, 9.0F, 4.0F, 14),
+	COBALT(EnumHelper.addToolMaterial("cobalt", 3, 2048, 9.0F, 4.0F, 16),
 			EnumHelper.addArmorMaterial("cobalt", "armor", 20, new int[] {2, 7, 5, 3}, 10),
 			(65 << 16) + (90 << 8) + 205, "oreCobalt", "blockCobalt", "ingotCobalt", "nuggetCobalt", 16, 70,
 			10, 15),
-	FERCO_STEEL(EnumHelper.addToolMaterial("fercoSteel", 3, 4096, 10.0F, 4.5F, 14),
+	FERCO_STEEL(EnumHelper.addToolMaterial("fercoSteel", 3, 4096, 10.0F, 4.5F, 12),
 			EnumHelper.addArmorMaterial("fercoSteel", "armor", 38, new int[] {2, 7, 5, 3}, 10),
 			(50 << 16) + (60 << 8) + 105, null, "blockFercoSteel", "ingotFercoSteel", "nuggetFercoSteel", 0,
 			0, 0, 0),
-	TUNGSTEN(EnumHelper.addToolMaterial("tungsten", 3, 3584, 7.0F, 2.5F, 14),
+	TUNGSTEN(EnumHelper.addToolMaterial("tungsten", 3, 5120, 7.0F, 2.5F, 20),
 			EnumHelper.addArmorMaterial("tungsten", "armor", 40, new int[] {3, 8, 6, 3}, 10),
 			(60 << 16) + (50 << 8) + 50, "oreTungsten", "blockTungsten", "ingotTungsten", "nuggetTungsten", 0,
 			0, 0, 0),
-	MUSHET_STEEL(EnumHelper.addToolMaterial("mushetSteel", 3, 5120, 8.0F, 3.0F, 14),
+	MUSHET_STEEL(EnumHelper.addToolMaterial("mushetSteel", 3, 8192, 8.0F, 3.0F, 12),
 			EnumHelper.addArmorMaterial("mushetSteel", "armor", 56, new int[] {3, 8, 6, 3}, 10),
 			(25 << 16) + (35 << 8) + 25, null, "blockMushetSteel", "ingotMushetSteel", "nuggetMushetSteel", 0,
 			0, 0, 0);
