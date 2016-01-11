@@ -331,14 +331,14 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 							'y', "stickWood"));
 			GameRegistry.addRecipe(new ShapedOreRecipe(swords[i], " x ", " x ", " y ", 'x',
 					swords[i].getMetal().getIngotName(), 'y', "stickWood"));
-			GameRegistry.addRecipe(
-					new ShapedOreRecipe(armors[i], "xxx", "x x", 'x', armors[i].getMetal().getIngotName()));
-			GameRegistry.addRecipe(new ShapedOreRecipe(armors[i], "x x", "xxx", "xxx", 'x',
-					armors[i].getMetal().getIngotName()));
-			GameRegistry.addRecipe(new ShapedOreRecipe(armors[i], "xxx", "x x", "x x", 'x',
-					armors[i].getMetal().getIngotName()));
-			GameRegistry.addRecipe(
-					new ShapedOreRecipe(armors[i], "x x", "x x", 'x', armors[i].getMetal().getIngotName()));
+			GameRegistry.addRecipe(new ShapedOreRecipe(armors[i * 4], "xxx", "x x", 'x',
+					armors[i * 4].getMetal().getIngotName()));
+			GameRegistry.addRecipe(new ShapedOreRecipe(armors[i * 4 + 1], "x x", "xxx", "xxx", 'x',
+					armors[i * 4 + 1].getMetal().getIngotName()));
+			GameRegistry.addRecipe(new ShapedOreRecipe(armors[i * 4 + 2], "xxx", "x x", "x x", 'x',
+					armors[i * 4 + 2].getMetal().getIngotName()));
+			GameRegistry.addRecipe(new ShapedOreRecipe(armors[i * 4 + 3], "x x", "x x", 'x',
+					armors[i * 4 + 3].getMetal().getIngotName()));
 		}
 	}
 }
