@@ -17,7 +17,11 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
@@ -126,6 +130,7 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 			}
 
 			@Override
+			@SideOnly(Side.CLIENT)
 			public Gui createGui(EntityPlayer player, World world, BlockPos pos) {
 				return new GuiAssembler(player.inventory, WorldHelper.<TileAssembler>getTile(world, pos));
 			}
@@ -137,6 +142,7 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 			}
 
 			@Override
+			@SideOnly(Side.CLIENT)
 			public Gui createGui(EntityPlayer player, World world, BlockPos pos) {
 				return new GuiMetalFurnace(player.inventory,
 						WorldHelper.<TileMetalFurnace>getTile(world, pos));
@@ -164,7 +170,7 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 	}
 
 	@Override
-	public void onInitEvent() {
+	public void onInitEvent(FMLInitializationEvent event) {
 		for (Metal metal : ore.getMetalComponent().getMetals()) {
 			OreDictionary.registerOre(metal.getOreName(), ore.createStack(metal));
 		}
@@ -178,12 +184,12 @@ public class ProxyCommonDulceDeLeche extends ProxyModBase {
 			OreDictionary.registerOre(metal.getNuggetName(), nugget.createStack(metal));
 		}
 
-		super.onInitEvent();
+		super.onInitEvent(event);
 	}
 
 	@Override
-	public void onPostInitEvent() {
-		super.onPostInitEvent();
+	public void onPostInitEvent(FMLPostInitializationEvent event) {
+		super.onPostInitEvent(event);
 
 		MinecraftForge.EVENT_BUS.register(EnchantmentArea.instance);
 

@@ -23,16 +23,16 @@ public class ModDulceDeLeche {
 
 	@EventHandler
 	public void onPreInitEvent(FMLPreInitializationEvent event) {
-		proxy.onPreInitEvent();
+		proxy.onPreInitEvent(event);
 	}
 
 	@EventHandler
 	public void onInitEvent(FMLInitializationEvent event) {
-		proxy.onInitEvent();
+		proxy.onInitEvent(event);
 	}
 
 	@EventHandler
 	public void onPostInitEvent(FMLPostInitializationEvent event) {
-		proxy.onPostInitEvent();
+		proxy.onPostInitEvent(event);
 	}
 }
