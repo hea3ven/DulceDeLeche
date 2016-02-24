@@ -13,6 +13,7 @@ public class ItemMetalBlock extends ItemColored {
 
 	public ItemMetalBlock(Block block, Metal[] metals) {
 		super(block, true);
+		setHasSubtypes(true);
 
 		List<String> names = Lists.newArrayList();
 		for (Metal metal : metals) {

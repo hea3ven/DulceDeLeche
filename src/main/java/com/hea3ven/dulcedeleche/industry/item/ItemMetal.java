@@ -20,6 +20,7 @@ public class ItemMetal extends Item {
 
 	public ItemMetal(Metal[] metals) {
 		setCreativeTab(CreativeTabs.tabMaterials);
+		setHasSubtypes(true);
 		metalComponent = new MetalComponent(metals);
 	}
 

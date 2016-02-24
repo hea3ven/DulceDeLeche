@@ -38,4 +38,11 @@ public class MetalComponent {
 		return metals[meta];
 	}
 
+	public int[] getMetas() {
+		int[] metas = new int[metals.length];
+		for (int i = 0; i < metals.length; i++) {
+			metas[i] = i;
+		}
+		return metas;
+	}
 }

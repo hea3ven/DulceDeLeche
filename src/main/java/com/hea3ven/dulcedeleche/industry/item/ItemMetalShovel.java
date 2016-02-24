@@ -13,6 +13,7 @@ public class ItemMetalShovel extends ItemSpade {
 	public ItemMetalShovel(Metal metal) {
 		super(metal.getToolMaterial());
 		setCreativeTab(CreativeTabs.tabTools);
+		setHasSubtypes(true);
 
 		this.metal = metal;
 	}

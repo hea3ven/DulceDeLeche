@@ -13,6 +13,7 @@ public class ItemMetalArmor extends ItemArmor {
 	public ItemMetalArmor(Metal metal, int armorType) {
 		super(metal.getArmorMaterial(), -1, armorType);
 		setCreativeTab(CreativeTabs.tabCombat);
+		setHasSubtypes(true);
 
 		this.metal = metal;
 	}

@@ -1,18 +1,20 @@
 package com.hea3ven.dulcedeleche.industry.metal;
 
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.util.IStringSerializable;
 
 import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 public enum Metal implements IStringSerializable {
 	IRON(ToolMaterial.IRON, ArmorMaterial.IRON, (216 << 16) + (216 << 8) + 216, "oreIron", "blockIron",
 			"ingotIron", "nuggetIron", 0, 64, 20, 9),
 	COPPER(null, null, (210 << 16) + (80 << 8) + 50, "oreCopper", "blockCopper", "ingotCopper",
 			"nuggetCopper", 32, 64, 15, 12),
-	TIN(null, null, (185 << 16) + (210 << 8) + 230, "oreTin", "blockTin", "ingotTin", "nuggetTin", 58, 90, 24,
+	TIN(null, null, (185 << 16) + (210 << 8) + 230, "oreTin", "blockTin", "ingotTin", "nuggetTin", 50, 90, 24,
 			7),
 	GOLD(ToolMaterial.GOLD, ArmorMaterial.GOLD, 0, "oreGold", "blockGold", "ingotGold", "nuggetGold", 0, 32,
 			2, 9),
@@ -41,6 +43,12 @@ public enum Metal implements IStringSerializable {
 
 	public static Metal get(int index) {
 		return values()[index];
+	}
+
+	public static void initVanillaMaterials(){
+		// IRON.maxUses = 2048
+		ReflectionHelper.setPrivateValue(ToolMaterial.class, ToolMaterial.IRON, 2048, 6);
+		Items.iron_pickaxe.setMaxDamage(2048);
 	}
 
 	private Item.ToolMaterial toolMaterial;
