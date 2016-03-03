@@ -12,7 +12,6 @@ public class ItemMetalPickaxe extends ItemPickaxe {
 	public ItemMetalPickaxe(Metal metal) {
 		super(metal.getToolMaterial());
 		setCreativeTab(CreativeTabs.tabTools);
-		setHasSubtypes(true);
 
 		this.metal = metal;
 	}

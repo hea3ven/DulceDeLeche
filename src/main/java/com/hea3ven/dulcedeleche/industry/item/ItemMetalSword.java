@@ -13,7 +13,6 @@ public class ItemMetalSword extends ItemSword {
 	public ItemMetalSword(Metal metal) {
 		super(metal.getToolMaterial());
 		setCreativeTab(CreativeTabs.tabCombat);
-		setHasSubtypes(true);
 
 		this.metal = metal;
 	}

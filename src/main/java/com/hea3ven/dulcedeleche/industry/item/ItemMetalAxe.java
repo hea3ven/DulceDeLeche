@@ -13,7 +13,6 @@ public class ItemMetalAxe extends ItemAxe {
 	public ItemMetalAxe(Metal metal) {
 		super(metal.getToolMaterial());
 		setCreativeTab(CreativeTabs.tabTools);
-		setHasSubtypes(true);
 
 		this.metal = metal;
 	}
