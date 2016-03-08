@@ -5,6 +5,14 @@
 		"h3nt-commonutils": {
 			"version": "1.0.2",
 			"required": "1.0.x"
+		},
+		"kotlin-runtime": {
+			"version": "1.0.0-beta-4584",
+			"required": "1.0.0-beta-x"
+		},
+		"kotlin-stdlib": {
+			"version": "1.0.0-beta-4584",
+			"required": "1.0.0-beta-x"
 		}
 	}
 }

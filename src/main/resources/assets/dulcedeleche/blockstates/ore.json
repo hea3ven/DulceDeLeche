@@ -1,8 +1,0 @@
-{
-    "variants": {
-        "metal=copper": { "model": "dulcedeleche:ore" },
-        "metal=tin": { "model": "dulcedeleche:ore" },
-        "metal=cobalt": { "model": "dulcedeleche:ore_nether" },
-        "metal=tungsten": { "model": "dulcedeleche:ore_end" }
-    }
-}
