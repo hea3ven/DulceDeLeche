@@ -6,6 +6,7 @@ import com.hea3ven.dulcedeleche.redstone.block.tileentity.TileAssembler
 import com.hea3ven.dulcedeleche.redstone.client.gui.GuiAssembler
 import com.hea3ven.tools.commonutils.inventory.ISimpleGuiHandler
 import com.hea3ven.tools.commonutils.mod.ProxyModBase
+import com.hea3ven.tools.commonutils.mod.ProxyModComposite
 import com.hea3ven.tools.commonutils.util.WorldHelper
 import net.minecraft.block.Block
 import net.minecraft.creativetab.CreativeTabs
@@ -16,9 +17,13 @@ import net.minecraft.world.World
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent
 
-class ProxyModDulceDeLeche : ProxyModBase(ModDulceDeLeche.MODID) {
+class ProxyModDulceDeLeche : ProxyModComposite(ModDulceDeLeche.MODID) {
 
 	private lateinit var assembler: Block
+
+	init {
+		addModule("food", "com.hea3ven.dulcedeleche.food.ProxyModDulceDeLecheFood")
+	}
 
 	override fun onPostInitEvent(event: FMLPostInitializationEvent?) {
 		super.onPostInitEvent(event)

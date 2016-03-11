@@ -48,16 +48,18 @@ minecraft {
 	replace 'FORGEVERSION', project.minecraft.forgeVersion
 }
 
-curseforge {
-	apiKey = project.hasProperty('curseForgeApiKey') ? project.curseForgeApiKey : ''
+if (project.hasProperty('project_curseforge_id')) {
+	curseforge {
+		apiKey = project.hasProperty('curseForgeApiKey') ? project.curseForgeApiKey : ''
 
-	project {
-		id = project_curseforge_id
-		releaseType = 'release'
-		changelog = UpdateFile.
-				getChangelog(new File(projectDir, project_update_file), version_mc, project.version).
-				replace('\n', '\r\n')
-		addGameVersion version_mc
+		project {
+			id = project_curseforge_id
+			releaseType = 'release'
+			changelog = UpdateFile.
+					getChangelog(new File(projectDir, project_update_file), version_mc, project.version).
+					replace('\n', '\r\n')
+			addGameVersion version_mc
+		}
 	}
 }
 
