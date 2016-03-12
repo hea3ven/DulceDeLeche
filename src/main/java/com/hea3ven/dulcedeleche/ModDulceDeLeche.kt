@@ -26,8 +26,8 @@ class ModDulceDeLeche {
 
 	companion object {
 		const val MODID = "dulcedeleche"
-		const val VERSION = "PROJECTVERSION"
-		const val DEPENDENCIES = "required-after:Forge@[FORGEVERSION,)"
+		const val VERSION = "1.8.9-1.0.0"
+		const val DEPENDENCIES = "required-after:Forge@[11.15.1.1723,)"
 
 		init {
 			Bootstrap.init()

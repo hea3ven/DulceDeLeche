@@ -3,16 +3,16 @@
 	"required": "1.1.x",
 	"libs": {
 		"h3nt-commonutils": {
-			"version": "1.0.2",
+			"version": "1.0.3",
 			"required": "1.0.x"
 		},
 		"kotlin-runtime": {
-			"version": "1.0.0-beta-4584",
-			"required": "1.0.0-beta-x"
+			"version": "1.0.0",
+			"required": "1.0.x"
 		},
 		"kotlin-stdlib": {
-			"version": "1.0.0-beta-4584",
-			"required": "1.0.0-beta-x"
+			"version": "1.0.0",
+			"required": "1.0.x"
 		}
 	}
 }
