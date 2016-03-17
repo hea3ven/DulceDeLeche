@@ -48,8 +48,6 @@ class GuiAssembler(playerInv: InventoryPlayer, val te: TileAssembler) :
 	}
 
 	companion object {
-		const val id = 0
-
 		val BG_RESOURCE = ResourceLocation("dulcedeleche:textures/gui/container/assembler.png");
 	}
 }

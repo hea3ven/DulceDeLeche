@@ -1,19 +1,15 @@
 package com.hea3ven.dulcedeleche.food
 
 import com.hea3ven.dulcedeleche.food.item.ItemBucketDulceDeLeche
-import com.hea3ven.tools.commonutils.mod.ProxyModBase
+import com.hea3ven.tools.commonutils.mod.ProxyModModule
 import net.minecraft.creativetab.CreativeTabs
-import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Items
-import net.minecraft.item.*
+import net.minecraft.item.ItemFood
+import net.minecraft.item.ItemStack
 import net.minecraft.item.crafting.FurnaceRecipes
 import net.minecraft.potion.Potion
-import net.minecraft.potion.PotionEffect
-import net.minecraft.stats.StatList
-import net.minecraft.world.World
-import net.minecraftforge.fml.common.registry.GameRegistry
 
-class ProxyModDulceDeLecheFood(modId: String) : ProxyModBase(modId) {
+class ProxyModDulceDeLecheFood : ProxyModModule() {
 
 	val dulcedeleche = ItemBucketDulceDeLeche().apply {
 		unlocalizedName = "dulcedeleche.dulcedeleche"

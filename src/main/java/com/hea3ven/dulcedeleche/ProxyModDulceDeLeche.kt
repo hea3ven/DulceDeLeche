@@ -46,7 +46,7 @@ class ProxyModDulceDeLeche : ProxyModComposite(ModDulceDeLeche.MODID) {
 	}
 
 	override fun registerGuis() {
-		addGui(GuiAssembler.id, object : ISimpleGuiHandler {
+		addGui(ModDulceDeLeche.guiIdAssembler, object : ISimpleGuiHandler {
 			override fun createContainer(player: EntityPlayer, world: World, pos: BlockPos) =
 					WorldHelper.getTile<TileAssembler>(world, pos).getContainer(player.inventory)
 
