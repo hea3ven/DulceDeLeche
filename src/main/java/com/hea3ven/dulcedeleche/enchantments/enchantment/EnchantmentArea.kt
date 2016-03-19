@@ -5,16 +5,16 @@ import net.minecraft.enchantment.Enchantment
 import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.enchantment.EnumEnchantmentType
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.util.BlockPos
+import net.minecraft.inventory.EntityEquipmentSlot
 import net.minecraft.util.EnumFacing
-import net.minecraft.util.ResourceLocation
+import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.world.BlockEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
-class EnchantmentArea(id: Int) :
-		Enchantment(id, ResourceLocation("dulcedeleche:area"), 1, EnumEnchantmentType.DIGGER) {
+class EnchantmentArea : Enchantment(Rarity.VERY_RARE, EnumEnchantmentType.DIGGER,
+		arrayOf(EntityEquipmentSlot.MAINHAND)) {
 	init {
 		name = "area"
 	}
@@ -24,7 +24,7 @@ class EnchantmentArea(id: Int) :
 	}
 
 	override fun getMinEnchantability(enchantmentLevel: Int): Int {
-		return if (enchantmentLevel == 1) 15 else 100
+		return 20
 	}
 
 	override fun getMaxEnchantability(enchantmentLevel: Int): Int {
@@ -46,8 +46,9 @@ class EnchantmentArea(id: Int) :
 		}
 	}
 
-	private fun getAreaModifier(player: EntityPlayer) = EnchantmentHelper.getEnchantmentLevel(effectId,
-			player.heldItem)
+	private fun getAreaModifier(player: EntityPlayer): Int {
+		return player.heldEquipment.map { EnchantmentHelper.getEnchantmentLevel(this, it) }.max() ?: 0
+	}
 
 	private fun areaBreak(world: World, player: EntityPlayer, pos: BlockPos, face: EnumFacing,
 			area: Int): Int {
@@ -76,11 +77,11 @@ class EnchantmentArea(id: Int) :
 		if (!canHarvest)
 			return -1
 
-		val stack = player.currentEquippedItem
+		val stack = player.activeItemStack
 		if (stack != null) {
-			stack.onBlockDestroyed(world, state.block, pos, player)
+			stack.onBlockDestroyed(world, state, pos, player)
 			if (stack.stackSize == 0)
-				player.destroyCurrentEquippedItem()
+				player.setHeldItem(player.activeHand, null)
 		}
 
 		val subEvent = AreaBlockBreakEvent(world, pos, state, player)
@@ -88,7 +89,7 @@ class EnchantmentArea(id: Int) :
 		if (!subEvent.isCanceled) {
 			val removed = removeBlock(world, player, pos, canHarvest)
 			if (removed)
-				state.block.harvestBlock(world, player, pos, state, world.getTileEntity(pos))
+				state.block.harvestBlock(world, player, pos, state, world.getTileEntity(pos), stack)
 			return subEvent.expToDrop
 		}
 		return -1
@@ -97,7 +98,7 @@ class EnchantmentArea(id: Int) :
 	private fun removeBlock(world: World, player: EntityPlayer, pos: BlockPos, canHarvest: Boolean): Boolean {
 		val state = world.getBlockState(pos)
 		state.block.onBlockHarvested(world, pos, state, player)
-		if (state.block.removedByPlayer(world, pos, player, canHarvest)) {
+		if (state.block.removedByPlayer(state, world, pos, player, canHarvest)) {
 			state.block.onBlockDestroyedByPlayer(world, pos, state)
 			return true
 		}
@@ -107,9 +108,5 @@ class EnchantmentArea(id: Int) :
 	class AreaBlockBreakEvent(world: World?, pos: BlockPos?, state: IBlockState?, player: EntityPlayer?) :
 			BlockEvent.BreakEvent(world, pos, state, player) {
 
-	}
-
-	companion object {
-		lateinit var instance : EnchantmentArea
 	}
 }

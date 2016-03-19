@@ -10,17 +10,17 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 		dependencies = ModDulceDeLeche.DEPENDENCIES)
 class ModDulceDeLeche {
 	@Mod.EventHandler
-	public fun OnPreInit(event: FMLPreInitializationEvent?) {
+	fun OnPreInit(event: FMLPreInitializationEvent?) {
 		proxy.onPreInitEvent(event)
 	}
 
 	@Mod.EventHandler
-	public fun OnInit(event: FMLInitializationEvent?) {
+	fun OnInit(event: FMLInitializationEvent?) {
 		proxy.onInitEvent(event)
 	}
 
 	@Mod.EventHandler
-	public fun OnPostInit(event: FMLPostInitializationEvent?) {
+	fun OnPostInit(event: FMLPostInitializationEvent?) {
 		proxy.onPostInitEvent(event)
 	}
 

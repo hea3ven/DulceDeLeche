@@ -4,10 +4,11 @@ import com.hea3ven.dulcedeleche.food.item.ItemBucketDulceDeLeche
 import com.hea3ven.tools.commonutils.mod.ProxyModModule
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.init.Items
+import net.minecraft.init.MobEffects
 import net.minecraft.item.ItemFood
 import net.minecraft.item.ItemStack
 import net.minecraft.item.crafting.FurnaceRecipes
-import net.minecraft.potion.Potion
+import net.minecraft.potion.PotionEffect
 
 class ProxyModDulceDeLecheFood : ProxyModModule() {
 
@@ -20,7 +21,7 @@ class ProxyModDulceDeLecheFood : ProxyModModule() {
 	val vauquita = ItemFood(1, 0.1f, false).apply {
 		unlocalizedName = "dulcedeleche.vauquita"
 		creativeTab = CreativeTabs.tabFood
-		setPotionEffect(Potion.digSpeed.id, 40, 0, 1.0f)
+		setPotionEffect(PotionEffect(MobEffects.digSpeed, 40, 0), 1.0f)
 	}
 
 	override fun registerItems() {

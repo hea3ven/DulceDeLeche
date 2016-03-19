@@ -68,7 +68,7 @@ class InventoryAssembler(val te: TileAssembler) : ItemStackHandler(5) {
 						invCrafting.getStackInSlot(it)?.copy()?.apply { stackSize = 1 }
 					}.toTypedArray()
 					syncTmpInvCrafting()
-					recipeExtraOutput = CraftingManager.getInstance().func_180303_b(invCrafting, te.world)
+					recipeExtraOutput = CraftingManager.getInstance().getRemainingItems(invCrafting, te.world)
 							.filter { it != null }.map { it!! }.toTypedArray()
 				} else {
 					recipe = null
@@ -100,7 +100,7 @@ class InventoryAssembler(val te: TileAssembler) : ItemStackHandler(5) {
 		crafting = true
 
 		net.minecraftforge.common.ForgeHooks.setCraftingPlayer(player);
-		val extraStacks = CraftingManager.getInstance().func_180303_b(invCrafting, te.world);
+		val extraStacks = CraftingManager.getInstance().getRemainingItems(invCrafting, te.world);
 		net.minecraftforge.common.ForgeHooks.setCraftingPlayer(null);
 
 		for (i in 0..extraStacks.size - 1) {
@@ -188,7 +188,7 @@ class InventoryAssembler(val te: TileAssembler) : ItemStackHandler(5) {
 			(0..8).forEach { tmpInvCrafting.setInventorySlotContents(it, newRecipe[it]?.copy()) }
 			recipeOutput = CraftingManager.getInstance().findMatchingRecipe(tmpInvCrafting, te.world)
 			if (recipeOutput != null) {
-				recipeExtraOutput = CraftingManager.getInstance().func_180303_b(tmpInvCrafting, te.world)
+				recipeExtraOutput = CraftingManager.getInstance().getRemainingItems(tmpInvCrafting, te.world)
 						.filter { it != null }.map { it!! }.toTypedArray()
 			} else {
 				recipe = null
