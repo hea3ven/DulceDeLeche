@@ -1,5 +1,4 @@
 buildscript {
-	ext.kotlin_version = '1.0.0'
 	repositories {
 		jcenter()
 		maven {
@@ -12,7 +11,7 @@ buildscript {
 		}
 	}
 	dependencies {
-		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$version_kotlin"
 		classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
 		classpath 'com.matthewprenger:CurseGradle:1.0-SNAPSHOT'
 		classpath 'org.ajoberstar:grgit:1.4.1'
@@ -29,12 +28,13 @@ apply plugin: 'com.matthewprenger.cursegradle'
 apply from: 'mcbuild.gradle'
 
 dependencies {
-	compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-	release "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-	release "org.jetbrains.kotlin:kotlin-runtime:$kotlin_version"
+	compile "org.jetbrains.kotlin:kotlin-stdlib:$version_kotlin"
+	release "org.jetbrains.kotlin:kotlin-stdlib:$version_kotlin"
+	release "org.jetbrains.kotlin:kotlin-runtime:$version_kotlin"
 
-	compile 'com.hea3ven.tools.commonutils:h3nt-commonutils:1.1.2:deobf'
-	release 'com.hea3ven.tools.commonutils:h3nt-commonutils:1.1.2'
+	// compile project(':CommonUtils')
+	compile "com.hea3ven.tools.commonutils:h3nt-commonutils:$version_commonutils:deobf"
+	release "com.hea3ven.tools.commonutils:h3nt-commonutils:$version_commonutils"
 
 	testCompile "junit:junit:4.12"
 }

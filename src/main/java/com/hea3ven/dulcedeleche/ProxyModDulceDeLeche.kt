@@ -8,6 +8,6 @@ class ProxyModDulceDeLeche : ProxyModComposite(ModDulceDeLeche.MODID) {
 	init {
 		addModule("enchantments", "com.hea3ven.dulcedeleche.enchantments.ProxyModDulceDeLecheEnchantments")
 		addModule("food", "com.hea3ven.dulcedeleche.food.ProxyModDulceDeLecheFood")
-		addModule("redstone", "com.hea3ven.dulcedeleche.food.ProxyModDulceDeLecheRedstone")
+		addModule("redstone", "com.hea3ven.dulcedeleche.redstone.ProxyModDulceDeLecheRedstone")
 	}
 }

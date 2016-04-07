@@ -1,0 +1,16 @@
+[
+{
+  "modid": "dulcedeleche",
+  "name": "Dulce De Leche",
+  "description": "Something that goes well with vanilla.",
+  "version": "${version}",
+  "mcversion": "${version_mc}",
+  "url": "https://github.com/hea3ven/DulceDeLeche",
+  "updateUrl": "",
+  "authorList": ["Hea3veN"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": ["required-after:Forge@[${version_forge},)"]
+}
+]
