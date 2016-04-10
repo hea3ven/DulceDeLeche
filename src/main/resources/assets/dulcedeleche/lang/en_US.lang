@@ -1,4 +1,6 @@
-enchantment.area=Area
+enchantment.dulcedeleche.area=Area
 
 item.dulcedeleche.dulcedeleche.name=Dulce De Leche
 item.dulcedeleche.vauquita.name=Vauquita
+
+tile.dulcedeleche.assembler.name=Assembler
