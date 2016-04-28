@@ -36,12 +36,12 @@ class ItemBucketDulceDeLeche : Item() {
 
 			entity.foodStats.addStats(2, 0.2f);
 			if (!world.isRemote) {
-				entity.addPotionEffect(PotionEffect(MobEffects.digSpeed, 20 * 20, 1));
-				entity.addPotionEffect(PotionEffect(MobEffects.moveSlowdown, 35 * 20, 1));
+				entity.addPotionEffect(PotionEffect(MobEffects.HASTE, 20 * 20, 1));
+				entity.addPotionEffect(PotionEffect(MobEffects.SLOWNESS, 35 * 20, 1));
 			}
 
 			entity.addStat(StatList.getObjectUseStats(this));
 		}
-		return if (stack.stackSize <= 0 ) ItemStack(Items.bucket) else stack;
+		return if (stack.stackSize <= 0 ) ItemStack(Items.BUCKET) else stack;
 	}
 }

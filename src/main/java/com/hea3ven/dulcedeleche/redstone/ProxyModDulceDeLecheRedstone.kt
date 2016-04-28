@@ -19,7 +19,7 @@ class ProxyModDulceDeLecheRedstone : ProxyModModule() {
 		unlocalizedName = "assembler"
 		setHardness(3.5F)
 		//			soundType SoundType.STONE
-		setCreativeTab(CreativeTabs.tabRedstone);
+		setCreativeTab(CreativeTabs.REDSTONE);
 	}
 
 	override fun registerBlocks() {
@@ -42,6 +42,6 @@ class ProxyModDulceDeLecheRedstone : ProxyModModule() {
 	}
 
 	override fun registerRecipes() {
-		addRecipe(assembler, "xxx", "xyx", "xxx", 'x', "cobblestone", 'y', Blocks.crafting_table)
+		addRecipe(assembler, "xxx", "xyx", "xxx", 'x', "cobblestone", 'y', Blocks.CRAFTING_TABLE)
 	}
 }

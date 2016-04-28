@@ -14,14 +14,14 @@ class ProxyModDulceDeLecheFood : ProxyModModule() {
 
 	val dulcedeleche = ItemBucketDulceDeLeche().apply {
 		unlocalizedName = "dulcedeleche.dulcedeleche"
-		creativeTab = CreativeTabs.tabFood
-		containerItem = Items.bucket;
+		creativeTab = CreativeTabs.FOOD
+		containerItem = Items.BUCKET;
 	}
 
 	val vauquita = ItemFood(1, 0.1f, false).apply {
 		unlocalizedName = "dulcedeleche.vauquita"
-		creativeTab = CreativeTabs.tabFood
-		setPotionEffect(PotionEffect(MobEffects.digSpeed, 40, 0), 1.0f)
+		creativeTab = CreativeTabs.FOOD
+		setPotionEffect(PotionEffect(MobEffects.HASTE, 40, 0), 1.0f)
 	}
 
 	override fun registerItems() {
@@ -30,8 +30,8 @@ class ProxyModDulceDeLecheFood : ProxyModModule() {
 	}
 
 	override fun registerRecipes() {
-		FurnaceRecipes.instance().addSmelting(Items.milk_bucket, ItemStack(dulcedeleche), 0.35f)
-		addRecipe(true, ItemStack(vauquita), dulcedeleche, Items.sugar)
+		FurnaceRecipes.instance().addSmelting(Items.MILK_BUCKET, ItemStack(dulcedeleche), 0.35f)
+		addRecipe(true, ItemStack(vauquita), dulcedeleche, Items.SUGAR)
 	}
 }
 

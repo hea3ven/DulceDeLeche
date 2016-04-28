@@ -6,7 +6,7 @@ import com.hea3ven.tools.commonutils.block.base.BlockMachine
 import net.minecraft.block.material.Material
 import net.minecraft.world.World
 
-class BlockAssembler : BlockMachine(Material.rock, ModDulceDeLeche.MODID, ModDulceDeLeche.guiIdAssembler) {
+class BlockAssembler : BlockMachine(Material.ROCK, ModDulceDeLeche.MODID, ModDulceDeLeche.guiIdAssembler) {
 
 	override fun createNewTileEntity(worldIn: World?, meta: Int) = TileAssembler()
 
