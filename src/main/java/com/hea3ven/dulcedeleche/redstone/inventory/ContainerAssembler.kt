@@ -9,19 +9,19 @@ import net.minecraft.item.ItemStack
 
 class ContainerAssembler(val te: TileAssembler, playerInv: InventoryPlayer) : GenericContainer() {
 	init {
-		addSlots(
-				SlotType.INPUT, 0, 8, 17, 3, 3, SlotIngredientAssembler::class.java, te)
+		addSlots(8, 17, 3, 3, { slot, x, y -> SlotIngredientAssembler(te, slot, x, y) })
 		addOutputSlots(te.inv, 0, 102, 35, 1, 1)
 		addOutputSlots(te.inv, 1, 131, 26, 2, 2)
 		addPlayerSlots(playerInv)
 		setUpdateHandler(te)
 	}
 
-	override fun slotClick(slotId: Int, dragType: Int, clickType: ClickType,
+	// TODO: Use IAdvancedSlot
+	override fun slotClick(slotId: Int, clickedButton: Int, clickType: ClickType,
 			playerIn: EntityPlayer?): ItemStack? {
-		if ( slotId < 9 && clickType == ClickType.THROW && dragType == 0)
+		if ( slotId < 9 && clickType == ClickType.THROW && clickedButton == 0)
 			te.inv.settingRecipe = true
-		val result = super.slotClick(slotId, dragType, clickType, playerIn)
+		val result = super.slotClick(slotId, clickedButton, clickType, playerIn)
 		te.inv.settingRecipe = false
 		return result
 	}
