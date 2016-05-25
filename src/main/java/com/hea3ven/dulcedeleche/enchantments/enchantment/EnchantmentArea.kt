@@ -37,9 +37,9 @@ class EnchantmentArea : Enchantment(Rarity.VERY_RARE, EnumEnchantmentType.DIGGER
 			return
 
 		val area = getAreaModifier(event.player)
-		if ( area > 0) {
+		if (area > 0) {
 			val trace = event.player.rayTrace(5.0, 1.0f)
-			if (trace.blockPos == event.pos) {
+			if (trace != null && trace.blockPos == event.pos) {
 				val exp = areaBreak(event.world, event.player, event.pos, trace.sideHit, area)
 				event.expToDrop = event.expToDrop + exp
 			}

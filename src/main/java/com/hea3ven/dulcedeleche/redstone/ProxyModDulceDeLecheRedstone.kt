@@ -4,22 +4,51 @@ import com.hea3ven.dulcedeleche.ModDulceDeLeche
 import com.hea3ven.dulcedeleche.redstone.block.BlockAssembler
 import com.hea3ven.dulcedeleche.redstone.block.tileentity.TileAssembler
 import com.hea3ven.dulcedeleche.redstone.client.gui.GuiAssembler
+import com.hea3ven.dulcedeleche.redstone.dispenser.DispenserPlantBehavior
 import com.hea3ven.tools.commonutils.inventory.ISimpleGuiHandler
 import com.hea3ven.tools.commonutils.mod.ProxyModModule
+import com.hea3ven.tools.commonutils.mod.config.FileConfigManagerBuilder
 import com.hea3ven.tools.commonutils.util.WorldHelper
+import net.minecraft.block.BlockDispenser
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
+import net.minecraft.item.Item
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
+import net.minecraftforge.common.IPlantable
+import net.minecraftforge.common.config.Property
+import net.minecraftforge.fml.common.event.FMLInitializationEvent
 
+@Suppress("unused")
 class ProxyModDulceDeLecheRedstone : ProxyModModule() {
+
+	private var enableDispenserPlantBehaviour: Boolean = true
 
 	private var assembler = BlockAssembler().apply {
 		unlocalizedName = "assembler"
 		setHardness(3.5F)
 		//			soundType SoundType.STONE
 		setCreativeTab(CreativeTabs.REDSTONE);
+	}
+
+	override fun onInitEvent(event: FMLInitializationEvent?) {
+		super.onInitEvent(event)
+
+		if (enableDispenserPlantBehaviour) {
+			for (plant in Item.REGISTRY.filter { it is IPlantable }) {
+				BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(plant, DispenserPlantBehavior())
+			}
+		}
+	}
+
+	override fun getConfig(): FileConfigManagerBuilder.CategoryConfigManagerBuilder {
+		return FileConfigManagerBuilder.CategoryConfigManagerBuilder("redstone")
+				.addSubCategory("dispencerBehaviours")
+				.addValue("plantSeeds", "true", Property.Type.BOOLEAN,
+						"Enable to make dispensers plant seeds",
+						{ enableDispenserPlantBehaviour = it.boolean }, true, true)
+				.endSubCategory()
 	}
 
 	override fun registerBlocks() {

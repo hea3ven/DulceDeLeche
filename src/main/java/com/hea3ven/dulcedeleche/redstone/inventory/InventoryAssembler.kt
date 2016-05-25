@@ -156,11 +156,12 @@ class InventoryAssembler(val te: TileAssembler) : ItemStackHandler(5) {
 	}
 
 	fun writeToNBT(compound: NBTTagCompound) {
-		compound.setTag("CraftingInventory", InventoryUtil.serializeNBT(invCrafting))
-		compound.setTag("OutputInventory", serializeNBT())
+		val nbt = compound
+		nbt.setTag("CraftingInventory", InventoryUtil.serializeNBT(invCrafting))
+		nbt.setTag("OutputInventory", serializeNBT())
 
 		if (recipe != null) {
-			compound.setTag("Recipe", NBTTagList().apply {
+			nbt.setTag("Recipe", NBTTagList().apply {
 				for (i in 0..8) {
 					val stack = recipe!![i]
 					if (stack != null) {
@@ -174,13 +175,13 @@ class InventoryAssembler(val te: TileAssembler) : ItemStackHandler(5) {
 		}
 	}
 
-	fun readFromNBT(compound: NBTTagCompound) {
-		InventoryUtil.deserializeNBT(invCrafting, compound.getCompoundTag("CraftingInventory"))
-		deserializeNBT(compound.getCompoundTag("OutputInventory"))
+	fun readFromNBT(nbt: NBTTagCompound) {
+		InventoryUtil.deserializeNBT(invCrafting, nbt.getCompoundTag("CraftingInventory"))
+		deserializeNBT(nbt.getCompoundTag("OutputInventory"))
 
-		if (compound.hasKey("Recipe")) {
+		if (nbt.hasKey("Recipe")) {
 			val newRecipe = arrayOfNulls<ItemStack?>(9)
-			val slots = compound.getTagList("Recipe", Constants.NBT.TAG_COMPOUND)
+			val slots = nbt.getTagList("Recipe", Constants.NBT.TAG_COMPOUND)
 			(0..slots.tagCount() - 1).map { slots.getCompoundTagAt(it) }.forEach {
 				newRecipe[it.getByte("Slot").toInt()] = ItemStack.loadItemStackFromNBT(it)
 			}
