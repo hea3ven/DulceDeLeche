@@ -23,7 +23,8 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent
 @Suppress("unused")
 class ProxyModDulceDeLecheRedstone : ProxyModModule() {
 
-	private var enableDispenserPlantBehaviour: Boolean = true
+	private var enableDispenserPlantBehaviour = true
+	private var enableAssembler = true
 
 	private var assembler = BlockAssembler().apply {
 		unlocalizedName = "assembler"
@@ -49,28 +50,35 @@ class ProxyModDulceDeLecheRedstone : ProxyModModule() {
 						"Enable to make dispensers plant seeds",
 						{ enableDispenserPlantBehaviour = it.boolean }, true, true)
 				.endSubCategory()
+				.addValue("enableAssembler", "true", Property.Type.BOOLEAN, "Enable the assembler block",
+						{ enableAssembler = it.boolean }, true, true)
 	}
 
 	override fun registerBlocks() {
-		addBlock(assembler, "assembler")
+		if (enableAssembler)
+			addBlock(assembler, "assembler")
 	}
 
 	override fun registerTileEntities() {
-		addTileEntity(TileAssembler::class.java, "assembler")
+		if (enableAssembler)
+			addTileEntity(TileAssembler::class.java, "assembler")
 	}
 
 	override fun registerGuis() {
-		addGui(ModDulceDeLeche.guiIdAssembler, object : ISimpleGuiHandler {
-			override fun createContainer(player: EntityPlayer, world: World, pos: BlockPos) =
-					WorldHelper.getTile<TileAssembler>(world, pos).getContainer(player.inventory)
+		if (enableAssembler) {
+			addGui(ModDulceDeLeche.guiIdAssembler, object : ISimpleGuiHandler {
+				override fun createContainer(player: EntityPlayer, world: World, pos: BlockPos) =
+						WorldHelper.getTile<TileAssembler>(world, pos).getContainer(player.inventory)
 
-			override fun createGui(player: EntityPlayer, world: World, pos: BlockPos) =
-					GuiAssembler(player.inventory,
-							WorldHelper.getTile(world, pos))
-		})
+				override fun createGui(player: EntityPlayer, world: World, pos: BlockPos) =
+						GuiAssembler(player.inventory,
+								WorldHelper.getTile(world, pos))
+			})
+		}
 	}
 
 	override fun registerRecipes() {
-		addRecipe(assembler, "xxx", "xyx", "xxx", 'x', "cobblestone", 'y', Blocks.CRAFTING_TABLE)
+		if (enableAssembler)
+			addRecipe(assembler, "xxx", "xyx", "xxx", 'x', "cobblestone", 'y', Blocks.CRAFTING_TABLE)
 	}
 }

@@ -7,7 +7,8 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 
 @Mod(modid = ModDulceDeLeche.MODID, version = ModDulceDeLeche.VERSION,
-		dependencies = ModDulceDeLeche.DEPENDENCIES)
+		dependencies = ModDulceDeLeche.DEPENDENCIES,
+		guiFactory = "com.hea3ven.dulcedeleche.DulceDeLecheModGuiFactory")
 class ModDulceDeLeche {
 	@Mod.EventHandler
 	fun OnPreInit(event: FMLPreInitializationEvent?) {
