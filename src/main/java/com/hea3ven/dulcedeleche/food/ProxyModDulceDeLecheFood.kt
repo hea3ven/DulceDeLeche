@@ -26,7 +26,7 @@ class ProxyModDulceDeLecheFood : ProxyModModule() {
 	val vauquita = ItemFood(1, 0.1f, false).apply {
 		unlocalizedName = "dulcedeleche.vauquita"
 		creativeTab = CreativeTabs.FOOD
-		setPotionEffect(PotionEffect(MobEffects.HASTE, 40, 0), 1.0f)
+		setPotionEffect(PotionEffect(MobEffects.HASTE, 15 * 20, 0), 1.0f)
 	}
 
 	override fun getConfig() = CategoryConfigManagerBuilder("food")
