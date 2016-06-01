@@ -1,7 +1,6 @@
 package com.hea3ven.dulcedeleche.redstone.inventory
 
 import com.hea3ven.dulcedeleche.redstone.block.tileentity.TileAssembler
-import com.hea3ven.tools.commonutils.util.InventoryUtil
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.Container
 import net.minecraft.inventory.IInventory
@@ -9,12 +8,10 @@ import net.minecraft.inventory.InventoryCrafting
 import net.minecraft.item.ItemStack
 import net.minecraft.item.crafting.CraftingManager
 import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.nbt.NBTTagList
-import net.minecraftforge.common.util.Constants
 import net.minecraftforge.items.ItemHandlerHelper
 import net.minecraftforge.items.ItemStackHandler
 
-class InventoryAssembler(val te: TileAssembler) : ItemStackHandler(5) {
+class InventoryAssembler(val te: TileAssembler) : ItemStackHandler(14) {
 	val invCrafting: InventoryCrafting = object : InventoryCrafting(object : Container() {
 		override fun canInteractWith(playerIn: EntityPlayer?): Boolean {
 			return true
@@ -24,18 +21,6 @@ class InventoryAssembler(val te: TileAssembler) : ItemStackHandler(5) {
 			updateRecipe()
 		}
 	}, 3, 3) {
-		override fun isItemValidForSlot(slot: Int, stack: ItemStack?): Boolean {
-			if (recipe == null)
-				return true
-			if (settingRecipe)
-				return true
-
-			return ItemHandlerHelper.canItemStacksStack(recipe!![slot], stack)
-		}
-
-		override fun markDirty() {
-			te.markDirty()
-		}
 	}
 
 	private val tmpInvCrafting: InventoryCrafting = InventoryCrafting(object : Container() {
@@ -47,49 +32,40 @@ class InventoryAssembler(val te: TileAssembler) : ItemStackHandler(5) {
 	var canCraft: Boolean = false
 		private set
 
-	internal var settingRecipe: Boolean = false
 
 	var recipeOutput: ItemStack? = null
 		private set
 
-	var recipe: Array<ItemStack?>? = null
-		private set
+	private var recipeExtraOutput: Array<ItemStack>? = null
 
 	private var crafting: Boolean = false
 
-	private var recipeExtraOutput: Array<ItemStack>? = null
+	var editingRecipe: Boolean = false
 
 	private fun updateRecipe() {
 		recipeOutput = CraftingManager.getInstance().findMatchingRecipe(invCrafting, te.world)
-		if (!crafting) {
-			if (!invMatchesRecipe()) {
-				if (recipeOutput != null) {
-					recipe = (0..8).map {
-						invCrafting.getStackInSlot(it)?.copy()?.apply { stackSize = 1 }
-					}.toTypedArray()
-					syncTmpInvCrafting()
-					recipeExtraOutput = CraftingManager.getInstance().getRemainingItems(invCrafting, te.world)
-							.filter { it != null }.map { it!! }.toTypedArray()
-				} else {
-					recipe = null
-					recipeExtraOutput = null
-				}
-			}
-		}
+		if (recipeOutput != null)
+			recipeExtraOutput = CraftingManager.getInstance().getRemainingItems(invCrafting, te.world)
+					.filter { it != null }.map { it!! }.toTypedArray()
 		canCraft = calculateCanCraft()
 	}
 
-	private fun syncTmpInvCrafting() {
+	private fun syncToTmpInvCrafting() {
 		for (i in 0..8)
-			tmpInvCrafting.setInventorySlotContents(i, invCrafting.getStackInSlot(i)?.copy())
+			tmpInvCrafting.setInventorySlotContents(i, getStackInSlot(i)?.copy())
+	}
+
+	private fun syncFromTmpInvCrafting() {
+		for (i in 0..8)
+			setStackInSlot(i, tmpInvCrafting.getStackInSlot(i))
 	}
 
 	private fun invMatchesRecipe(): Boolean {
-		if (recipe == null)
+		if (recipeOutput == null)
 			return false
 		for (i in 0..8) {
-			val stack = invCrafting.getStackInSlot(i)
-			if (stack != null && !ItemStack.areItemsEqual(stack, recipe!![i]))
+			val stack = getStackInSlot(i)
+			if (!ItemStack.areItemsEqual(stack, invCrafting.getStackInSlot(i)))
 				return false
 		}
 		return true
@@ -99,52 +75,52 @@ class InventoryAssembler(val te: TileAssembler) : ItemStackHandler(5) {
 		val output = recipeOutput;
 		crafting = true
 
+		syncToTmpInvCrafting()
 		net.minecraftforge.common.ForgeHooks.setCraftingPlayer(player);
-		val extraStacks = CraftingManager.getInstance().getRemainingItems(invCrafting, te.world);
+		val extraStacks = CraftingManager.getInstance().getRemainingItems(tmpInvCrafting, te.world);
 		net.minecraftforge.common.ForgeHooks.setCraftingPlayer(null);
+		syncFromTmpInvCrafting()
+
+		for (i in 0..8) {
+			extractItem(i, 1, false)
+		}
 
 		for (i in 0..extraStacks.size - 1) {
-			val invStack = invCrafting.getStackInSlot(i);
-			if (invStack != null) {
-				invCrafting.decrStackSize(i, 1);
-			}
-
 			var extraStack = extraStacks[i];
 			if (extraStack != null) {
-				for (j in 0..3) {
-					extraStack = insertItem(1 + j, extraStack, false)
+				for (j in 0..EXTRA_OUTPUT_SLOT_COUNT - 1) {
+					extraStack = insertItem(EXTRA_OUTPUT_SLOT_START + j, extraStack, false)
 					if (extraStack == null)
 						break
 				}
 			}
 		}
 
-		insertItem(0, output, false);
+		insertItem(OUTPUT_SLOT, output, false);
+		canCraft = calculateCanCraft()
 		crafting = false
 	}
 
-	override fun onContentsChanged(slot: Int) {
-		canCraft = calculateCanCraft()
-		te.markDirty()
-	}
-
 	fun calculateCanCraft(): Boolean {
-		if (recipe == null || recipeOutput == null)
+		if (recipeOutput == null)
 			return false
 
-		if (insertItem(0, recipeOutput, true) != null)
+		if (insertItem(OUTPUT_SLOT, recipeOutput, true) != null)
+			return false
+
+		if (!invMatchesRecipe())
 			return false
 
 		if (recipeExtraOutput == null)
 			return true
 
 		val extraOutput = recipeExtraOutput!!.map { it.copy() }
-		val tmpInv = ItemStackHandler(4)
-		for (i in 1..4)
-			tmpInv.setStackInSlot(i - 1, getStackInSlot(i)?.copy())
+		val tmpInv = ItemStackHandler(EXTRA_OUTPUT_SLOT_COUNT)
+		for (i in 0..EXTRA_OUTPUT_SLOT_COUNT - 1)
+			tmpInv.setStackInSlot(i, getStackInSlot(EXTRA_OUTPUT_SLOT_START + i)?.copy())
 		for (stack in extraOutput) {
 			var slotStack = stack
-			for (i in 0..3) {
+			for (i in 0..EXTRA_OUTPUT_SLOT_COUNT - 1) {
 				slotStack = tmpInv.insertItem(i, stack, false)
 				if (slotStack == null)
 					break
@@ -155,47 +131,57 @@ class InventoryAssembler(val te: TileAssembler) : ItemStackHandler(5) {
 		return true
 	}
 
-	fun writeToNBT(compound: NBTTagCompound) {
-		val nbt = compound
-		nbt.setTag("CraftingInventory", InventoryUtil.serializeNBT(invCrafting))
-		nbt.setTag("OutputInventory", serializeNBT())
+	override fun serializeNBT(): NBTTagCompound? {
+		val nbt = super.serializeNBT() ?: NBTTagCompound()
 
-		if (recipe != null) {
-			nbt.setTag("Recipe", NBTTagList().apply {
-				for (i in 0..8) {
-					val stack = recipe!![i]
-					if (stack != null) {
-						appendTag(NBTTagCompound().apply {
-							setByte("Slot", i.toByte())
-							stack.writeToNBT(this)
-						})
-					}
-				}
-			})
-		}
+		val tmpInv = ItemStackHandler(9)
+		for (i in 0..8)
+			tmpInv.setStackInSlot(i, invCrafting.getStackInSlot(i))
+		nbt.setTag("Recipe", tmpInv.serializeNBT())
+		return nbt
 	}
 
-	fun readFromNBT(nbt: NBTTagCompound) {
-		InventoryUtil.deserializeNBT(invCrafting, nbt.getCompoundTag("CraftingInventory"))
-		deserializeNBT(nbt.getCompoundTag("OutputInventory"))
+	override fun deserializeNBT(nbt: NBTTagCompound) {
+		super.deserializeNBT(nbt)
 
-		if (nbt.hasKey("Recipe")) {
-			val newRecipe = arrayOfNulls<ItemStack?>(9)
-			val slots = nbt.getTagList("Recipe", Constants.NBT.TAG_COMPOUND)
-			(0..slots.tagCount() - 1).map { slots.getCompoundTagAt(it) }.forEach {
-				newRecipe[it.getByte("Slot").toInt()] = ItemStack.loadItemStackFromNBT(it)
-			}
+		val tmpInv = ItemStackHandler(9)
+		tmpInv.deserializeNBT(nbt.getCompoundTag("Recipe"))
+		for (i in 0..8)
+			invCrafting.setInventorySlotContents(i, tmpInv.getStackInSlot(i))
 
-			(0..8).forEach { tmpInvCrafting.setInventorySlotContents(it, newRecipe[it]?.copy()) }
-			recipeOutput = CraftingManager.getInstance().findMatchingRecipe(tmpInvCrafting, te.world)
-			if (recipeOutput != null) {
-				recipeExtraOutput = CraftingManager.getInstance().getRemainingItems(tmpInvCrafting, te.world)
-						.filter { it != null }.map { it!! }.toTypedArray()
-			} else {
-				recipe = null
-				recipeExtraOutput = null
-			}
-			canCraft = calculateCanCraft()
+		canCraft = calculateCanCraft()
+	}
+
+	override fun onContentsChanged(slot: Int) {
+		if (!crafting && slot < 9) {
+			val stack = getStackInSlot(slot)
+			if (stack != null)
+				invCrafting.setInventorySlotContents(slot, ItemHandlerHelper.copyStackWithSize(stack, 1))
 		}
+		canCraft = calculateCanCraft()
+		te.markDirty()
+	}
+
+	fun clearRecipeSlot(slot: Int) {
+		invCrafting.setInventorySlotContents(slot, null)
+	}
+
+	override fun insertItem(slot: Int, stack: ItemStack?, simulate: Boolean): ItemStack? {
+		if (slot < 9) {
+			if (!editingRecipe) {
+				if (invCrafting.getStackInSlot(slot) == null)
+					return stack
+				if (!ItemStack.areItemsEqual(invCrafting.getStackInSlot(slot), stack))
+					return stack
+			}
+		}
+		return super.insertItem(slot, stack, simulate)
+	}
+
+	companion object {
+		val OUTPUT_SLOT = 9
+		val EXTRA_OUTPUT_SLOT_START = 10
+		val EXTRA_OUTPUT_SLOT_COUNT = 4
+		val EXTRA_OUTPUT_SLOT_END = EXTRA_OUTPUT_SLOT_START + EXTRA_OUTPUT_SLOT_COUNT - 1
 	}
 }

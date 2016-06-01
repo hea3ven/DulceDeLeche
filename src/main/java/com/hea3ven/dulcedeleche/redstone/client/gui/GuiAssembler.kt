@@ -18,17 +18,15 @@ class GuiAssembler(playerInv: InventoryPlayer, val te: TileAssembler) :
 		this.drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize);
 
 		// Progress Bar
-		var i1 = te.progress * 24 / TileAssembler.MAX_PROGRESS;
+		val i1 = te.progress * 24 / TileAssembler.MAX_PROGRESS;
 		this.drawTexturedModalRect(k + 67, l + 34, 176, 0, i1 + 1, 16);
 
-		val recipe = te.inv.recipe
-		if (recipe != null) {
-			for (i in 0..8) {
-				if (te.inv.invCrafting.getStackInSlot(i) == null) {
-					if (recipe[i] != null) {
-						val slot = inventorySlots.inventorySlots[i]
-						drawGhostItem(recipe[i]!!, k + slot.xDisplayPosition, l + slot.yDisplayPosition)
-					}
+		for (i in 0..8) {
+			if (te.inv.getStackInSlot(i) == null) {
+				if (te.inv.invCrafting.getStackInSlot(i) != null) {
+					val slot = inventorySlots.inventorySlots[i]
+					drawGhostItem(te.inv.invCrafting.getStackInSlot(i)!!, k + slot.xDisplayPosition,
+							l + slot.yDisplayPosition)
 				}
 			}
 		}

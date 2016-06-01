@@ -1,7 +1,8 @@
 package com.hea3ven.dulcedeleche.redstone.block.tileentity
 
-import com.hea3ven.dulcedeleche.redstone.inventory.ContainerAssembler
 import com.hea3ven.dulcedeleche.redstone.inventory.InventoryAssembler
+import com.hea3ven.dulcedeleche.redstone.inventory.SlotIngredientAssembler
+import com.hea3ven.tools.commonutils.inventory.GenericContainer
 import com.hea3ven.tools.commonutils.inventory.IUpdateHandler
 import com.hea3ven.tools.commonutils.inventory.ItemHandlerComposite
 import com.hea3ven.tools.commonutils.tileentity.TileMachine
@@ -13,13 +14,15 @@ import net.minecraft.util.ITickable
 import net.minecraftforge.common.capabilities.Capability
 import net.minecraftforge.items.CapabilityItemHandler
 import net.minecraftforge.items.wrapper.InvWrapper
+import net.minecraftforge.items.wrapper.RangedWrapper
 
 class TileAssembler : TileMachine(), ITickable, IUpdateHandler {
 	val inv = InventoryAssembler(this)
 
 	private val itemHandler = ItemHandlerComposite()
-			.addInputItemHandler(InvWrapper(inv.invCrafting))
-			.addOutputItemHandler(inv)
+			.addInputItemHandler(RangedWrapper(inv, 0, 9))
+			.addOutputItemHandler(RangedWrapper(inv, InventoryAssembler.OUTPUT_SLOT,
+					InventoryAssembler.EXTRA_OUTPUT_SLOT_END))
 
 	var progress = 0
 
@@ -45,7 +48,13 @@ class TileAssembler : TileMachine(), ITickable, IUpdateHandler {
 	override fun getField(i: Int) = progress
 
 	fun getContainer(playerInv: InventoryPlayer): Container {
-		return ContainerAssembler(this, playerInv)
+		return GenericContainer()
+				.addGenericSlots(8, 17, 3, 3, { slot, x, y -> SlotIngredientAssembler(this, slot, x, y) })
+				.addOutputSlots(inv, 9, 102, 35, 1, 1)
+				.addOutputSlots(inv, 10, 131, 26, 2, 2)
+				.addPlayerSlots(playerInv)
+				.addGenericSlots(InvWrapper(inv.invCrafting), 0, 5000, 0, 9 * 9, 1)
+				.setUpdateHandler(this)
 	}
 
 	override fun hasCapability(capability: Capability<*>?, facing: EnumFacing?): Boolean {
@@ -53,11 +62,9 @@ class TileAssembler : TileMachine(), ITickable, IUpdateHandler {
 				super.hasCapability(capability, facing)
 	}
 
-	@Suppress("UNCHECKED_CAST")
 	override fun <T : Any?> getCapability(capability: Capability<T>?, facing: EnumFacing?): T {
-		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-			return itemHandler as T
-		}
+		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(itemHandler)
 		return super.getCapability(capability, facing)
 	}
 
@@ -65,14 +72,14 @@ class TileAssembler : TileMachine(), ITickable, IUpdateHandler {
 		super.writeToNBT(compound)
 
 		compound.setInteger("Progress", progress)
-		inv.writeToNBT(compound)
+		compound.setTag("Inventory", inv.serializeNBT());
 	}
 
 	override fun readFromNBT(compound: NBTTagCompound) {
 		super.readFromNBT(compound)
 
 		progress = compound.getInteger("Progress")
-		inv.readFromNBT(compound)
+		inv.deserializeNBT(compound.getCompoundTag("Inventory"))
 	}
 
 	companion object {
