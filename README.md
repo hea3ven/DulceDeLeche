@@ -42,3 +42,8 @@ The Vauqita is another food item crafted from sugar and Dulce De Leche, when eat
 ![](https://raw.githubusercontent.com/hea3ven/DulceDeLeche/master/media/assembler1.png) ![](https://raw.githubusercontent.com/hea3ven/DulceDeLeche/master/media/assembler2.png)
 
 The Assembler is a block that can automatically craft items.
+
+#### Dispenser Behaviours
+
+ * Add dispenser behaviour to plant seeds
+ * Add dispenser behaviour to feed animals for breeding
