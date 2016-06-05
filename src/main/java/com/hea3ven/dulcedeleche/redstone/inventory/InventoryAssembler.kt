@@ -131,7 +131,7 @@ class InventoryAssembler(val te: TileAssembler) : ItemStackHandler(14) {
 		return true
 	}
 
-	override fun serializeNBT(): NBTTagCompound? {
+	override fun serializeNBT(): NBTTagCompound {
 		val nbt = super.serializeNBT() ?: NBTTagCompound()
 
 		val tmpInv = ItemStackHandler(9)

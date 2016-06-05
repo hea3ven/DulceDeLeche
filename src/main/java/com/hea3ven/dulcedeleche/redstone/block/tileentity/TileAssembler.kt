@@ -68,11 +68,12 @@ class TileAssembler : TileMachine(), ITickable, IUpdateHandler {
 		return super.getCapability(capability, facing)
 	}
 
-	override fun writeToNBT(compound: NBTTagCompound) {
-		super.writeToNBT(compound)
+	override fun writeToNBT(compound: NBTTagCompound) : NBTTagCompound {
+		val nbt = super.writeToNBT(compound)
 
 		compound.setInteger("Progress", progress)
 		compound.setTag("Inventory", inv.serializeNBT());
+		return nbt;
 	}
 
 	override fun readFromNBT(compound: NBTTagCompound) {
