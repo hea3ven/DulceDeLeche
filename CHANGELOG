@@ -1,3 +1,6 @@
+1.9.4-1.0.1:
+    * Fix the wrong library being included in the jar.
+
 1.9.4-1.0.0:
     * [enchantments] Add enchantment Area that makes tools dig multiple blocks at the same time.
 	* [food] Add Dulce de Leche item.
