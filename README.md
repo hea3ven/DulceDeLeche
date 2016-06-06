@@ -6,7 +6,7 @@ A minecraft mod that adds content that tries to follow vanilla balance.
 
 [Changelog](https://github.com/hea3ven/DulceDeLeche/blob/master/CHANGELOG)
 
-Curse: Dulce De Leche
+Curse: [Dulce De Leche](http://mods.curse.com/mc-mods/minecraft/245705-dulce-de-leche)
 
 This mod requires forge to be installed.
 To install the mod copy the file to the "mods" folder
