@@ -1,3 +1,6 @@
+1.9.4-1.0.2:
+    * Change the Area enchantment to being able to only break blocks with the same hardness as the block being mined, fixes #2.
+
 1.9.4-1.0.1:
     * Fix the wrong library being included in the jar.
 
