@@ -1,16 +1,12 @@
 {
-    "homepage": "https://github.com/hea3ven/DulceDeLeche",
+    "1.9": {
+        "1.9-1.0.0": "    * [enchantments] Add enchantment Area that makes tools dig multiple blocks at the same time.\n    * [food] Add Dulce de Leche item.\n    * [food] Add Vauquita item.\n    * [redstone] Add Assembler block that can automatically craft recipes.\n    * [redstone] Add dispenser behaviour to plant seeds.\n    * [redstone] Add dispenser behaviour to feed animals for breeding.",
+        "1.9-1.0.2": "    * Change the Area enchantment to being able to only break blocks with the same hardness as the block being mined, fixes #2.",
+        "commit": "d0f79221e332d57ed74a8bd6d58cbc805cec1f71"
+    },
     "promos": {
-        "1.9-latest": "1.9-1.0.0",
-        "1.9-recommended": "1.9-1.0.0",
-        "1.9.4-latest": "1.9-1.0.0",
-        "1.9.4-recommended": "1.9-1.0.0"
-	},
-	"1.9": {
-		"commit": "ce7379a",
-		"1.9-1.0.0": "    * [enchantments] Add enchantment Area that makes tools dig multiple blocks at the same time.\n    * [food] Add Dulce de Leche item.\n    * [food] Add Vauquita item.\n    * [redstone] Add Assembler block that can automatically craft recipes.\n    * [redstone] Add dispenser behaviour to plant seeds.\n    * [redstone] Add dispenser behaviour to feed animals for breeding."
-	},
-	"1.9.4": {
-		"1.9.4-1.0.0": "    * [enchantments] Add enchantment Area that makes tools dig multiple blocks at the same time.\n    * [food] Add Dulce de Leche item.\n    * [food] Add Vauquita item.\n    * [redstone] Add Assembler block that can automatically craft recipes.\n    * [redstone] Add dispenser behaviour to plant seeds.\n    * [redstone] Add dispenser behaviour to feed animals for breeding."
-	}
+        "1.9-latest": "1.9-1.0.2",
+        "1.9-recommended": "1.9-1.0.2"
+    },
+    "homepage": "https://github.com/hea3ven/DulceDeLeche"
 }

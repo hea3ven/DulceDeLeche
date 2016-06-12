@@ -1,7 +1,10 @@
+1.9-1.0.2:
+    * Change the Area enchantment to being able to only break blocks with the same hardness as the block being mined, fixes #2.
+
 1.9-1.0.0:
     * [enchantments] Add enchantment Area that makes tools dig multiple blocks at the same time.
-	* [food] Add Dulce de Leche item.
-	* [food] Add Vauquita item.
+    * [food] Add Dulce de Leche item.
+    * [food] Add Vauquita item.
     * [redstone] Add Assembler block that can automatically craft recipes.
     * [redstone] Add dispenser behaviour to plant seeds.
     * [redstone] Add dispenser behaviour to feed animals for breeding.
