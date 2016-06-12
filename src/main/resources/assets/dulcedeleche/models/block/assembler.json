@@ -1,8 +1,0 @@
-{
-    "parent": "minecraft:block/cube_bottom_top",
-    "textures": {
-        "top": "dulcedeleche:blocks/assembler_top",
-        "side": "minecraft:blocks/furnace_top",
-        "bottom": "minecraft:blocks/furnace_top"
-    }
-}
