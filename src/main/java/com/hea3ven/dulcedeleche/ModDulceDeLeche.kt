@@ -8,7 +8,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 
 @Mod(modid = ModDulceDeLeche.MODID, version = ModDulceDeLeche.VERSION,
 		dependencies = ModDulceDeLeche.DEPENDENCIES,
-		guiFactory = "com.hea3ven.dulcedeleche.DulceDeLecheModGuiFactory")
+		guiFactory = "com.hea3ven.dulcedeleche.DulceDeLecheModGuiFactory",
+		updateJSON = "https://raw.githubusercontent.com/hea3ven/DulceDeLeche/version/media/update.json")
 class ModDulceDeLeche {
 	@Mod.EventHandler
 	fun OnPreInit(event: FMLPreInitializationEvent?) {
