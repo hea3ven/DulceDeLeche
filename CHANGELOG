@@ -1,3 +1,6 @@
+1.10-1.0.2:
+    * Update to Minecraft 1.10.
+
 1.9.4-1.0.2:
     * Change the Area enchantment to being able to only break blocks with the same hardness as the block being mined, fixes #2.
 

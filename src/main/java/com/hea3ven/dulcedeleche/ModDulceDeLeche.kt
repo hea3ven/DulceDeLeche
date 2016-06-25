@@ -28,8 +28,8 @@ class ModDulceDeLeche {
 
 	companion object {
 		const val MODID = "dulcedeleche"
-		const val VERSION = "1.9.4-1.0.2"
-		const val DEPENDENCIES = "required-after:Forge@[12.17.0.1954,)"
+		const val VERSION = "1.10-1.0.2"
+		const val DEPENDENCIES = "required-after:Forge@[12.18.0.1986,)"
 
 		const val guiIdAssembler = 0
 
