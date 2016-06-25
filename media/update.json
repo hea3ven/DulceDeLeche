@@ -10,11 +10,18 @@
         "1.9.4-1.0.2": "    * Change the Area enchantment to being able to only break blocks with the same hardness as the block being mined, fixes #2.",
         "commit": "c67d54b9623aaeb032852bce8878c8c627df9acb"
     },
+    "1.10": {
+        "1.10-1.0.2": "    * Update to Minecraft 1.10.",
+        "commit": "f592e556d448dba5ce71026a59b9ea7efc423052"
+    },
     "homepage": "https://github.com/hea3ven/DulceDeLeche",
     "promos": {
         "1.9-latest": "1.9-1.0.3",
         "1.9-recommended": "1.9-1.0.3",
         "1.9.4-latest": "1.9.4-1.0.2",
-        "1.9.4-recommended": "1.9.4-1.0.2"
+        "1.9.4-recommended": "1.9.4-1.0.2",
+        "1.10-latest": "1.10-1.0.2",
+        "1.10-recommended": "1.10-1.0.2",
+        "reserved": "0"
     }
 }
