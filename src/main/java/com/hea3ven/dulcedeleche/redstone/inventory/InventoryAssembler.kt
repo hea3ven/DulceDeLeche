@@ -8,6 +8,7 @@ import net.minecraft.inventory.InventoryCrafting
 import net.minecraft.item.ItemStack
 import net.minecraft.item.crafting.CraftingManager
 import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.util.NonNullList
 import net.minecraftforge.items.ItemHandlerHelper
 import net.minecraftforge.items.ItemStackHandler
 
@@ -33,26 +34,25 @@ class InventoryAssembler(val te: TileAssembler) : ItemStackHandler(14) {
 		private set
 
 
-	var recipeOutput: ItemStack? = null
+	var recipeOutput: ItemStack = ItemStack.EMPTY
 		private set
 
-	private var recipeExtraOutput: Array<ItemStack>? = null
+	private var recipeExtraOutput: NonNullList<ItemStack> = NonNullList.create()
 
 	private var crafting: Boolean = false
 
 	var editingRecipe: Boolean = false
 
 	private fun updateRecipe() {
-		recipeOutput = CraftingManager.getInstance().findMatchingRecipe(invCrafting, te.world)
-		if (recipeOutput != null)
-			recipeExtraOutput = CraftingManager.getInstance().getRemainingItems(invCrafting, te.world)
-					.filter { it != null }.map { it!! }.toTypedArray()
+		recipeOutput = CraftingManager.findMatchingResult(invCrafting, te.world)
+		if (!recipeOutput.isEmpty)
+			recipeExtraOutput = CraftingManager.getRemainingItems(invCrafting, te.world)
 		canCraft = calculateCanCraft()
 	}
 
 	private fun syncToTmpInvCrafting() {
 		for (i in 0..8)
-			tmpInvCrafting.setInventorySlotContents(i, getStackInSlot(i)?.copy())
+			tmpInvCrafting.setInventorySlotContents(i, getStackInSlot(i).copy())
 	}
 
 	private fun syncFromTmpInvCrafting() {
@@ -61,7 +61,7 @@ class InventoryAssembler(val te: TileAssembler) : ItemStackHandler(14) {
 	}
 
 	private fun invMatchesRecipe(): Boolean {
-		if (recipeOutput == null)
+		if (recipeOutput.isEmpty)
 			return false
 		for (i in 0..8) {
 			val stack = getStackInSlot(i)
@@ -72,60 +72,61 @@ class InventoryAssembler(val te: TileAssembler) : ItemStackHandler(14) {
 	}
 
 	internal fun craft(player: EntityPlayer?) {
-		val output = recipeOutput;
+		val output = recipeOutput
 		crafting = true
 
 		syncToTmpInvCrafting()
-		net.minecraftforge.common.ForgeHooks.setCraftingPlayer(player);
-		val extraStacks = CraftingManager.getInstance().getRemainingItems(tmpInvCrafting, te.world);
-		net.minecraftforge.common.ForgeHooks.setCraftingPlayer(null);
+		net.minecraftforge.common.ForgeHooks.setCraftingPlayer(player)
+		val extraStacks = CraftingManager.getRemainingItems(tmpInvCrafting, te.world)
+		net.minecraftforge.common.ForgeHooks.setCraftingPlayer(null)
 		syncFromTmpInvCrafting()
 
 		for (i in 0..8) {
 			extractItem(i, 1, false)
 		}
 
-		for (i in 0..extraStacks.size - 1) {
-			var extraStack = extraStacks[i];
-			if (extraStack != null) {
+		for (extraStack in extraStacks) {
+			if (!extraStack.isEmpty) {
 				for (j in 0..EXTRA_OUTPUT_SLOT_COUNT - 1) {
-					extraStack = insertItem(EXTRA_OUTPUT_SLOT_START + j, extraStack, false)
-					if (extraStack == null)
+					if(insertItem(EXTRA_OUTPUT_SLOT_START + j, extraStack, false).isEmpty)
 						break
 				}
 			}
 		}
 
-		insertItem(OUTPUT_SLOT, output, false);
+		insertItem(OUTPUT_SLOT, output, false)
 		canCraft = calculateCanCraft()
 		crafting = false
 	}
 
 	fun calculateCanCraft(): Boolean {
-		if (recipeOutput == null)
+		if(recipeOutput.isEmpty)
 			return false
+		val out = recipeOutput
 
-		if (insertItem(OUTPUT_SLOT, recipeOutput, true) != null)
+		if (!insertItem(OUTPUT_SLOT, out, true).isEmpty)
 			return false
 
 		if (!invMatchesRecipe())
 			return false
 
-		if (recipeExtraOutput == null)
+		if (recipeExtraOutput.isEmpty())
 			return true
 
-		val extraOutput = recipeExtraOutput!!.map { it.copy() }
+		val extraOutput = NonNullList.create<ItemStack>()
+		for (stack in recipeExtraOutput)
+			extraOutput.add(stack.copy())
 		val tmpInv = ItemStackHandler(EXTRA_OUTPUT_SLOT_COUNT)
 		for (i in 0..EXTRA_OUTPUT_SLOT_COUNT - 1)
-			tmpInv.setStackInSlot(i, getStackInSlot(EXTRA_OUTPUT_SLOT_START + i)?.copy())
+			tmpInv.setStackInSlot(i, getStackInSlot(EXTRA_OUTPUT_SLOT_START + i).copy())
 		for (stack in extraOutput) {
 			var slotStack = stack
 			for (i in 0..EXTRA_OUTPUT_SLOT_COUNT - 1) {
 				slotStack = tmpInv.insertItem(i, stack, false)
-				if (slotStack == null)
+				if (slotStack.isEmpty)
 					break
 			}
-			if (slotStack != null)
+			if (!slotStack.isEmpty)
 				return false
 		}
 		return true
@@ -155,7 +156,7 @@ class InventoryAssembler(val te: TileAssembler) : ItemStackHandler(14) {
 	override fun onContentsChanged(slot: Int) {
 		if (!crafting && slot < 9) {
 			val stack = getStackInSlot(slot)
-			if (stack != null)
+			if (!stack.isEmpty)
 				invCrafting.setInventorySlotContents(slot, ItemHandlerHelper.copyStackWithSize(stack, 1))
 		}
 		canCraft = calculateCanCraft()
@@ -163,13 +164,13 @@ class InventoryAssembler(val te: TileAssembler) : ItemStackHandler(14) {
 	}
 
 	fun clearRecipeSlot(slot: Int) {
-		invCrafting.setInventorySlotContents(slot, null)
+		invCrafting.setInventorySlotContents(slot, ItemStack.EMPTY)
 	}
 
-	override fun insertItem(slot: Int, stack: ItemStack?, simulate: Boolean): ItemStack? {
+	override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack {
 		if (slot < 9) {
 			if (!editingRecipe) {
-				if (invCrafting.getStackInSlot(slot) == null)
+				if (invCrafting.getStackInSlot(slot).isEmpty)
 					return stack
 				if (!ItemStack.areItemsEqual(invCrafting.getStackInSlot(slot), stack))
 					return stack

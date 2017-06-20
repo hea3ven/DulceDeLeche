@@ -16,7 +16,7 @@ class DispenserBreedBehavior : IBehaviorDispenseItem {
 	override fun dispense(source: IBlockSource, stack: ItemStack): ItemStack {
 		val position = BlockDispenser.getDispensePosition(source)
 		val pos = BlockPos(position.x, position.y, position.z)
-		val box = AxisAlignedBB(pos, pos.add(1, 1, 1));
+		val box = AxisAlignedBB(pos, pos.add(1, 1, 1))
 		val entities = source.world.getEntitiesWithinAABBExcludingEntity(null, box)
 				.filter { it is EntityAnimal }
 				.map { it as EntityAnimal }
@@ -36,7 +36,7 @@ class DispenserBreedBehavior : IBehaviorDispenseItem {
 			if (!entity.isBreedingItem(stack))
 				continue
 
-			if (player.interact(entity, stack, EnumHand.MAIN_HAND) != EnumActionResult.SUCCESS)
+			if (player.interactOn(entity, EnumHand.MAIN_HAND) != EnumActionResult.SUCCESS)
 				continue
 		}
 

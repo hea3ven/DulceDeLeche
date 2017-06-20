@@ -58,7 +58,7 @@ class EnchantmentArea : Enchantment(Rarity.VERY_RARE, EnumEnchantmentType.DIGGER
 		assert(dirs.size == 2)
 
 		val state = world.getBlockState(pos)
-		val hardness = state.block.getBlockHardness(state, world, pos)
+		val hardness = state.getBlockHardness(world, pos)
 
 		var exp = 0
 		for (i in area downTo -area) {
@@ -80,14 +80,12 @@ class EnchantmentArea : Enchantment(Rarity.VERY_RARE, EnumEnchantmentType.DIGGER
 		if (!canHarvest)
 			return -1
 
-		if (state.block.getBlockHardness(state, world, pos) != hardness)
+		if (state.getBlockHardness(world, pos) != hardness)
 			return -1
 
 		val stack = player.activeItemStack
-		if (stack != null) {
+		if (!stack.isEmpty) {
 			stack.onBlockDestroyed(world, state, pos, player)
-			if (stack.stackSize == 0)
-				player.setHeldItem(player.activeHand, null)
 		}
 
 		val subEvent = AreaBlockBreakEvent(world, pos, state, player)
@@ -112,7 +110,5 @@ class EnchantmentArea : Enchantment(Rarity.VERY_RARE, EnumEnchantmentType.DIGGER
 	}
 
 	class AreaBlockBreakEvent(world: World?, pos: BlockPos?, state: IBlockState?, player: EntityPlayer?) :
-			BlockEvent.BreakEvent(world, pos, state, player) {
-
-	}
+			BlockEvent.BreakEvent(world, pos, state, player)
 }

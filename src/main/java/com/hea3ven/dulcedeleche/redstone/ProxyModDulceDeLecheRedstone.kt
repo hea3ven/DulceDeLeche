@@ -34,7 +34,7 @@ class ProxyModDulceDeLecheRedstone : ProxyModModule() {
 		unlocalizedName = "assembler"
 		setHardness(3.5F)
 		//			soundType SoundType.STONE
-		setCreativeTab(CreativeTabs.REDSTONE);
+		setCreativeTab(CreativeTabs.REDSTONE)
 	}
 
 	override fun onInitEvent(event: FMLInitializationEvent?) {

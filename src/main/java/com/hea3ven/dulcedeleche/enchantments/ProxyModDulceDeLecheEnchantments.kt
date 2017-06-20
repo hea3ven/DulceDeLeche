@@ -18,7 +18,7 @@ class ProxyModDulceDeLecheEnchantments : ProxyModModule() {
 		super.onPostInitEvent(event)
 
 		if (enableArea)
-			MinecraftForge.EVENT_BUS.register(area);
+			MinecraftForge.EVENT_BUS.register(area)
 	}
 
 	override fun getConfig() = CategoryConfigManagerBuilder("enchantment")

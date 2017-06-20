@@ -20,7 +20,7 @@ class ProxyModDulceDeLecheFood : ProxyModModule() {
 	val dulcedeleche = ItemBucketDulceDeLeche().apply {
 		unlocalizedName = "dulcedeleche.dulcedeleche"
 		creativeTab = CreativeTabs.FOOD
-		containerItem = Items.BUCKET;
+		containerItem = Items.BUCKET
 	}
 
 	val vauquita = ItemFood(1, 0.1f, false).apply {

@@ -53,26 +53,26 @@ class TileAssembler : TileMachine(), ITickable, IUpdateHandler {
 				.addOutputSlots(inv, 9, 102, 35, 1, 1)
 				.addOutputSlots(inv, 10, 131, 26, 2, 2)
 				.addPlayerSlots(playerInv)
-				.addGenericSlots(InvWrapper(inv.invCrafting), 0, 5000, 0, 9 * 9, 1)
+				.addGenericSlots(InvWrapper(inv.invCrafting), 0, 5000, 0, 9, 1)
 				.setUpdateHandler(this)
 	}
 
-	override fun hasCapability(capability: Capability<*>?, facing: EnumFacing?): Boolean {
+	override fun hasCapability(capability: Capability<*>, facing: EnumFacing?): Boolean {
 		return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ||
 				super.hasCapability(capability, facing)
 	}
 
-	override fun <T : Any?> getCapability(capability: Capability<T>?, facing: EnumFacing?): T {
+	override fun <T : Any> getCapability(capability: Capability<T>, facing: EnumFacing?): T? {
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
 			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(itemHandler)
 		return super.getCapability(capability, facing)
 	}
 
-	override fun writeToNBT(compound: NBTTagCompound) {
-		super.writeToNBT(compound)
+	override fun writeToNBT(compound: NBTTagCompound):NBTTagCompound {
 
 		compound.setInteger("Progress", progress)
-		compound.setTag("Inventory", inv.serializeNBT());
+		compound.setTag("Inventory", inv.serializeNBT())
+		return super.writeToNBT(compound)
 	}
 
 	override fun readFromNBT(compound: NBTTagCompound) {

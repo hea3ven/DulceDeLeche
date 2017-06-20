@@ -22,7 +22,7 @@ class DispenserPlantBehavior : IBehaviorDispenseItem {
 			val player = ModDulceDeLeche.proxy.getFakePlayer(source.world)
 			ItemStackUtil.useItem(source.world, player, stack, pos, EnumHand.MAIN_HAND, EnumFacing.UP)
 		}
-		return stack;
+		return stack
 	}
 
 }

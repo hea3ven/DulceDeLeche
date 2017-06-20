@@ -7,6 +7,8 @@ import net.minecraftforge.fml.client.IModGuiFactory
 
 @Suppress("unused")
 class DulceDeLecheModGuiFactory : IModGuiFactory {
+	override fun hasConfigGui() = true
+
 	override fun runtimeGuiCategories() = null
 
 	override fun mainConfigGuiClass() = GuiConfigDulceDeLeche::class.java
@@ -15,8 +17,10 @@ class DulceDeLecheModGuiFactory : IModGuiFactory {
 
 	override fun initialize(minecraftInstance: Minecraft) {
 	}
+
+	override fun createConfigGui(parentScreen: GuiScreen) = GuiConfigDulceDeLeche(parentScreen)
+
 }
 
 class GuiConfigDulceDeLeche(parentScreen: GuiScreen) :
-		GuiConfigAutomatic(parentScreen, ModDulceDeLeche.proxy) {
-}
+		GuiConfigAutomatic(parentScreen, ModDulceDeLeche.proxy)

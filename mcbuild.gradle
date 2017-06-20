@@ -30,41 +30,12 @@ buildscript {
 	}
 }
 
-apply plugin: McBuildPlugin
-
 import groovy.json.JsonBuilder
 import groovy.json.JsonSlurper
 import org.ajoberstar.grgit.Grgit
 import org.apache.http.client.methods.HttpPost
 import org.apache.http.entity.StringEntity
 import org.apache.http.impl.client.HttpClientBuilder
-
-version = "${version_mc}-${project_version}"
-group = "${project_group}"
-archivesBaseName = "${project_name}"
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
-minecraft {
-	version = "${version_mc}-${version_forge}" + (project.hasProperty('version_forge_branch')? '-' + version_forge_branch : '')
-	mappings = version_mappings
-	runDir = 'run'
-
-	if (project.hasProperty('project_coremod')) {
-		coreMod = project_coremod
-	}
-
-	def project_class_path = project_class.replace('.', '/')
-	replaceIn "src/main/java/${project_class_path}.java"
-	replace 'PROJECTVERSION', project.version
-	replace 'MCVERSION', project.minecraft.version
-	replace 'FORGEVERSION', version_forge
-}
-
-if (project.hasProperty('project_coremod')) {
-	jar.manifest.attributes.put('FMLCorePluginContainsFMLMod', 'true')
-}
 
 if (project.hasProperty('project_curseforge_id')) {
 	curseforge {
@@ -81,25 +52,6 @@ if (project.hasProperty('project_curseforge_id')) {
 	}
 }
 
-repositories {
-	mavenLocal()
-	maven {
-		url "https://raw.github.com/hea3ven/mvn-repo/master"
-	}
-//	maven {
-//		name "JEI"
-//		url "http://dvs1.progwml6.com/files/maven"
-//	}
-}
-
-configurations {
-	runmods
-}
-
-dependencies {
-//	deobfCompile "mezz.jei:jei_1.8.9:2.24.0.109"
-}
-
 processResources {
 	from(sourceSets.main.resources.srcDirs) {
 		include 'mcmod.info'
@@ -112,46 +64,6 @@ processResources {
 		exclude 'mcmod.info'
 		exclude project_bootstrap_file
 	}
-}
-
-class McBuildPlugin implements Plugin<Project> {
-	void apply(Project project) {
-		project.configurations.create('release')
-		project.configurations.release.transitive = false
-	}
-}
-
-if (project.hasProperty('project_bootstrap_file')) {
-
-	sourceSets.main.java.srcDirs += 'src/bootstrap/java'
-
-	jar {
-		manifest {
-			attributes("H3NTBootstrap": project_bootstrap_file)
-		}
-		into('libs') {
-			from configurations.release
-		}
-	}
-}
-
-task copyRunMods(type: Copy) {
-	from configurations.runmods.files
-	into minecraft.runDir + "/mods/"
-}
-setupDecompWorkspace.dependsOn copyRunMods
-
-if (tasks.findByPath('compileKotlin') != null) {
-	task updateMainKotlinFile << {
-		def mainFile = new File('src/main/java/' + project_class.replace('.', '/') + '.kt')
-		if (mainFile.exists()) {
-			def content = mainFile.text.
-					replaceAll(/val VERSION = "[^"]*"/, 'val VERSION = "' + project.version + '"').
-					replaceAll(/Forge@\[[^,]*,\)/, "Forge@[$version_forge,)")
-			mainFile.withWriter { w -> w << content }
-		}
-	}
-	compileKotlin.dependsOn updateMainKotlinFile
 }
 
 task updateChangelog << {

@@ -1,6 +1,12 @@
 buildscript {
 	repositories {
+		mavenLocal()
+		mavenCentral()
 		jcenter()
+		maven {
+			name = "Hea3veN"
+			url = "https://raw.github.com/hea3ven/mvn-repo/master"
+		}
 		maven {
 			name = "forge"
 			url = "http://files.minecraftforge.net/maven"
@@ -12,7 +18,9 @@ buildscript {
 	}
 	dependencies {
 		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$version_kotlin"
-		classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
+		classpath 'com.hea3ven.tools.gradle.bootstrap:h3nt-gradle-bootstrap:1.0.0'
+		classpath 'com.hea3ven.tools.gradle.automc:h3nt-gradle-automc:1.0.0'
+		classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
 		classpath 'com.matthewprenger:CurseGradle:1.0-SNAPSHOT'
 		classpath 'org.ajoberstar:grgit:1.4.1'
 	}
@@ -24,18 +32,32 @@ plugins {
 
 apply plugin: 'kotlin'
 apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'com.hea3ven.tools.gradle.bootstrap'
+apply plugin: 'com.hea3ven.tools.gradle.automc'
 apply plugin: 'com.matthewprenger.cursegradle'
 apply from: 'mcbuild.gradle'
 
+repositories {
+	mavenLocal()
+	maven {
+		name = "Hea3veN"
+		url = "https://raw.github.com/hea3ven/mvn-repo/master"
+	}
+}
+
 dependencies {
 	compile "org.jetbrains.kotlin:kotlin-stdlib:$version_kotlin"
-	release "org.jetbrains.kotlin:kotlin-stdlib:$version_kotlin"
-	release "org.jetbrains.kotlin:kotlin-runtime:$version_kotlin"
+	// release "org.jetbrains.kotlin:kotlin-stdlib:$version_kotlin"
+	// release "org.jetbrains.kotlin:kotlin-runtime:$version_kotlin"
 
 	// compile project(':CommonUtils')
 	deobfCompile "com.hea3ven.tools.commonutils:h3nt-commonutils:$version_commonutils"
-	release "com.hea3ven.tools.commonutils:h3nt-commonutils:$version_commonutils"
+	// release "com.hea3ven.tools.commonutils:h3nt-commonutils:$version_commonutils"
 
 	testCompile "junit:junit:4.12"
+}
+
+bootstrap {
+	file 'assets/dulcedeleche/bootstrap.json'
 }
 

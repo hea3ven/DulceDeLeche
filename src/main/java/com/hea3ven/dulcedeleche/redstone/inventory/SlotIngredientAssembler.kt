@@ -19,10 +19,10 @@ class SlotIngredientAssembler(val te: TileAssembler, slot: Int, xPosition: Int, 
 	}
 
 	override fun onPickUp(player: EntityPlayer?, clickedButton: Int): ItemStack? {
-		val slotStack = getStack();
-		val playerStack = player!!.inventory.getItemStack();
+		val slotStack = stack
+		val playerStack = player!!.inventory.itemStack
 
-		if (slotStack == null && playerStack == null) {
+		if (slotStack.isEmpty && playerStack.isEmpty) {
 			te.inv.clearRecipeSlot(slotNumber)
 		}
 		te.inv.editingRecipe = true
@@ -31,9 +31,9 @@ class SlotIngredientAssembler(val te: TileAssembler, slot: Int, xPosition: Int, 
 		return result
 	}
 
-	override fun onSwapPlayerStack(player: EntityPlayer?, equipSlot: Int) {
+	override fun onSwapPlayerStack(clickedButton: Int, player: EntityPlayer?, equipSlot: Int) {
 		te.inv.editingRecipe = true
-		val result = delegate.onSwapPlayerStack(player, equipSlot)
+		val result = delegate.onSwapPlayerStack(clickedButton, player, equipSlot)
 		te.inv.editingRecipe = false
 		return result
 	}
@@ -66,7 +66,7 @@ class SlotIngredientAssembler(val te: TileAssembler, slot: Int, xPosition: Int, 
 	}
 
 	override fun getImmutableStack(): ItemStack? {
-		return delegate.getImmutableStack()
+		return delegate.immutableStack
 	}
 
 	override fun extract(size: Int): ItemStack? {

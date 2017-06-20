@@ -19,10 +19,10 @@ class ItemBucketDulceDeLeche : Item() {
 		maxStackSize = 1
 	}
 
-	override fun onItemRightClick(stack: ItemStack, worldIn: World, player: EntityPlayer, hand: EnumHand)
+	override fun onItemRightClick(worldIn: World, player: EntityPlayer, hand: EnumHand)
 			: ActionResult<ItemStack> {
 		player.activeHand = hand
-		return ActionResult(EnumActionResult.SUCCESS, stack)
+		return ActionResult(EnumActionResult.SUCCESS, player.getHeldItem(hand))
 	}
 
 	override fun getItemUseAction(stack: ItemStack?) = EnumAction.EAT
@@ -31,17 +31,17 @@ class ItemBucketDulceDeLeche : Item() {
 
 	override fun onItemUseFinish(stack: ItemStack, world: World, entity: EntityLivingBase): ItemStack? {
 		if (entity is EntityPlayer) {
-			if ( !entity.capabilities.isCreativeMode)
-				--stack.stackSize
+			if (!entity.capabilities.isCreativeMode)
+				stack.shrink(1)
 
-			entity.foodStats.addStats(2, 0.2f);
+			entity.foodStats.addStats(2, 0.2f)
 			if (!world.isRemote) {
-				entity.addPotionEffect(PotionEffect(MobEffects.HASTE, 20 * 20, 1));
-				entity.addPotionEffect(PotionEffect(MobEffects.SLOWNESS, 35 * 20, 1));
+				entity.addPotionEffect(PotionEffect(MobEffects.HASTE, 20 * 20, 1))
+				entity.addPotionEffect(PotionEffect(MobEffects.SLOWNESS, 35 * 20, 1))
 			}
 
-			entity.addStat(StatList.getObjectUseStats(this));
+			entity.addStat(StatList.getObjectUseStats(this))
 		}
-		return if (stack.stackSize <= 0 ) ItemStack(Items.BUCKET) else stack;
+		return if (stack.isEmpty) ItemStack(Items.BUCKET) else stack
 	}
 }
