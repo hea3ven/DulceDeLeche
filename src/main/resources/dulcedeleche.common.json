@@ -1,0 +1,11 @@
+{
+    "required": true,
+    "package": "com.hea3ven.dulcedeleche.mixin",
+    "compatibilityLevel": "JAVA_8",
+    "mixins": [
+        "ServerPlayerInteractionManagerMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}

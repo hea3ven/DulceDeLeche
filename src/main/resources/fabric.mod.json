@@ -1,0 +1,21 @@
+{
+    "id": "dulcedeleche",
+    "name": "Dulce De Leche",
+    "description": "A minecraft mod with an assortment of modifications and content that tries to improve vanilla gameplay.",
+    "version": "@version@",
+    "side": "universal",
+    "languageAdapter": "net.fabricmc.language.kotlin.KotlinLanguageAdapter",
+    "initializer": "com.hea3ven.dulcedeleche.ModDulceDeLeche",
+    "mixins": {
+        "client": "dulcedeleche.client.json",
+        "common": "dulcedeleche.common.json"
+    },
+    "requires": {
+        "fabric": {
+            "version": "@version_fabric@"
+        },
+        "fabric-language-kotlin": {
+            "version": ">=@version_kotlin@"
+        }
+    }
+}

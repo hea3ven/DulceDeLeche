@@ -1,0 +1,11 @@
+{
+    "type": "crafting_shapeless",
+    "ingredients": [
+        {"item": "dulcedeleche:dulcedeleche"},
+        {"item": "minecraft:sugar"}
+    ],
+    "result": {
+        "item": "dulcedeleche:vauquita",
+        "count": 1
+    }
+}
