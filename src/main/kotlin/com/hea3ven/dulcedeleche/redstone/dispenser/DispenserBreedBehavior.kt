@@ -1,0 +1,52 @@
+package com.hea3ven.dulcedeleche.redstone.dispenser
+
+import com.hea3ven.dulcedeleche.ModDulceDeLeche
+import com.mojang.authlib.GameProfile
+import net.minecraft.block.DispenserBlock
+import net.minecraft.block.dispenser.DispenserBehavior
+import net.minecraft.entity.EquipmentSlot
+import net.minecraft.entity.passive.AnimalEntity
+import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.item.ItemStack
+import net.minecraft.util.ActionResult
+import net.minecraft.util.Hand
+import net.minecraft.util.math.BlockPointer
+import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.BoundingBox
+import java.util.*
+
+class DispenserBreedBehavior : DispenserBehavior {
+    override fun dispense(source: BlockPointer, stack: ItemStack): ItemStack {
+        val var3 = source.blockState.get(DispenserBlock.field_10918);
+        val position = source.blockPos.offset(var3)
+        val pos = BlockPos(position.x, position.y, position.z)
+        val box = BoundingBox(pos, pos.add(1, 1, 1))
+        val entities = source.world.getEntities(null, box, { it is AnimalEntity }).map { it as AnimalEntity }
+                .toMutableList()
+
+        if (entities.size <= 0) return stack
+
+        val player = ModDulceDeLeche.getFakePlayer(source.world)
+
+        player.setEquippedStack(EquipmentSlot.HAND_MAIN, stack)
+
+        entities.shuffle()
+        while (entities.size > 0) {
+            val entity = entities[0]
+            entities.remove(entity)
+
+            // if (!entity.isBreedingItem(stack)) continue
+            if (!entity.method_6481(stack)) {
+                continue
+            }
+
+            if (player.interact(entity, Hand.MAIN) == ActionResult.SUCCESS) {
+                break
+            }
+        }
+
+        player.setEquippedStack(EquipmentSlot.HAND_MAIN, ItemStack.EMPTY)
+
+        return stack
+    }
+}

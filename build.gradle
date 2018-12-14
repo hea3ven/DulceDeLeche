@@ -1,63 +1,81 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
 buildscript {
-	repositories {
-		mavenLocal()
-		mavenCentral()
-		jcenter()
-		maven {
-			name = "Hea3veN"
-			url = "https://raw.github.com/hea3ven/mvn-repo/master"
-		}
-		maven {
-			name = "forge"
-			url = "http://files.minecraftforge.net/maven"
-		}
-		maven {
-			name = "sonatype"
-			url = "https://oss.sonatype.org/content/repositories/snapshots/"
-		}
-	}
-	dependencies {
-		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$version_kotlin"
-		classpath 'com.hea3ven.tools.gradle.bootstrap:h3nt-gradle-bootstrap:1.0.0'
-		classpath 'com.hea3ven.tools.gradle.automc:h3nt-gradle-automc:1.0.0'
-		classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
-		classpath 'com.matthewprenger:CurseGradle:1.0-SNAPSHOT'
-		classpath 'org.ajoberstar:grgit:1.4.1'
-	}
+    dependencies {
+        classpath  'com.squareup.okhttp3:okhttp:3.8.1'
+        classpath  'com.j256.simplemagic:simplemagic:1.14'
+    }
 }
 
 plugins {
-	id "org.ajoberstar.grgit" version "1.4.1"
+    id 'org.jetbrains.kotlin.jvm' version '1.3.11'
+    id 'fabric-loom' version "0.2.0-SNAPSHOT"
+    id 'org.ajoberstar.grgit' version '1.4.1'
+    id 'com.matthewprenger.cursegradle' version '1.1.2'
+    id 'com.github.breadmoirai.github-release' version '2.2.2-dev'
 }
 
-apply plugin: 'kotlin'
-apply plugin: 'net.minecraftforge.gradle.forge'
-apply plugin: 'com.hea3ven.tools.gradle.bootstrap'
-apply plugin: 'com.hea3ven.tools.gradle.automc'
-apply plugin: 'com.matthewprenger.cursegradle'
-apply from: 'mcbuild.gradle'
+archivesBaseName = "dulcedeleche"
+version = project_version + '-' + (project.hasProperty('BUILD_NO') ? project.BUILD_NO : 'SNAPSHOT')
 
 repositories {
-	mavenLocal()
-	maven {
-		name = "Hea3veN"
-		url = "https://raw.github.com/hea3ven/mvn-repo/master"
-	}
+    mavenLocal()
+    maven {
+        name = "Hea3veN"
+        url = "https://raw.github.com/hea3ven/mvn-repo/master"
+    }
 }
 
 dependencies {
-	compile "org.jetbrains.kotlin:kotlin-stdlib:$version_kotlin"
-	// release "org.jetbrains.kotlin:kotlin-stdlib:$version_kotlin"
-	// release "org.jetbrains.kotlin:kotlin-runtime:$version_kotlin"
+    minecraft "com.mojang:minecraft:$version_mc_jar"
+    mappings "net.fabricmc:yarn:$version_mc_mappings"
+    modCompile "net.fabricmc:fabric-loader:$version_fabric_loader"
 
-	// compile project(':CommonUtils')
-	deobfCompile "com.hea3ven.tools.commonutils:h3nt-commonutils:$version_commonutils"
-	// release "com.hea3ven.tools.commonutils:h3nt-commonutils:$version_commonutils"
+    modCompile "net.fabricmc:fabric:$version_fabric"
 
-	testCompile "junit:junit:4.12"
+    modCompile "net.fabricmc:fabric-language-kotlin:$version_fabric_kotlin"
+    compileOnly "net.fabricmc:fabric-language-kotlin:$version_fabric_kotlin"
+
+    testCompile "junit:junit:4.12"
 }
 
-bootstrap {
-	file 'assets/dulcedeleche/bootstrap.json'
+minecraft {
+}
+
+processResources {
+    filesMatching ('**/*.json') {
+        filter ReplaceTokens, tokens: [
+            version: project.version.toString(),
+            version_fabric: "$version_fabric".toString(),
+            version_kotlin: "$version_kotlin".toString(),
+            version_fabric_kotlin: "$version_fabric_kotlin".toString()
+            ]
+    }
+}
+
+curseforge {
+    apiKey = project.hasProperty('curse_api_key') ? project.curse_api_key : ''
+
+    options {
+        forgeGradleIntegration = false
+    }
+
+    project {
+        id = project_curseforge_id
+        releaseType = 'release'
+        changelog = project.hasProperty('changelog') ? project.changelog : ''
+        addGameVersion version_mc
+    }
+}
+
+githubRelease {
+    token project.hasProperty('github_release_token') ? project.github_release_token : ''
+    owner "Hea3veN"
+    repo "DulceDeLeche"
+    targetCommitish "master"
+    body project.hasProperty('changelog') ? project.changelog : ''
+    draft false
+    prerelease false
+    releaseAssets jar.outputs.allOutputFiles
 }
 
