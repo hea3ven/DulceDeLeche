@@ -1,15 +1,6 @@
 # Dulce De Leche
 
-A minecraft mod that adds content that tries to follow vanilla balance.
-
-## Download and instalation
-
-[Changelog](https://github.com/hea3ven/DulceDeLeche/blob/master/CHANGELOG)
-
-Curse: [Dulce De Leche](http://mods.curse.com/mc-mods/minecraft/245705-dulce-de-leche)
-
-This mod requires forge to be installed.
-To install the mod copy the file to the "mods" folder
+A minecraft mod with an assortment of modifications and content that tries to improve vanilla gameplay.
 
 ## Modules
 
@@ -37,7 +28,7 @@ The Vauqita is another food item crafted from sugar and Dulce De Leche, when eat
 
 ### Redstone Module
 
-#### Assembler
+#### ~~Assembler~~ (Disabled in 1.14)
 
 ![](https://raw.githubusercontent.com/hea3ven/DulceDeLeche/master/media/assembler1.png) ![](https://raw.githubusercontent.com/hea3ven/DulceDeLeche/master/media/assembler2.png)
 

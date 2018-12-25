@@ -12,4 +12,7 @@ scratchpad.txt
 *.launch
 /bin
 *.iml
+*.ipr
+*.iws
 /classes
+/out
