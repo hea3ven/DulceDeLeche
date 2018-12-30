@@ -38,3 +38,9 @@ The Assembler is a block that can automatically craft items.
 
  * Add dispenser behaviour to plant seeds
  * Add dispenser behaviour to feed animals for breeding
+
+### World Module
+
+#### Non-solid leaves
+
+Makes leaves blocks non-solid blocks that you can walk through.

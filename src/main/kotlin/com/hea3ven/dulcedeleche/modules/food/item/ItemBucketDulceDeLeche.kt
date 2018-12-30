@@ -1,4 +1,4 @@
-package com.hea3ven.dulcedeleche.food.item
+package com.hea3ven.dulcedeleche.modules.food.item
 
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffectInstance

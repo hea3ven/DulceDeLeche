@@ -1,19 +1,16 @@
-package com.hea3ven.dulcedeleche.redstone.dispenser
+package com.hea3ven.dulcedeleche.modules.redstone.dispenser
 
 import com.hea3ven.dulcedeleche.ModDulceDeLeche
-import com.mojang.authlib.GameProfile
 import net.minecraft.block.DispenserBlock
 import net.minecraft.block.dispenser.DispenserBehavior
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.passive.AnimalEntity
-import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
 import net.minecraft.util.math.BlockPointer
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.BoundingBox
-import java.util.*
 
 class DispenserBreedBehavior : DispenserBehavior {
     override fun dispense(source: BlockPointer, stack: ItemStack): ItemStack {

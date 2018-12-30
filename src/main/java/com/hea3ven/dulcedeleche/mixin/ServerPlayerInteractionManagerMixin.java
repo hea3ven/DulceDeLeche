@@ -1,6 +1,5 @@
 package com.hea3ven.dulcedeleche.mixin;
 
-import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -12,8 +11,8 @@ import net.minecraft.server.network.ServerPlayerInteractionManager;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import com.hea3ven.dulcedeleche.enchantments.DulceDeLecheEnchantments;
-import com.hea3ven.dulcedeleche.enchantments.enchantment.IServerPlayerInteractionManager;
+import com.hea3ven.dulcedeleche.modules.enchantments.EnchantmentsModule;
+import com.hea3ven.dulcedeleche.modules.enchantments.enchantment.IServerPlayerInteractionManager;
 
 @Mixin(ServerPlayerInteractionManager.class)
 public abstract class ServerPlayerInteractionManagerMixin
@@ -52,7 +51,7 @@ public abstract class ServerPlayerInteractionManagerMixin
             target = "Lnet/minecraft/server/network/ServerPlayerInteractionManager;destroyBlock(Lnet/minecraft/util/math/BlockPos;)Z",
             value = "INVOKE")})
     public final void onBlockBreak(BlockPos pos, CallbackInfoReturnable info) {
-        DulceDeLecheEnchantments.INSTANCE.getAREA().onBlockBreak(this, pos);
+        EnchantmentsModule.INSTANCE.getAREA().onBlockBreak(this, pos);
     }
 
     @Override

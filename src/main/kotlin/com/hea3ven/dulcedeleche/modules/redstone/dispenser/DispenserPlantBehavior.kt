@@ -1,4 +1,4 @@
-package com.hea3ven.dulcedeleche.redstone.dispenser
+package com.hea3ven.dulcedeleche.modules.redstone.dispenser
 
 import com.hea3ven.dulcedeleche.ModDulceDeLeche
 import net.minecraft.block.DispenserBlock

@@ -1,4 +1,4 @@
-package com.hea3ven.dulcedeleche.enchantments.enchantment
+package com.hea3ven.dulcedeleche.modules.enchantments.enchantment
 
 import net.minecraft.block.BlockState
 import net.minecraft.enchantment.Enchantment
