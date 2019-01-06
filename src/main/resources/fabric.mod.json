@@ -8,7 +8,7 @@
     "initializer": "com.hea3ven.dulcedeleche.ModDulceDeLeche",
     "mixins": {
         "client": "dulcedeleche.client.json",
-        "common": "dulcedeleche.common.json"
+        "common": ["dulcedeleche.common.json", "dulcedeleche.mobs.common.json"]
     },
     "requires": {
         "fabric": {

@@ -6,6 +6,8 @@ import com.hea3ven.dulcedeleche.modules.enchantments.EnchantmentsModule
 import com.hea3ven.dulcedeleche.modules.enchantments.EnchantmentsModuleConfig
 import com.hea3ven.dulcedeleche.modules.food.FoodModule
 import com.hea3ven.dulcedeleche.modules.food.FoodModuleConfig
+import com.hea3ven.dulcedeleche.modules.mobs.MobsModule
+import com.hea3ven.dulcedeleche.modules.mobs.MobsModuleConfig
 import com.hea3ven.dulcedeleche.modules.redstone.RedstoneModule
 import com.hea3ven.dulcedeleche.modules.redstone.RedstoneModuleConfig
 import com.hea3ven.dulcedeleche.modules.world.WorldModule
@@ -23,7 +25,7 @@ object ModDulceDeLeche : ModInitializer {
 
     private val fakePlayerProfile = GameProfile(null, "[dulcedeleche]")
 
-    val modules = listOf(FoodModule, EnchantmentsModule, RedstoneModule, WorldModule)
+    val modules = listOf(FoodModule, EnchantmentsModule, RedstoneModule, WorldModule, MobsModule)
 
     override fun onInitialize() {
         initializeConfig()
@@ -37,11 +39,13 @@ object ModDulceDeLeche : ModInitializer {
                              Pair(FoodModuleConfig::class.java, FoodModule::createDefaultConfig),
                              Pair(EnchantmentsModuleConfig::class.java, EnchantmentsModule::createDefaultConfig),
                              Pair(RedstoneModuleConfig::class.java, RedstoneModule::createDefaultConfig),
-                             Pair(WorldModuleConfig::class.java, WorldModule::createDefaultConfig))
+                             Pair(WorldModuleConfig::class.java, WorldModule::createDefaultConfig),
+                             Pair(MobsModuleConfig::class.java, MobsModule::createDefaultConfig))
         FoodModule.cfg = cfg.modules.food
         EnchantmentsModule.cfg = cfg.modules.enchantments
         RedstoneModule.cfg = cfg.modules.redstone
         WorldModule.cfg = cfg.modules.world
+        MobsModule.cfg = cfg.modules.mobs
     }
 
     private fun initializeModules() {
@@ -58,7 +62,8 @@ object ModDulceDeLeche : ModInitializer {
 
     private fun createDefaultConfig() = GeneralConfig(
             ModulesConfig(FoodModule.createDefaultConfig(), EnchantmentsModule.createDefaultConfig(),
-                          RedstoneModule.createDefaultConfig(), WorldModule.createDefaultConfig()))
+                          RedstoneModule.createDefaultConfig(), WorldModule.createDefaultConfig(),
+                          MobsModule.createDefaultConfig()))
 
 }
 

@@ -1,0 +1,11 @@
+{
+    "required": true,
+    "package": "com.hea3ven.dulcedeleche.modules.mobs.mixin",
+    "compatibilityLevel": "JAVA_8",
+    "mixins": [
+        "CreeperEntityMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}
