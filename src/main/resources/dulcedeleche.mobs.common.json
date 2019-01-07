@@ -4,7 +4,8 @@
     "compatibilityLevel": "JAVA_8",
     "mixins": [
         "CreeperEntityMixin",
-        "ZombieEntityMixin"
+        "ZombieEntityMixin",
+        "MobEntityMixin"
     ],
     "injectors": {
         "defaultRequire": 1
