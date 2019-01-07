@@ -3,7 +3,8 @@
     "package": "com.hea3ven.dulcedeleche.modules.mobs.mixin",
     "compatibilityLevel": "JAVA_8",
     "mixins": [
-        "CreeperEntityMixin"
+        "CreeperEntityMixin",
+        "ZombieEntityMixin"
     ],
     "injectors": {
         "defaultRequire": 1
