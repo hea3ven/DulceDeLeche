@@ -1,6 +1,7 @@
 package com.hea3ven.dulcedeleche.modules.mobs
 
 import com.hea3ven.dulcedeleche.Module
+import com.hea3ven.dulcedeleche.modules.mobs.mixin.CaveSpiderEntityMixin
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.SpawnType
@@ -14,7 +15,7 @@ import net.minecraft.world.IWorld
 import net.minecraft.world.LightType
 
 object MobsModule : Module<MobsModuleConfig>() {
-    override fun createDefaultConfig() = MobsModuleConfig(true, 14.0, true)
+    override fun createDefaultConfig() = MobsModuleConfig(true, 14.0, true, true)
 
     override fun onInitialize() {
     }
@@ -38,6 +39,13 @@ object MobsModule : Module<MobsModuleConfig>() {
                 target.addPotionEffect(StatusEffectInstance(StatusEffects.SLOWNESS, 200, 1));
             }
         }
+    }
+
+    fun onCaveSpiderEntityDoAttack(entity: LivingEntity, target: Entity) {
+        if (target !is LivingEntity) {
+            return
+        }
+        target.addPotionEffect(StatusEffectInstance(StatusEffects.WEAKNESS, 15 * 20));
     }
 }
 

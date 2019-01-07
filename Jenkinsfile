@@ -28,7 +28,7 @@ pipeline {
                                 changes += "${entry.msg}\r\n".replace('\'', '\\\'')
                             }
                         }
-                        sh "gradle build check curseforge githubRelease --stacktrace --info -PBUILD_NO=$BUILD_NUMBER -Pcurse_api_key=$curse_api_key -Pgithub_release_token=$github_release_token -Pchangelog='$changes'"
+                        sh "gradle clean build check curseforge githubRelease --stacktrace --info -PBUILD_NO=$BUILD_NUMBER -Pcurse_api_key=$curse_api_key -Pgithub_release_token=$github_release_token -Pchangelog='$changes'"
                     }
                 }
             }
