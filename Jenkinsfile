@@ -22,6 +22,7 @@ pipeline {
                         string(credentialsId: 'curse_api_key', variable: 'curse_api_key'),
                         string(credentialsId: 'github_release_token', variable: 'github_release_token')]) {
                     script {
+                        sh "rm build/libs/*"
                         def changes = ""
                         for (changeLog in currentBuild.changeSets) {
                             for(entry in changeLog.items) {

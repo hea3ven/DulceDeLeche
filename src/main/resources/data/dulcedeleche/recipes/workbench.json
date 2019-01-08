@@ -1,0 +1,22 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#C#",
+        "# #",
+        "#H#"
+    ],
+    "key": {
+        "C": {
+            "item": "minecraft:crafting_table"
+        },
+        "#": {
+            "tag": "minecraft:planks"
+        },
+        "H": {
+            "item": "minecraft:chest"
+        }
+    },
+    "result": {
+        "item": "dulcedeleche:workbench"
+    }
+}

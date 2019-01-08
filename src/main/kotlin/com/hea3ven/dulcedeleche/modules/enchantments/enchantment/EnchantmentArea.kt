@@ -13,9 +13,6 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
 class EnchantmentArea : Enchantment(Weight.LEGENDARY, EnchantmentTarget.BREAKER, arrayOf(EquipmentSlot.HAND_MAIN)) {
-    init {
-        translationName = "area"
-    }
 
     override fun getMaximumLevel(): Int {
         return 2

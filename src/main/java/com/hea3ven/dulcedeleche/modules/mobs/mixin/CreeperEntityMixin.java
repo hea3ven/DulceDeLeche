@@ -11,6 +11,8 @@ import com.hea3ven.dulcedeleche.modules.mobs.MobsModule;
 
 @Mixin(CreeperEntity.class)
 public class CreeperEntityMixin extends HostileEntity {
+
+    @SuppressWarnings("ConstantConditions")
     protected CreeperEntityMixin() {
         super(null, null);
     }

@@ -1,0 +1,25 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#C#",
+        "#R#",
+        "#H#"
+    ],
+    "key": {
+        "C": {
+            "item": "minecraft:crafting_table"
+        },
+        "#": {
+            "item": "minecraft:iron_ingot"
+        },
+        "R": {
+            "item": "minecraft:comparator"
+        },
+        "H": {
+            "item": "minecraft:chest"
+        }
+    },
+    "result": {
+        "item": "dulcedeleche:assembler"
+    }
+}

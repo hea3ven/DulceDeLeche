@@ -12,20 +12,17 @@ import net.minecraft.util.registry.Registry
 
 object FoodModule : Module<FoodModuleConfig>() {
 
-    val BUCKET_DULCEDELECHE = ItemBucketDulceDeLeche()
-
-    val VAUQUITA = FoodItem(1, 0.1f, false, Item.Settings().itemGroup(ItemGroup.FOOD)).apply {
-        setStatusEffect(StatusEffectInstance(StatusEffects.HASTE, 15 * 20, 0), 1.0f)
-    }
-
     override fun createDefaultConfig() = FoodModuleConfig(true)
 
     override fun onInitialize() {
         if (cfg.dulceDeLecheEnabled) {
             logger.debug("Registering the Dulce de Leche item")
-            Registry.register(Registry.ITEM, Identifier("dulcedeleche:dulcedeleche"), BUCKET_DULCEDELECHE)
+            Registry.register(Registry.ITEM, Identifier("dulcedeleche:dulcedeleche"), ItemBucketDulceDeLeche())
             logger.debug("Registering the Vauquita item")
-            Registry.register(Registry.ITEM, Identifier("dulcedeleche:vauquita"), VAUQUITA)
+            Registry.register(Registry.ITEM, Identifier("dulcedeleche:vauquita"),
+                              FoodItem(1, 0.1f, false, Item.Settings().itemGroup(ItemGroup.FOOD)).apply {
+                                  setStatusEffect(StatusEffectInstance(StatusEffects.HASTE, 15 * 20, 0), 1.0f)
+                              })
         }
     }
 }

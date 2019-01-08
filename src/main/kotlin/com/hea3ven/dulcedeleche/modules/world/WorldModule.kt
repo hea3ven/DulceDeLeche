@@ -2,7 +2,7 @@ package com.hea3ven.dulcedeleche.modules.world
 
 import com.hea3ven.dulcedeleche.Module
 import com.hea3ven.dulcedeleche.modules.world.event.BlockItemPlaceEvent
-import com.hea3ven.util.reflectField
+import com.hea3ven.tools.commonutils.util.ReflectionUtil.reflectField
 import net.fabricmc.fabric.events.PlayerInteractionEvent
 import net.minecraft.block.Block
 import net.minecraft.block.LeavesBlock

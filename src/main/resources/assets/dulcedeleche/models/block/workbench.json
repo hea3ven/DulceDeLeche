@@ -1,0 +1,9 @@
+{
+    "parent": "minecraft:block/orientable",
+    "textures": {
+        "top": "dulcedeleche:block/workbench_top",
+        "side": "dulcedeleche:block/workbench_side",
+        "front": "dulcedeleche:block/workbench_front",
+        "bottom": "minecraft:block/oak_planks"
+    }
+}
