@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "dulcedeleche:block/workbench" },
+        "facing=south": { "model": "dulcedeleche:block/workbench", "y": 180 },
+        "facing=west":  { "model": "dulcedeleche:block/workbench", "y": 270 },
+        "facing=east":  { "model": "dulcedeleche:block/workbench", "y": 90 }
+    }
+}

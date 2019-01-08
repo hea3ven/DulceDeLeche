@@ -10,11 +10,12 @@ buildscript {
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.3.11'
     id 'fabric-loom' version "0.2.0-SNAPSHOT"
-    id 'org.ajoberstar.grgit' version '1.4.1'
+    id 'org.ajoberstar.grgit' version '2.3.0'
     id 'com.matthewprenger.cursegradle' version '1.1.2'
     id 'com.github.breadmoirai.github-release' version '2.2.2-dev'
 }
 
+group = 'com.hea3ven.dulcedeleche'
 archivesBaseName = "dulcedeleche"
 version = project_version + '-' + (project.hasProperty('BUILD_NO') ? project.BUILD_NO : 'SNAPSHOT')
 
@@ -35,6 +36,8 @@ dependencies {
 
     modCompile "net.fabricmc:fabric-language-kotlin:$version_fabric_kotlin"
     compileOnly "net.fabricmc:fabric-language-kotlin:$version_fabric_kotlin"
+
+    // compile project(':CommonUtils')
 
     testCompile "junit:junit:4.12"
 }

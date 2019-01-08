@@ -12,6 +12,8 @@ import com.hea3ven.dulcedeleche.modules.mobs.MobsModule;
 
 @Mixin(ZombieEntity.class)
 public class ZombieEntityMixin extends HostileEntity {
+
+    @SuppressWarnings("ConstantConditions")
     protected ZombieEntityMixin() {
         super(null, null);
     }

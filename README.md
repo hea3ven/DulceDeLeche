@@ -26,9 +26,23 @@ Dulce De Leche is a food item obtained by cooking a milk bucket in a furnace. Wh
 
 The Vauqita is another food item crafted from sugar and Dulce De Leche, when eaten it teporarily provides Haste I.
 
+### Mobs
+
+This module adds several tweaks:
+ 1. Prevents creepers from spawning in the surface of the world.
+ 1. Increases the zombie knockback resistance.
+ 1. Makes Spiders apply slowness when they bite.
+ 1. Removes the Poison from Cave Spiders, and replaces it with Weakness.
+
 ### Redstone Module
 
-#### ~~Assembler~~ (Disabled in 1.14)
+#### Workbench
+
+![](https://raw.githubusercontent.com/hea3ven/DulceDeLeche/master/media/workbench1.png) ![](https://raw.githubusercontent.com/hea3ven/DulceDeLeche/master/media/workbench2.png)
+
+The Workbench is an advanced crafting table block.
+
+#### Assembler
 
 ![](https://raw.githubusercontent.com/hea3ven/DulceDeLeche/master/media/assembler1.png) ![](https://raw.githubusercontent.com/hea3ven/DulceDeLeche/master/media/assembler2.png)
 
@@ -44,3 +58,7 @@ The Assembler is a block that can automatically craft items.
 #### Non-solid leaves
 
 Makes leaves blocks non-solid blocks that you can walk through.
+
+#### Bed restrictions
+
+Prevents players from sleeping in recently placed beds.

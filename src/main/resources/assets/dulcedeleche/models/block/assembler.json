@@ -1,8 +1,9 @@
 {
-    "parent": "minecraft:block/cube_bottom_top",
+    "parent": "minecraft:block/orientable",
     "textures": {
-        "top": "dulcedeleche:blocks/assembler_top",
-        "side": "minecraft:blocks/furnace_top",
-        "bottom": "minecraft:blocks/furnace_top"
+        "top": "dulcedeleche:block/assembler_top",
+        "side": "dulcedeleche:block/assembler_side",
+        "front": "dulcedeleche:block/assembler_front",
+        "bottom": "minecraft:block/iron_block"
     }
 }

@@ -2,5 +2,7 @@
     "enchantment.dulcedeleche.area": "Area",
     "item.dulcedeleche.dulcedeleche": "Dulce De Leche",
     "item.dulcedeleche.vauquita": "Vauquita",
+    "block.dulcedeleche.workbench": "Workbench",
+    "block.dulcedeleche.assembler": "Assembler",
     "block.minecraft.bed.recently_placed": "This bed was recently placed"
 }

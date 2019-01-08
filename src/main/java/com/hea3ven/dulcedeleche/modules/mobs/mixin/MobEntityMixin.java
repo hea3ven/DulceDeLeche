@@ -14,6 +14,7 @@ import com.hea3ven.dulcedeleche.modules.mobs.MobsModule;
 @Mixin(MobEntity.class)
 public abstract class MobEntityMixin extends LivingEntity {
 
+    @SuppressWarnings("ConstantConditions")
     protected MobEntityMixin() {
         super(null, null);
     }

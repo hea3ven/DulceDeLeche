@@ -14,6 +14,7 @@ import com.hea3ven.dulcedeleche.modules.mobs.MobsModule;
 @Mixin(CaveSpiderEntity.class)
 public abstract class CaveSpiderEntityMixin extends SpiderEntity {
 
+    @SuppressWarnings("ConstantConditions")
     protected CaveSpiderEntityMixin() {
         super(null, null);
     }
