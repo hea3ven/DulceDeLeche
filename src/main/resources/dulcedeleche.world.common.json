@@ -1,0 +1,11 @@
+{
+    "required": true,
+    "package": "com.hea3ven.dulcedeleche.modules.world.mixin",
+    "compatibilityLevel": "JAVA_8",
+    "mixins": [
+        "BlockItemMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}

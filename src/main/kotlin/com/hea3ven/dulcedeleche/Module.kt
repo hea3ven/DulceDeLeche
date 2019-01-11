@@ -5,7 +5,7 @@ import org.apache.logging.log4j.LogManager
 
 abstract class Module<T : BaseModuleConfig> {
 
-    protected val logger = LogManager.getFormatterLogger("ModDulceDeLeche." + this.javaClass.simpleName);
+    protected val logger = LogManager.getFormatterLogger("ModDulceDeLeche." + this.javaClass.simpleName)!!
 
     lateinit var cfg: T
     abstract fun createDefaultConfig(): T

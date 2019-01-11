@@ -64,20 +64,20 @@ class EnchantmentArea : Enchantment(Weight.LEGENDARY, EnchantmentTarget.BREAKER,
         }
     }
 
-    fun breakBlock(interactionManager: IServerPlayerInteractionManager, pos: BlockPos,
+    private fun breakBlock(interactionManager: IServerPlayerInteractionManager, pos: BlockPos,
             originState: BlockState): Boolean {
         val state = interactionManager.world.getBlockState(pos)
         if (state.block != originState.block) {
             return false
         }
-        val blockEntity = interactionManager.world.getBlockEntity(pos);
-        val destroyed = interactionManager.doDestroyBlock(pos);
+        val blockEntity = interactionManager.world.getBlockEntity(pos)
+        val destroyed = interactionManager.doDestroyBlock(pos)
         if (!interactionManager.isCreative()) {
-            val stack = interactionManager.player.mainHandStack;
-            stack.onBlockBroken(interactionManager.world, state, pos, interactionManager.player);
+            val stack = interactionManager.player.mainHandStack
+            stack.onBlockBroken(interactionManager.world, state, pos, interactionManager.player)
             if (destroyed && interactionManager.player.isUsingEffectiveTool(state)) {
                 state.block.afterBreak(interactionManager.world, interactionManager.player, pos, state, blockEntity,
-                                       if (stack.isEmpty) ItemStack.EMPTY else stack.copy());
+                                       if (stack.isEmpty) ItemStack.EMPTY else stack.copy())
             }
         }
         return true

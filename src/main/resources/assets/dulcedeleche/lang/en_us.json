@@ -1,5 +1,6 @@
 {
     "enchantment.dulcedeleche.area": "Area",
     "item.dulcedeleche.dulcedeleche": "Dulce De Leche",
-    "item.dulcedeleche.vauquita": "Vauquita"
+    "item.dulcedeleche.vauquita": "Vauquita",
+    "block.minecraft.bed.recently_placed": "This bed was recently placed"
 }

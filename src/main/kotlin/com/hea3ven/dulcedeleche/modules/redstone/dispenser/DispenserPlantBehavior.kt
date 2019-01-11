@@ -12,7 +12,7 @@ import net.minecraft.util.math.Direction
 
 class DispenserPlantBehavior : DispenserBehavior {
     override fun dispense(source: BlockPointer, stack: ItemStack): ItemStack {
-        val direction: Direction = source.blockState.get(DispenserBlock.field_10918);
+        val direction: Direction = source.blockState.get(DispenserBlock.field_10918)
         val position = source.blockPos.offset(direction)
 
         val offset = if (source.world.isAir(position)) 1 else 0
