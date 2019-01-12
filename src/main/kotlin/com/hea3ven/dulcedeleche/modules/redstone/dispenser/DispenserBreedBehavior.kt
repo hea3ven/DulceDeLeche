@@ -32,8 +32,7 @@ class DispenserBreedBehavior : DispenserBehavior {
             val entity = entities[0]
             entities.remove(entity)
 
-            // if (!entity.isBreedingItem(stack)) continue
-            if (!entity.method_6481(stack)) {
+            if (!entity.isBreedingItem(stack)) {
                 continue
             }
 

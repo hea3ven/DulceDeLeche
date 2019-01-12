@@ -18,7 +18,7 @@ object BedManagement {
 
     private fun initPlacements(world: World) {
         if (placements == null) {
-            placements = world.persistentStateManager!!.create(DimensionType.OVERWORLD, ::BedPlacements, "beds_data")
+            placements = world.persistentStateManager!!.get(DimensionType.OVERWORLD, ::BedPlacements, "beds_data")
             if (placements == null) {
                 placements = BedPlacements("beds_data")
                 world.persistentStateManager!!.set(DimensionType.OVERWORLD, "beds_data", placements)

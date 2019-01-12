@@ -25,10 +25,6 @@ class EnchantmentArea : Enchantment(Weight.LEGENDARY, EnchantmentTarget.BREAKER,
         return 20
     }
 
-    override fun getMaximumPower(enchantmentLevel: Int): Int {
-        return super.getMaximumPower(enchantmentLevel) + 50
-    }
-
     fun onBlockBreak(interactionManager: IServerPlayerInteractionManager, pos: BlockPos) {
         val areaLevel = interactionManager.player.itemsHand.map {
             EnchantmentHelper.getLevel(this, it)

@@ -20,7 +20,7 @@ object MobsModule : Module<MobsModuleConfig>() {
     }
 
     fun onCreeperEntityCanSpawn(entity: Entity, world: IWorld, spawnType: SpawnType): Boolean {
-        return world.getLightLevel(LightType.SKY, BlockPos(entity.x, entity.y, entity.z)) <= 8
+        return world.getLightLevel(LightType.SKY_LIGHT, BlockPos(entity.x, entity.y, entity.z)) <= 8
     }
 
     fun onZombiePrepareEntityAttributes(entity: LivingEntity) {
