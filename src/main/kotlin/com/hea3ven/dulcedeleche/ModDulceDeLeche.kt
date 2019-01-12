@@ -21,7 +21,7 @@ import org.apache.logging.log4j.LogManager
 
 object ModDulceDeLeche : ModInitializer {
 
-    private val logger = LogManager.getFormatterLogger("ModDulceDeLeche");
+    private val logger = LogManager.getFormatterLogger("ModDulceDeLeche")
 
     private val fakePlayerProfile = GameProfile(null, "[dulcedeleche]")
 
@@ -35,7 +35,7 @@ object ModDulceDeLeche : ModInitializer {
     private fun initializeConfig() {
         logger.info("Reading configuration file")
         val cfg = readConfig("dulcedeleche", GeneralConfig::class.java, this::createDefaultConfig,
-                             Pair(ModulesConfig::class.java, { createDefaultConfig().modules }),
+                             Pair(ModulesConfig::class.java, createDefaultConfig()::modules),
                              Pair(FoodModuleConfig::class.java, FoodModule::createDefaultConfig),
                              Pair(EnchantmentsModuleConfig::class.java, EnchantmentsModule::createDefaultConfig),
                              Pair(RedstoneModuleConfig::class.java, RedstoneModule::createDefaultConfig),

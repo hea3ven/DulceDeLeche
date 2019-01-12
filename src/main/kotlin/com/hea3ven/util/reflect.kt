@@ -1,6 +1,5 @@
 package com.hea3ven.util
 
-import org.apache.logging.log4j.LogManager
 import java.lang.reflect.Field
 
 fun reflectField(klass: Class<*>, deobfName: String, obfName: String, fieldConsumer: (Field) -> Unit) {

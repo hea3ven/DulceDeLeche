@@ -14,7 +14,7 @@ fun <T> readConfig(configFileName: String, configClass: Class<T>, defaultConfigB
         configBuilders.forEach { builderDesc ->
             registerTypeAdapter(builderDesc.first, InstanceCreator { builderDesc.second() })
         }
-    }.create();
+    }.create()
     val configFile = configDir.resolve("$configFileName.json")
     if (Files.exists(configFile)) {
         Files.newBufferedReader(configFile).use {

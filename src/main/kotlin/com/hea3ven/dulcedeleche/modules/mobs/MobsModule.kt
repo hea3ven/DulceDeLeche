@@ -1,7 +1,6 @@
 package com.hea3ven.dulcedeleche.modules.mobs
 
 import com.hea3ven.dulcedeleche.Module
-import com.hea3ven.dulcedeleche.modules.mobs.mixin.CaveSpiderEntityMixin
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.SpawnType
@@ -21,7 +20,7 @@ object MobsModule : Module<MobsModuleConfig>() {
     }
 
     fun onCreeperEntityCanSpawn(entity: Entity, world: IWorld, spawnType: SpawnType): Boolean {
-        return world.getLightLevel(LightType.SKY, BlockPos(entity.x, entity.y, entity.z)) <= 8
+        return world.getLightLevel(LightType.SKY_LIGHT, BlockPos(entity.x, entity.y, entity.z)) <= 8
     }
 
     fun onZombiePrepareEntityAttributes(entity: LivingEntity) {
@@ -36,7 +35,7 @@ object MobsModule : Module<MobsModuleConfig>() {
         }
         if (cfg.spidersApplySlowness) {
             if (entity is SpiderEntity) {
-                target.addPotionEffect(StatusEffectInstance(StatusEffects.SLOWNESS, 200, 1));
+                target.addPotionEffect(StatusEffectInstance(StatusEffects.SLOWNESS, 200, 1))
             }
         }
     }
@@ -45,7 +44,7 @@ object MobsModule : Module<MobsModuleConfig>() {
         if (target !is LivingEntity) {
             return
         }
-        target.addPotionEffect(StatusEffectInstance(StatusEffects.WEAKNESS, 15 * 20));
+        target.addPotionEffect(StatusEffectInstance(StatusEffects.WEAKNESS, 15 * 20))
     }
 }
 

@@ -14,7 +14,7 @@ import net.minecraft.util.math.BoundingBox
 
 class DispenserBreedBehavior : DispenserBehavior {
     override fun dispense(source: BlockPointer, stack: ItemStack): ItemStack {
-        val var3 = source.blockState.get(DispenserBlock.field_10918);
+        val var3 = source.blockState.get(DispenserBlock.field_10918)
         val position = source.blockPos.offset(var3)
         val pos = BlockPos(position.x, position.y, position.z)
         val box = BoundingBox(pos, pos.add(1, 1, 1))
@@ -32,8 +32,7 @@ class DispenserBreedBehavior : DispenserBehavior {
             val entity = entities[0]
             entities.remove(entity)
 
-            // if (!entity.isBreedingItem(stack)) continue
-            if (!entity.method_6481(stack)) {
+            if (!entity.isBreedingItem(stack)) {
                 continue
             }
 

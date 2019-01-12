@@ -40,6 +40,7 @@ public abstract class ServerPlayerInteractionManagerMixin
     }
 
     @Shadow
+    @SuppressWarnings("SameReturnValue")
     private boolean destroyBlock(BlockPos var1) {
         return true;
     }
