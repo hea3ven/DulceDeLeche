@@ -72,6 +72,8 @@ dependencies {
     shadow("com.hea3ven.tools.commonutils:h3nt-commonutils:$version_h3nt_commonutils")
 
     compileOnly("com.google.code.findbugs:jsr305:3.0.2")
+
+    testCompile("junit:junit:4.12")
 }
 
 tasks.processResources {
