@@ -7,7 +7,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.PersistentState
 import net.minecraft.world.World
 
-class BedPlacements(persistKey: String) : PersistentState(persistKey) {
+class BedPlacements() : PersistentState("beds_data") {
     private val placements = mutableMapOf<BlockPos, Long>()
 
     fun onBedPlaced(world: World, pos1: BlockPos, pos2: BlockPos) {

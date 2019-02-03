@@ -22,7 +22,7 @@ public class BlockItemMixin extends Item {
     }
 
     @Inject(method = "place(Lnet/minecraft/item/ItemPlacementContext;)Lnet/minecraft/util/ActionResult;",
-            at = @At(value = "RETURN", ordinal = 3))
+            at = @At(value = "RETURN", ordinal = 4))
     public final void onPlace(ItemPlacementContext itemPlacementContext,
             CallbackInfoReturnable<ActionResult> info) {
 

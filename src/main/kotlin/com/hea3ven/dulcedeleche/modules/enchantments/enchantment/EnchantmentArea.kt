@@ -7,9 +7,9 @@ import net.minecraft.enchantment.EnchantmentTarget
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
+import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
-import net.minecraft.world.FluidRayTraceMode
 import net.minecraft.world.World
 
 class EnchantmentArea : Enchantment(Weight.LEGENDARY, EnchantmentTarget.BREAKER, arrayOf(EquipmentSlot.HAND_MAIN)) {
@@ -32,8 +32,8 @@ class EnchantmentArea : Enchantment(Weight.LEGENDARY, EnchantmentTarget.BREAKER,
         if (areaLevel <= 0) {
             return
         }
-        val trace = interactionManager.player.rayTrace(5.0, 1.0f, FluidRayTraceMode.NONE)
-        if (trace != null && trace.blockPos == pos) {
+        val trace = interactionManager.player.rayTrace(5.0, 1.0f, false)
+        if (trace != null && trace.pos == pos && trace is BlockHitResult) {
             areaBreak(interactionManager, pos, trace.side, areaLevel)
         }
     }
@@ -44,7 +44,6 @@ class EnchantmentArea : Enchantment(Weight.LEGENDARY, EnchantmentTarget.BREAKER,
             face.rotateClockwise(it).vector!!
         }
         assert(dirs.size == 2)
-        println(dirs)
 
         val state = interactionManager.world.getBlockState(pos)
 
@@ -87,5 +86,5 @@ interface IServerPlayerInteractionManager {
 
     fun isCreative(): Boolean
 
-    fun doDestroyBlock(pos: BlockPos):Boolean
+    fun doDestroyBlock(pos: BlockPos): Boolean
 }
