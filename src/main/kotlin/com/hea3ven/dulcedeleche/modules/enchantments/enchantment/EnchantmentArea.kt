@@ -33,7 +33,7 @@ class EnchantmentArea : Enchantment(Weight.LEGENDARY, EnchantmentTarget.BREAKER,
             return
         }
         val trace = interactionManager.player.rayTrace(5.0, 1.0f, false)
-        if (trace != null && trace.pos == pos && trace is BlockHitResult) {
+        if (trace != null && trace is BlockHitResult && trace.blockPos == pos) {
             areaBreak(interactionManager, pos, trace.side, areaLevel)
         }
     }
