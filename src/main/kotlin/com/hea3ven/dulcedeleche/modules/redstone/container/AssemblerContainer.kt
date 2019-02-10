@@ -13,7 +13,7 @@ class AssemblerContainer(syncId: Int, craftingMachineEntity: AssemblerBlockEntit
 
     init {
         addOutputSlots(craftingMachineEntity, 18, 98, 57, 4, 1)
-        readData(propertyDelegate)
+        addProperties(propertyDelegate)
     }
 
 }

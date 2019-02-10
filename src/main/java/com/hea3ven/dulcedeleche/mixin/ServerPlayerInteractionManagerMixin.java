@@ -8,8 +8,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.network.ServerPlayerInteractionManager;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 import com.hea3ven.dulcedeleche.modules.enchantments.EnchantmentsModule;
 import com.hea3ven.dulcedeleche.modules.enchantments.enchantment.IServerPlayerInteractionManager;
@@ -21,7 +21,7 @@ public abstract class ServerPlayerInteractionManagerMixin
     public ServerPlayerEntity player;
 
     @Shadow
-    public World world;
+    public ServerWorld world;
 
     public final ServerPlayerEntity getPlayer() {
         return player;
@@ -31,11 +31,11 @@ public abstract class ServerPlayerInteractionManagerMixin
         this.player = var1;
     }
 
-    public final World getWorld() {
+    public final ServerWorld getWorld() {
         return world;
     }
 
-    public final void setWorld(World var1) {
+    public final void setWorld(ServerWorld var1) {
         this.world = var1;
     }
 

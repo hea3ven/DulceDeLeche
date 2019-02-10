@@ -1,7 +1,5 @@
 package com.hea3ven.dulcedeleche.modules.world.mixin;
 
-import net.fabricmc.fabric.util.HandlerArray;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -25,10 +23,6 @@ public class BlockItemMixin extends Item {
             at = @At(value = "RETURN", ordinal = 4))
     public final void onPlace(ItemPlacementContext itemPlacementContext,
             CallbackInfoReturnable<ActionResult> info) {
-
-        for (BlockItemPlaceEvent handler : ((HandlerArray<BlockItemPlaceEvent>) BlockItemPlaceEvent.Companion
-                .getPOST_SUCCESS()).getBackingArray()) {
-            handler.place(itemPlacementContext);
-        }
+        BlockItemPlaceEvent.Companion.getPOST_SUCCESS().invoker().place(itemPlacementContext);
     }
 }

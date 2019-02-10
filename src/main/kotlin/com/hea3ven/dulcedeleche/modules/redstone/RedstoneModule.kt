@@ -9,8 +9,8 @@ import com.hea3ven.dulcedeleche.modules.redstone.client.gui.AssemblerScreen
 import com.hea3ven.dulcedeleche.modules.redstone.client.gui.WorkbenchScreen
 import com.hea3ven.dulcedeleche.modules.redstone.dispenser.DispenserBreedBehavior
 import com.hea3ven.dulcedeleche.modules.redstone.dispenser.DispenserPlantBehavior
-import net.fabricmc.fabric.api.client.gui.GuiFactory
-import net.fabricmc.fabric.api.client.gui.GuiProviderRegistry
+import net.fabricmc.fabric.api.client.screen.ContainerScreenFactory
+import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry
 import net.fabricmc.fabric.api.container.ContainerFactory
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry
 import net.minecraft.block.Block
@@ -57,7 +57,7 @@ object RedstoneModule : Module<RedstoneModuleConfig>() {
         workbenchItem.registerBlockItemMap(Item.BLOCK_ITEM_MAP, workbenchItem)
         ContainerProviderRegistry.INSTANCE.registerFactory(workbenchId, ContainerFactory<Container>(
                 WorkbenchBlockEntity.Companion::createContainer))
-        GuiProviderRegistry.INSTANCE.registerFactory(workbenchId, GuiFactory(::WorkbenchScreen))
+        ScreenProviderRegistry.INSTANCE.registerFactory(workbenchId, ContainerScreenFactory(::WorkbenchScreen))
         workbenchBlockEntityType = Registry.register(Registry.BLOCK_ENTITY, workbenchId, BlockEntityType(
                 { WorkbenchBlockEntity(RedstoneModule.workbenchBlockEntityType) }, null))
 
@@ -68,7 +68,7 @@ object RedstoneModule : Module<RedstoneModuleConfig>() {
         assemblerItem.registerBlockItemMap(Item.BLOCK_ITEM_MAP, assemblerItem)
         ContainerProviderRegistry.INSTANCE.registerFactory(assemblerId, ContainerFactory<Container>(
                 AssemblerBlockEntity.Companion::createContainer))
-        GuiProviderRegistry.INSTANCE.registerFactory(assemblerId, GuiFactory(::AssemblerScreen))
+        ScreenProviderRegistry.INSTANCE.registerFactory(assemblerId, ContainerScreenFactory(::AssemblerScreen))
         assemblerBlockEntityType = Registry.register(Registry.BLOCK_ENTITY, assemblerId, BlockEntityType(
                 { AssemblerBlockEntity(RedstoneModule.assemblerBlockEntityType) }, null))
     }

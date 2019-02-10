@@ -7,10 +7,10 @@ import net.minecraft.enchantment.EnchantmentTarget
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
+import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
-import net.minecraft.world.World
 
 class EnchantmentArea : Enchantment(Weight.LEGENDARY, EnchantmentTarget.BREAKER, arrayOf(EquipmentSlot.HAND_MAIN)) {
 
@@ -79,7 +79,7 @@ class EnchantmentArea : Enchantment(Weight.LEGENDARY, EnchantmentTarget.BREAKER,
 
 interface IServerPlayerInteractionManager {
     val player: PlayerEntity
-    val world: World
+    val world: ServerWorld
 
     fun isCreative(): Boolean
 

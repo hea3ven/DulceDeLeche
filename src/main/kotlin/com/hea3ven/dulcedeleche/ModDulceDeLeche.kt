@@ -56,7 +56,7 @@ object ModDulceDeLeche : ModInitializer {
     }
 
     fun getFakePlayer(world: World) = object : PlayerEntity(world, ModDulceDeLeche.fakePlayerProfile) {
-        override fun isSpectator() = false
+        override fun method_7325() = false
         override fun isCreative() = false
     }
 

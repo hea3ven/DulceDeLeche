@@ -3,7 +3,7 @@ package com.hea3ven.dulcedeleche.modules.world
 import com.hea3ven.dulcedeleche.Module
 import com.hea3ven.dulcedeleche.modules.world.event.BlockItemPlaceEvent
 import com.hea3ven.tools.commonutils.util.ReflectionUtil.reflectField
-import net.fabricmc.fabric.events.PlayerInteractionEvent
+import net.fabricmc.fabric.api.event.player.UseBlockCallback
 import net.minecraft.block.Block
 import net.minecraft.block.LeavesBlock
 import net.minecraft.item.ItemPlacementContext
@@ -27,8 +27,7 @@ object WorldModule : Module<WorldModuleConfig>() {
                 return BedManagement.onPlace(itemPlacementContext)
             }
         })
-        PlayerInteractionEvent.INTERACT_BLOCK.register(
-                PlayerInteractionEvent.BlockPositioned(BedManagement::onPlayerInteract))
+        UseBlockCallback.EVENT.register(UseBlockCallback(BedManagement::onPlayerInteract))
     }
 
 }

@@ -9,6 +9,7 @@ import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.TranslatableTextComponent
 import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
+import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
@@ -18,10 +19,10 @@ object BedManagement {
 
     private fun initPlacements(world: ServerWorld) {
         if (placements == null) {
-            placements = world.dimensionalPersistentStateManager!!.get(::BedPlacements, "beds_data")
+            placements = world.persistentStateManager!!.get(::BedPlacements, "beds_data")
             if (placements == null) {
                 placements = BedPlacements()
-                world.dimensionalPersistentStateManager!!.set(placements)
+                world.persistentStateManager!!.set(placements)
             }
         }
     }
@@ -58,14 +59,13 @@ object BedManagement {
         return ActionResult.SUCCESS
     }
 
-    fun onPlayerInteract(player: PlayerEntity, world: World, hand: Hand, pos: BlockPos, direction: Direction,
-            hitX: Float, hitY: Float, hitZ: Float): ActionResult {
+    fun onPlayerInteract(player: PlayerEntity, world: World, hand: Hand, hit: BlockHitResult): ActionResult {
         if (world.isClient) {
             return ActionResult.PASS
         }
-        val state = world.getBlockState(pos)
+        val state = world.getBlockState(hit.blockPos)
         if (state.block is BedBlock) {
-            if (!BedManagement.canSleep(world, pos)) {
+            if (!BedManagement.canSleep(world, hit.blockPos)) {
                 player.addChatMessage(TranslatableTextComponent("block.minecraft.bed.recently_placed"), true)
                 return ActionResult.FAILURE
             }
