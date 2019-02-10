@@ -5,9 +5,11 @@
     "version": "@version@",
     "side": "universal",
     "languageAdapter": "net.fabricmc.language.kotlin.KotlinLanguageAdapter",
-    "initializer": "com.hea3ven.dulcedeleche.ModDulceDeLeche",
+    "initializers": [
+        "com.hea3ven.dulcedeleche.ModDulceDeLeche",
+        "com.hea3ven.dulcedeleche.ModClientDulceDeLeche"
+    ],
     "mixins": {
-        "client": "dulcedeleche.client.json",
         "common": ["dulcedeleche.common.json", "dulcedeleche.mobs.common.json", "dulcedeleche.world.common.json"]
     },
     "requires": {
