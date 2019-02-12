@@ -10,19 +10,20 @@ import net.minecraft.block.entity.BlockEntity
 import net.minecraft.item.ItemPlacementContext
 import net.minecraft.state.StateFactory
 import net.minecraft.state.property.DirectionProperty
+import net.minecraft.util.Identifier
 import net.minecraft.util.Mirror
 import net.minecraft.util.Rotation
 import net.minecraft.util.math.Direction
 import net.minecraft.world.BlockView
 
-class AssemblerBlock(settings: Block.Settings) : MachineBlock(settings, RedstoneModule.assemblerId) {
+class AssemblerBlock(screenId: Identifier, settings: Block.Settings) : MachineBlock(settings, screenId) {
 
     init {
         defaultState = stateFactory.defaultState.with(FACING, Direction.NORTH)
     }
 
     override fun createBlockEntity(view: BlockView): BlockEntity {
-        return AssemblerBlockEntity(RedstoneModule.assemblerBlockEntityType)
+        return AssemblerBlockEntity(RedstoneModule.AssemblerBlockEntityType)
     }
 
     override fun getPlacementState(itemPlacementContext_1: ItemPlacementContext): BlockState {

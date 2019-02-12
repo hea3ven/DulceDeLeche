@@ -1,18 +1,17 @@
 package com.hea3ven.dulcedeleche.modules.redstone
 
-import com.hea3ven.dulcedeleche.modules.redstone.RedstoneModule.assemblerId
-import com.hea3ven.dulcedeleche.modules.redstone.RedstoneModule.workbenchId
 import com.hea3ven.dulcedeleche.modules.redstone.client.gui.AssemblerScreen
 import com.hea3ven.dulcedeleche.modules.redstone.client.gui.WorkbenchScreen
+import com.hea3ven.tools.commonutils.mod.ModModule
 import net.fabricmc.fabric.api.client.screen.ContainerScreenFactory
-import net.fabricmc.fabric.api.client.screen.ScreenProviderRegistry
 
-object RedstoneClientModule {
+object RedstoneClientModule : ModModule() {
 
-    fun onInitialize() {
-        ScreenProviderRegistry.INSTANCE.registerFactory(workbenchId, ContainerScreenFactory(::WorkbenchScreen))
-        ScreenProviderRegistry.INSTANCE.registerFactory(assemblerId, ContainerScreenFactory(::AssemblerScreen))
+    override fun onPreInit() {
+        addScreen("workbench", ContainerScreenFactory(::WorkbenchScreen))
+        addScreen("assembler", ContainerScreenFactory(::AssemblerScreen))
     }
+
 
 }
 

@@ -1,13 +1,11 @@
 package com.hea3ven.dulcedeleche
 
-import com.hea3ven.dulcedeleche.modules.redstone.RedstoneClientModule
-import net.fabricmc.api.ClientModInitializer
+import com.hea3ven.tools.commonutils.mod.ModComposite
 
-@Suppress("unused")
-object ModClientDulceDeLeche : ClientModInitializer {
+object ModClientDulceDeLeche : ModComposite("dulcedeleche") {
 
-    override fun onInitializeClient() {
-        RedstoneClientModule.onInitialize()
+    init {
+        addModule("redstoneClient", "com.hea3ven.dulcedeleche.modules.redstone.RedstoneClientModule.INSTANCE")
     }
 }
 

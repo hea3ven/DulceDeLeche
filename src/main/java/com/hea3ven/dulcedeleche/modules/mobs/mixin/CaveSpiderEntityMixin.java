@@ -9,6 +9,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.mob.CaveSpiderEntity;
 import net.minecraft.entity.mob.SpiderEntity;
 
+import com.hea3ven.dulcedeleche.ModDulceDeLeche;
+import com.hea3ven.dulcedeleche.fabric.DulceDeLecheFabricModInitializer;
 import com.hea3ven.dulcedeleche.modules.mobs.MobsModule;
 
 @Mixin(CaveSpiderEntity.class)
@@ -22,7 +24,7 @@ public abstract class CaveSpiderEntityMixin extends SpiderEntity {
     @Inject(method = "method_6121(Lnet/minecraft/entity/Entity;)Z", at = @At("HEAD"),
             cancellable = true)
     public void onPrepareEntityAttributes(Entity entity, CallbackInfoReturnable<Boolean> info) {
-        if (MobsModule.INSTANCE.cfg.getReplaceCaveSpiderPoison()) {
+        if (ModDulceDeLeche.INSTANCE.getCfg().getModules().getMobs().getReplaceCaveSpiderPoison()) {
             if (super.method_6121(entity)) {
                 MobsModule.INSTANCE.onCaveSpiderEntityDoAttack(this, entity);
                 info.setReturnValue(true);

@@ -12,6 +12,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 
 import com.hea3ven.dulcedeleche.modules.enchantments.EnchantmentsModule;
+import com.hea3ven.dulcedeleche.modules.enchantments.enchantment.EnchantmentArea;
 import com.hea3ven.dulcedeleche.modules.enchantments.enchantment.IServerPlayerInteractionManager;
 
 @Mixin(ServerPlayerInteractionManager.class)
@@ -52,7 +53,9 @@ public abstract class ServerPlayerInteractionManagerMixin
             target = "Lnet/minecraft/server/network/ServerPlayerInteractionManager;destroyBlock(Lnet/minecraft/util/math/BlockPos;)Z",
             value = "INVOKE")})
     public final void onBlockBreak(BlockPos pos, CallbackInfoReturnable info) {
-        EnchantmentsModule.INSTANCE.getAREA().onBlockBreak(this, pos);
+        ((EnchantmentArea) EnchantmentsModule.INSTANCE.getEnchantments()
+                .get("area")
+                .getEnchantment()).onBlockBreak(this, pos);
     }
 
     @Override
