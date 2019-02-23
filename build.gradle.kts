@@ -50,6 +50,8 @@ val shadow by configurations.creating {
 	isTransitive = false
 }
 
+/* compileOnly.extendsFrom(configurations. */
+
 dependencies {
 	minecraft("com.mojang:minecraft:$version_mc_jar")
 	mappings("net.fabricmc:yarn:$version_mc_mappings")

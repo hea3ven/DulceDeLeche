@@ -1,7 +1,6 @@
 package com.hea3ven.dulcedeleche.modules.redstone.dispenser
 
 import com.hea3ven.dulcedeleche.ModDulceDeLeche
-import com.hea3ven.dulcedeleche.fabric.DulceDeLecheFabricModInitializer
 import net.minecraft.block.DispenserBlock
 import net.minecraft.block.dispenser.DispenserBehavior
 import net.minecraft.entity.EquipmentSlot

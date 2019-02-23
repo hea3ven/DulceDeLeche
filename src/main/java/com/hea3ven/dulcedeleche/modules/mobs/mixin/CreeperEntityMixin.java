@@ -8,7 +8,6 @@ import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.world.IWorld;
 
 import com.hea3ven.dulcedeleche.ModDulceDeLeche;
-import com.hea3ven.dulcedeleche.fabric.DulceDeLecheFabricModInitializer;
 import com.hea3ven.dulcedeleche.modules.mobs.MobsModule;
 
 @Mixin(CreeperEntity.class)

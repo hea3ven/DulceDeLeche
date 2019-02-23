@@ -1,8 +1,6 @@
 package com.hea3ven.dulcedeleche.modules.world.world
 
 import com.hea3ven.dulcedeleche.ModDulceDeLeche
-import com.hea3ven.dulcedeleche.fabric.DulceDeLecheFabricModInitializer
-import com.hea3ven.dulcedeleche.modules.world.WorldModule
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.ListTag
 import net.minecraft.util.math.BlockPos

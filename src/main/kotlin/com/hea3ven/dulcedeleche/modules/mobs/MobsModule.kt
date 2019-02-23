@@ -1,7 +1,6 @@
 package com.hea3ven.dulcedeleche.modules.mobs
 
 import com.hea3ven.dulcedeleche.ModDulceDeLeche
-import com.hea3ven.dulcedeleche.fabric.DulceDeLecheFabricModInitializer
 import com.hea3ven.tools.commonutils.mod.ModModule
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
@@ -18,7 +17,7 @@ import net.minecraft.world.LightType
 object MobsModule : ModModule() {
 
     fun onCreeperEntityCanSpawn(entity: Entity, world: IWorld, spawnType: SpawnType): Boolean {
-        return world.getLightLevel(LightType.SKY_LIGHT, BlockPos(entity.x, entity.y, entity.z)) <= 8
+        return world.getLightLevel(LightType.SKY, BlockPos(entity.x, entity.y, entity.z)) <= 8
     }
 
     fun onZombiePrepareEntityAttributes(entity: LivingEntity) {

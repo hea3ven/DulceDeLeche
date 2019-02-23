@@ -66,7 +66,7 @@ object BedManagement {
         if (state.block is BedBlock) {
             if (!BedManagement.canSleep(world, hit.blockPos)) {
                 player.addChatMessage(TranslatableTextComponent("block.minecraft.bed.recently_placed"), true)
-                return ActionResult.FAILURE
+                return ActionResult.FAIL
             }
         }
         return ActionResult.PASS

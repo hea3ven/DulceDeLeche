@@ -1,7 +1,6 @@
 package com.hea3ven.dulcedeleche.modules.redstone
 
 import com.hea3ven.dulcedeleche.ModDulceDeLeche
-import com.hea3ven.dulcedeleche.fabric.DulceDeLecheFabricModInitializer
 import com.hea3ven.dulcedeleche.modules.food.item.ItemBucketDulceDeLeche
 import com.hea3ven.dulcedeleche.modules.redstone.block.AssemblerBlock
 import com.hea3ven.dulcedeleche.modules.redstone.block.WorkbenchBlock
@@ -32,21 +31,19 @@ object RedstoneModule : ModModule() {
     lateinit var AssemblerBlockEntityType: BlockEntityType<AssemblerBlockEntity>
 
     override fun onPreInit() {
-        Registry.register(Registry.ITEM, Identifier("dulcedeleche", "dulcedeleche"), ItemBucketDulceDeLeche());
-//        val block = WorkbenchBlock(id("workbench"), Block.Settings.of(Material.STONE))
-//        addBlock<WorkbenchBlockEntity>("workbench", block,
-//                                       ItemGroup.REDSTONE, { blockEntityTypeSupplier ->
-//                                           Supplier({ WorkbenchBlockEntity(blockEntityTypeSupplier.get()) })
-//                                       })
-//        addContainer("workbench", ContainerFactory<Container>(WorkbenchBlockEntity.Companion::createContainer));
-//        addBlock<AssemblerBlockEntity>("assembler", AssemblerBlock(id("assembler"), Block.Settings.of(Material.STONE)),
-//                                       ItemGroup.REDSTONE, { blockEntityTypeSupplier ->
-//                                           Supplier({ AssemblerBlockEntity(blockEntityTypeSupplier.get()) })
-//                                       })
-//        addContainer("assembler", ContainerFactory<Container>(AssemblerBlockEntity.Companion::createContainer));
-//
-//        WorkbenchBlockEntityType = blocks["workbench"]!!.blockEntityType as BlockEntityType<WorkbenchBlockEntity>
-//        AssemblerBlockEntityType = blocks["assembler"]!!.blockEntityType as BlockEntityType<AssemblerBlockEntity>
+        val block = WorkbenchBlock(id("workbench"), Block.Settings.of(Material.STONE))
+        addBlock<WorkbenchBlockEntity>("workbench", block, ItemGroup.REDSTONE, { blockEntityTypeSupplier ->
+            Supplier({ WorkbenchBlockEntity(blockEntityTypeSupplier.get()) })
+        })
+        addContainer("workbench", ContainerFactory<Container>(WorkbenchBlockEntity.Companion::createContainer));
+        addBlock<AssemblerBlockEntity>("assembler", AssemblerBlock(id("assembler"), Block.Settings.of(Material.STONE)),
+                                       ItemGroup.REDSTONE, { blockEntityTypeSupplier ->
+                                           Supplier({ AssemblerBlockEntity(blockEntityTypeSupplier.get()) })
+                                       })
+        addContainer("assembler", ContainerFactory<Container>(AssemblerBlockEntity.Companion::createContainer));
+
+        WorkbenchBlockEntityType = blocks["workbench"]!!.blockEntityType as BlockEntityType<WorkbenchBlockEntity>
+        AssemblerBlockEntityType = blocks["assembler"]!!.blockEntityType as BlockEntityType<AssemblerBlockEntity>
 
     }
 

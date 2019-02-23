@@ -28,7 +28,7 @@ class WorkbenchCraftingInventory(private val workbenchEntity: CraftingMachineBlo
 
     override fun canPlayerUseInv(var1: PlayerEntity) = true
 
-    override fun clearInv() = workbenchEntity.getRecipeStacks().clear()
+    override fun clear() = workbenchEntity.getRecipeStacks().clear()
 
     override fun getInvSize() = workbenchEntity.getRecipeStacks().size
 

@@ -1,7 +1,6 @@
 package com.hea3ven.dulcedeleche.modules.world
 
 import com.hea3ven.dulcedeleche.ModDulceDeLeche
-import com.hea3ven.dulcedeleche.fabric.DulceDeLecheFabricModInitializer
 import com.hea3ven.dulcedeleche.modules.world.event.BlockItemPlaceEvent
 import com.hea3ven.tools.commonutils.mod.ModModule
 import com.hea3ven.tools.commonutils.util.ReflectionUtil.reflectField

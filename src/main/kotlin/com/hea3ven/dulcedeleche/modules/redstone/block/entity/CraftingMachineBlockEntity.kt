@@ -27,7 +27,7 @@ abstract class CraftingMachineBlockEntity(additionalSlots: Int, blockEntityType:
     override fun getInvStack(index: Int) = inventory[index]
     override fun canPlayerUseInv(player: PlayerEntity) = true
     override fun removeInvStack(index: Int) = InventoryUtil.removeStack(inventory, index)!!
-    override fun clearInv() = inventory.clear()
+    override fun clear() = inventory.clear()
     override fun isInvEmpty() = inventory.all(ItemStack::isEmpty)
     override fun createContainer(syncId: Int, playerInv: PlayerInventory) = null
     override fun takeInvStack(index: Int, amount: Int) = InventoryUtil.splitStack(inventory, index, amount)!!
