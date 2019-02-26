@@ -57,27 +57,39 @@ abstract class CraftingMachineBlockEntity(additionalSlots: Int, blockEntityType:
         InventoryExtraUtil.deserialize(tag, recipe, "Recipe")
     }
 
-    fun canCraft(): Boolean {
-        if (getRecipe() == null) {
-            return false
-        }
+    fun canCraft(player: PlayerEntity?): Boolean {
         val invCopy = BasicInventory(*inventory.map(ItemStack::copy).toTypedArray())
-        return consumeItems(invCopy)
+        return !tryCraftItem(player, invCopy).isEmpty
     }
 
     fun craftItem(player: PlayerEntity?, craftedStack: ItemStack): ItemStack {
         if (!world.isClient) {
-            val craftingInv1 = getCraftingInventory()
-            val remainingStacks = world!!.recipeManager.method_8128(RecipeType.CRAFTING, craftingInv1, world)
-
-            if (!consumeItems(this)) {
-                return ItemStack.EMPTY
-            }
-
-            storeRemainders(remainingStacks, player)
-
+            tryCraftItem(player, this)
         }
         return craftedStack
+    }
+
+    private fun tryCraftItem(player: PlayerEntity?, inventory: Inventory): ItemStack {
+        val recipe = getRecipe() ?: return ItemStack.EMPTY
+
+        if (!onCraftItem(recipe, player, inventory)) {
+            return ItemStack.EMPTY
+        }
+
+        return recipe.output
+    }
+
+    protected open fun onCraftItem(recipe: CraftingRecipe, player: PlayerEntity?, inventory: Inventory): Boolean {
+        if (!consumeItems(inventory)) {
+            return false
+        }
+
+        val remainingStacks = recipe.getRemainingStacks(getCraftingInventory())
+        if (!storeRemainders(remainingStacks, inventory, player)) {
+            return false
+        }
+
+        return true
     }
 
     private fun consumeItems(inventory: Inventory): Boolean {
@@ -103,26 +115,28 @@ abstract class CraftingMachineBlockEntity(additionalSlots: Int, blockEntityType:
         return false
     }
 
-    private fun storeRemainders(remainingStacks: DefaultedList<ItemStack>, player: PlayerEntity?) {
+    private fun storeRemainders(remainingStacks: DefaultedList<ItemStack>, inventory: Inventory,
+            player: PlayerEntity?): Boolean {
         for (index in 0 until remainingStacks.size) {
-            val originalStack = getInvStack(index)
+            val originalStack = inventory.getInvStack(index)
             val remainingStack = remainingStacks[index]
             if (!remainingStack.isEmpty) {
                 if (originalStack.isEmpty) {
-                    setInvStack(index, remainingStack)
+                    inventory.setInvStack(index, remainingStack)
                 } else if (ItemStack.areEqualIgnoreTags(originalStack, remainingStack) && ItemStack.areTagsEqual(
                                 originalStack, remainingStack)) {
                     remainingStack.addAmount(originalStack.amount)
-                    setInvStack(index, remainingStack)
+                    inventory.setInvStack(index, remainingStack)
                 } else if (player != null) {
                     if (!player.inventory.insertStack(remainingStack)) {
                         player.dropItem(remainingStack, false)
                     }
                 } else {
-                    ItemScatterer.spawn(world, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), remainingStack)
+                    return false
                 }
             }
         }
+        return true
     }
 
     private fun getCraftingInventory(): CraftingInventory {

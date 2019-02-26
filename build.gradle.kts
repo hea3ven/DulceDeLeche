@@ -6,7 +6,7 @@ import org.gradle.jvm.tasks.Jar
 import org.apache.tools.ant.filters.ReplaceTokens
 
 plugins {
-    kotlin("jvm") version "1.3.11"
+    kotlin("jvm") version "1.3.21"
     id("fabric-loom") version "0.2.0-SNAPSHOT"
     id("com.matthewprenger.cursegradle") version "1.1.2"
     id("com.github.breadmoirai.github-release") version "2.2.4"
@@ -44,6 +44,9 @@ repositories {
     maven(url="http://mribecky.com.ar/maven") {
         name = "Hea3veN"
     }
+    maven(url = "https://kotlin.bintray.com/kotlinx") {
+        name = "Kotlin X"
+    }
 }
 
 val shadow by configurations.creating {
@@ -59,11 +62,11 @@ dependencies {
 
 	modCompile("net.fabricmc:fabric:$version_fabric")
 
-    modCompile("net.fabricmc:fabric-language-kotlin:$version_fabric_kotlin")
     compileOnly("net.fabricmc:fabric-language-kotlin:$version_fabric_kotlin")
+    compileOnly("org.jetbrains.kotlin:kotlin-stdlib:$version_kotlin")
 
-    modCompile("com.hea3ven.tools.commonutils:h3nt-commonutils:3.0.0-fabric-1")
-    shadow("com.hea3ven.tools.commonutils:h3nt-commonutils:3.0.0-fabric-1")
+    modCompile("com.hea3ven.tools.commonutils:h3nt-commonutils:3.0.0-fabric-3")
+    shadow("com.hea3ven.tools.commonutils:h3nt-commonutils:3.0.0-fabric-3")
 
     compileOnly("com.google.code.findbugs:jsr305:3.0.2")
 }

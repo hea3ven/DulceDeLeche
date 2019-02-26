@@ -6,14 +6,17 @@ import com.hea3ven.tools.commonutils.util.ItemStackUtil
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.container.PropertyDelegate
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.inventory.Inventory
 import net.minecraft.inventory.SidedInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.recipe.crafting.CraftingRecipe
 import net.minecraft.text.TranslatableTextComponent
 import net.minecraft.util.Identifier
 import net.minecraft.util.PacketByteBuf
 import net.minecraft.util.Tickable
 import net.minecraft.util.math.Direction
+import kotlin.math.min
 
 class AssemblerBlockEntity(blockEntityType: BlockEntityType<AssemblerBlockEntity>) :
         CraftingMachineBlockEntity(4, blockEntityType), SidedInventory, Tickable {
@@ -54,6 +57,10 @@ class AssemblerBlockEntity(blockEntityType: BlockEntityType<AssemblerBlockEntity
         return true
     }
 
+    override fun onCraftItem(recipe: CraftingRecipe, player: PlayerEntity?, inventory: Inventory): Boolean {
+        return super.onCraftItem(recipe, player, inventory) && insertResult(recipe.output.copy(), inventory)
+    }
+
     override fun tick() {
         if (craftingTime > 0) {
             craftingTime--
@@ -63,24 +70,12 @@ class AssemblerBlockEntity(blockEntityType: BlockEntityType<AssemblerBlockEntity
                 val recipe = getRecipe()
                 if (recipe != null) {
                     val result = craftItem(null, recipe.output.copy())
-                    if (!result.isEmpty) {
-                        for (i in 18 until 22) {
-                            val stack = getInvStack(i)
-                            if (stack.isEmpty) {
-                                setInvStack(i, result)
-                                break
-                            } else if (ItemStackUtil.areStacksCombinable(result, stack)) {
-                                // TODO: check max stack size
-                                stack.amount += result.amount
-                                break
-                            }
-                        }
-                        craftingTime = CRAFTING_WORK
-                        markDirty()
-                    }
+                    assert(!result.isEmpty)
+                    craftingTime = CRAFTING_WORK
+                    markDirty()
                 }
             }
-            if (!canCraft()) {
+            if (!canCraft(null)) {
                 if (craftingTime != -1) {
                     craftingTime = -1
                     markDirty()
@@ -92,6 +87,24 @@ class AssemblerBlockEntity(blockEntityType: BlockEntityType<AssemblerBlockEntity
                 }
             }
         }
+    }
+
+    private fun insertResult(result: ItemStack, inventory: Inventory): Boolean {
+        for (i in 18 until 22) {
+            val stack = inventory.getInvStack(i)
+            if (stack.isEmpty) {
+                inventory.setInvStack(i, result)
+                return true
+            } else if (ItemStackUtil.areStacksCombinable(result, stack)) {
+                val count = min(stack.maxAmount - stack.amount, result.amount)
+                stack.amount += count
+                result.amount -= count
+                if (result.amount == 0) {
+                    return true
+                }
+            }
+        }
+        return false
     }
 
     override fun toTag(tag: CompoundTag): CompoundTag {

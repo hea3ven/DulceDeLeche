@@ -16,7 +16,7 @@ class CraftingMachineResultSlot(private val workbenchCraftingInv: WorkbenchCraft
     }
 
     override fun canTakeItems(player: PlayerEntity): Boolean {
-        return workbenchCraftingInv.canCraft()
+        return workbenchCraftingInv.canCraft(player)
     }
 
     override fun onTakeItem(player: PlayerEntity?, craftedStack: ItemStack): ItemStack {

@@ -48,6 +48,6 @@ class WorkbenchCraftingInventory(private val workbenchEntity: CraftingMachineBlo
         return craftItem
     }
 
-    fun canCraft() = workbenchEntity.canCraft()
+    fun canCraft(player: PlayerEntity?) = workbenchEntity.canCraft(player)
 
 }
