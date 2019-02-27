@@ -1,0 +1,11 @@
+{
+    "required": true,
+    "package": "com.hea3ven.dulcedeleche.modules.redstone.mixin",
+    "compatibilityLevel": "JAVA_8",
+    "mixins": [
+        "SurvivesExplosionLootConditionMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}

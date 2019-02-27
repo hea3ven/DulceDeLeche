@@ -1,6 +1,7 @@
 package com.hea3ven.dulcedeleche.modules.redstone
 
 import com.hea3ven.dulcedeleche.ModDulceDeLeche
+import com.hea3ven.dulcedeleche.modules.redstone.RedstoneModule.addBlock
 import com.hea3ven.dulcedeleche.modules.redstone.block.AssemblerBlock
 import com.hea3ven.dulcedeleche.modules.redstone.block.WorkbenchBlock
 import com.hea3ven.dulcedeleche.modules.redstone.block.entity.AssemblerBlockEntity

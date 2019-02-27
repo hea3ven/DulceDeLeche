@@ -10,7 +10,12 @@
         "com.hea3ven.dulcedeleche.fabric.DulceDeLecheFabricClientModInitializer"
     ],
     "mixins": {
-        "common": ["dulcedeleche.common.json", "dulcedeleche.mobs.common.json", "dulcedeleche.world.common.json"]
+        "common": [
+            "dulcedeleche.common.json",
+            "dulcedeleche.mobs.common.json",
+            "dulcedeleche.redstone.common.json",
+            "dulcedeleche.world.common.json"
+        ]
     },
     "requires": {
         "fabric": {
