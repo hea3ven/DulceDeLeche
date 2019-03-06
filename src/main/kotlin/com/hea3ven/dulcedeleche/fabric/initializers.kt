@@ -1,24 +1,28 @@
 package com.hea3ven.dulcedeleche.fabric
 
-import com.hea3ven.dulcedeleche.ModClientDulceDeLeche
-import com.hea3ven.dulcedeleche.ModDulceDeLeche
+import com.hea3ven.dulcedeleche.DulceDeLecheMod
+import com.hea3ven.dulcedeleche.DulceDeLecheModClient
+import com.hea3ven.dulcedeleche.DulceDeLecheModServer
 import com.hea3ven.tools.commonutils.mod.fabric.FabricClientModHandler
-import com.hea3ven.tools.commonutils.mod.fabric.FabricModHandler
+import com.hea3ven.tools.commonutils.mod.fabric.FabricServerModHandler
 import net.fabricmc.api.ClientModInitializer
-import net.fabricmc.api.ModInitializer
+import net.fabricmc.api.DedicatedServerModInitializer
 
-object DulceDeLecheFabricModInitializer : ModInitializer {
-
-    override fun onInitialize() {
-        FabricModHandler.onInitialize(ModDulceDeLeche)
+@Suppress("unused")
+object DulceDeLecheFabricModInitializer : DedicatedServerModInitializer {
+    override fun onInitializeServer() {
+        FabricServerModHandler.onInitializeServer(DulceDeLecheModServer)
+        DulceDeLecheMod.mod = DulceDeLecheModServer
     }
 
 }
 
+@Suppress("unused")
 object DulceDeLecheFabricClientModInitializer : ClientModInitializer {
 
     override fun onInitializeClient() {
-        FabricClientModHandler.onInitializeClient(ModClientDulceDeLeche)
+        FabricClientModHandler.onInitializeClient(DulceDeLecheModClient)
+        DulceDeLecheMod.mod = DulceDeLecheModClient
     }
 
 }

@@ -1,6 +1,6 @@
 package com.hea3ven.dulcedeleche.modules.redstone.block
 
-import com.hea3ven.dulcedeleche.modules.redstone.RedstoneModule
+import com.hea3ven.dulcedeleche.DulceDeLecheMod
 import com.hea3ven.dulcedeleche.modules.redstone.block.entity.AssemblerBlockEntity
 import com.hea3ven.tools.commonutils.block.MachineBlock
 import net.minecraft.block.Block
@@ -23,7 +23,7 @@ class AssemblerBlock(screenId: Identifier, settings: Block.Settings) : MachineBl
     }
 
     override fun createBlockEntity(view: BlockView): BlockEntity {
-        return AssemblerBlockEntity(RedstoneModule.AssemblerBlockEntityType)
+        return AssemblerBlockEntity(DulceDeLecheMod.mod.getBlockInfo("assembler").getBlockEntityType())
     }
 
     override fun getPlacementState(itemPlacementContext_1: ItemPlacementContext): BlockState {

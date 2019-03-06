@@ -23,6 +23,7 @@ val version_fabric: String by project
 val version_fabric_loader: String by project
 val version_fabric_kotlin: String by project
 val version_kotlin: String by project
+val version_h3nt_commonutils: String by project
 val curse_api_key: String? by project
 val project_curseforge_id: String by project
 val changelog: String? by project
@@ -65,8 +66,8 @@ dependencies {
     modCompile("net.fabricmc:fabric-language-kotlin:$version_fabric_kotlin")
     compileOnly("org.jetbrains.kotlin:kotlin-stdlib:$version_kotlin")
 
-    modCompile("com.hea3ven.tools.commonutils:h3nt-commonutils:3.0.0-fabric-3")
-    shadow("com.hea3ven.tools.commonutils:h3nt-commonutils:3.0.0-fabric-3")
+    modCompile("com.hea3ven.tools.commonutils:h3nt-commonutils:$version_h3nt_commonutils")
+    shadow("com.hea3ven.tools.commonutils:h3nt-commonutils:$version_h3nt_commonutils")
 
     compileOnly("com.google.code.findbugs:jsr305:3.0.2")
 }

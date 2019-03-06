@@ -1,25 +1,41 @@
 package com.hea3ven.dulcedeleche.modules.redstone.block.entity
 
 import com.hea3ven.dulcedeleche.modules.redstone.container.WorkbenchContainer
-import com.hea3ven.tools.commonutils.container.GenericContainer
 import net.minecraft.block.entity.BlockEntityType
-import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.container.Container
+import net.minecraft.container.PropertyDelegate
+import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.text.TranslatableTextComponent
-import net.minecraft.util.Identifier
-import net.minecraft.util.PacketByteBuf
 
 class WorkbenchBlockEntity(blockEntityType: BlockEntityType<WorkbenchBlockEntity>) :
         CraftingMachineBlockEntity(0, blockEntityType) {
 
-    override fun getContainerName() = TranslatableTextComponent("container.workbench")
+    private val propertyDelegate = object : PropertyDelegate {
+        override fun size() = 1
 
-    companion object {
-        fun createContainer(syncId: Int, identifier: Identifier, playerEntity: PlayerEntity,
-                reader: PacketByteBuf): GenericContainer {
-            val pos = reader.readBlockPos()
-            val assemblerEntity = playerEntity.world.getBlockEntity(pos) as WorkbenchBlockEntity
-            return WorkbenchContainer(syncId, assemblerEntity, playerEntity)
+        override fun get(key: Int) = when (key) {
+            CAN_CRAFT_PROPERTY -> if (canCraft(null)) 1 else 0
+            else -> throw IndexOutOfBoundsException("key $key")
+        }
+
+        override fun set(key: Int, value: Int) {
+            if (key != CAN_CRAFT_PROPERTY) {
+                throw IndexOutOfBoundsException("key $key")
+            }
         }
     }
+
+    override fun getContainerName() = TranslatableTextComponent("container.workbench")
+
+    override fun createContainer(syncId: Int, player: PlayerInventory): Container {
+        return WorkbenchContainer(syncId, player, this, propertyDelegate)
+    }
+
+    companion object {
+
+        const val CAN_CRAFT_PROPERTY = 0
+
+    }
+
 }
 

@@ -1,6 +1,6 @@
 package com.hea3ven.dulcedeleche.modules.redstone.dispenser
 
-import com.hea3ven.dulcedeleche.ModDulceDeLeche
+import com.hea3ven.dulcedeleche.DulceDeLecheMod
 import net.minecraft.block.DispenserBlock
 import net.minecraft.block.dispenser.DispenserBehavior
 import net.minecraft.entity.EquipmentSlot
@@ -23,7 +23,7 @@ class DispenserBreedBehavior : DispenserBehavior {
 
         if (entities.size <= 0) return stack
 
-        val player = ModDulceDeLeche.getFakePlayer(source.world)
+        val player = DulceDeLecheMod.mod.getFakePlayer(source.world)
 
         player.setEquippedStack(EquipmentSlot.HAND_MAIN, stack)
 

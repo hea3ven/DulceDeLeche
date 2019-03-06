@@ -1,6 +1,6 @@
 package com.hea3ven.dulcedeleche.modules.redstone.dispenser
 
-import com.hea3ven.dulcedeleche.ModDulceDeLeche
+import com.hea3ven.dulcedeleche.DulceDeLecheMod
 import com.hea3ven.tools.commonutils.util.ItemStackUtil
 import net.minecraft.block.DispenserBlock
 import net.minecraft.block.dispenser.DispenserBehavior
@@ -17,7 +17,7 @@ class DispenserPlantBehavior : DispenserBehavior {
 
         val offset = if (source.world.isAir(position)) 1 else 0
         val pos = BlockPos(position.x, position.y - offset, position.z)
-        val player = ModDulceDeLeche.getFakePlayer(source.world)
+        val player = DulceDeLecheMod.mod.getFakePlayer(source.world)
         player.setEquippedStack(EquipmentSlot.HAND_MAIN, stack)
         ItemStackUtil.useItem(player, stack, pos, Direction.UP)
         player.setEquippedStack(EquipmentSlot.HAND_MAIN, ItemStack.EMPTY)

@@ -1,6 +1,6 @@
 package com.hea3ven.dulcedeleche.modules.mobs
 
-import com.hea3ven.dulcedeleche.ModDulceDeLeche
+import com.hea3ven.dulcedeleche.DulceDeLecheMod
 import com.hea3ven.tools.commonutils.mod.ModModule
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
@@ -23,7 +23,7 @@ object MobsModule : ModModule() {
     fun onZombiePrepareEntityAttributes(entity: LivingEntity) {
         entity.getAttributeInstance(EntityAttributes.KNOCKBACK_RESISTANCE).addModifier(
                 EntityAttributeModifier("Dulce De Leche modifier",
-                                        ModDulceDeLeche.cfg.modules.mobs.zombieKnockbackAttributeMultiplier,
+                                        DulceDeLecheMod.cfg.modules.mobs.zombieKnockbackAttributeMultiplier,
                                         EntityAttributeModifier.Operation.MULTIPLY_TOTAL))
     }
 
@@ -31,7 +31,7 @@ object MobsModule : ModModule() {
         if (target !is LivingEntity) {
             return
         }
-        if (ModDulceDeLeche.cfg.modules.mobs.spidersApplySlowness) {
+        if (DulceDeLecheMod.cfg.modules.mobs.spidersApplySlowness) {
             if (entity is SpiderEntity) {
                 target.addPotionEffect(StatusEffectInstance(StatusEffects.SLOWNESS, 200, 1))
             }

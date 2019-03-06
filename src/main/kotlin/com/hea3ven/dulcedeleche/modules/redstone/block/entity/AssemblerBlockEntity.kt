@@ -1,19 +1,18 @@
 package com.hea3ven.dulcedeleche.modules.redstone.block.entity
 
 import com.hea3ven.dulcedeleche.modules.redstone.container.AssemblerContainer
-import com.hea3ven.tools.commonutils.container.GenericContainer
 import com.hea3ven.tools.commonutils.util.ItemStackUtil
 import net.minecraft.block.entity.BlockEntityType
+import net.minecraft.container.Container
 import net.minecraft.container.PropertyDelegate
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.Inventory
 import net.minecraft.inventory.SidedInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.recipe.crafting.CraftingRecipe
 import net.minecraft.text.TranslatableTextComponent
-import net.minecraft.util.Identifier
-import net.minecraft.util.PacketByteBuf
 import net.minecraft.util.Tickable
 import net.minecraft.util.math.Direction
 import kotlin.math.min
@@ -21,10 +20,14 @@ import kotlin.math.min
 class AssemblerBlockEntity(blockEntityType: BlockEntityType<AssemblerBlockEntity>) :
         CraftingMachineBlockEntity(4, blockEntityType), SidedInventory, Tickable {
 
+    override fun createContainer(syncId: Int, playerInv: PlayerInventory): Container {
+        return AssemblerContainer(syncId, playerInv, this, propertyDelegate)
+    }
+
     var craftingTime = -1
         private set
 
-    val propertyDelegate = object : PropertyDelegate {
+    private val propertyDelegate = object : PropertyDelegate {
         override fun size() = 1
 
         override fun get(key: Int) = when (key) {
@@ -67,10 +70,8 @@ class AssemblerBlockEntity(blockEntityType: BlockEntityType<AssemblerBlockEntity
         }
         if (!world.isClient) {
             if (craftingTime == 0) {
-                val recipe = getRecipe()
-                if (recipe != null) {
-                    val result = craftItem(null, recipe.output.copy())
-                    assert(!result.isEmpty)
+                val result = craftItem(null)
+                if (!result.isEmpty) {
                     craftingTime = CRAFTING_WORK
                     markDirty()
                 }
@@ -90,7 +91,7 @@ class AssemblerBlockEntity(blockEntityType: BlockEntityType<AssemblerBlockEntity
     }
 
     private fun insertResult(result: ItemStack, inventory: Inventory): Boolean {
-        for (i in 18 until 22) {
+        for (i in outputInventoryRange) {
             val stack = inventory.getInvStack(i)
             if (stack.isEmpty) {
                 inventory.setInvStack(i, result)
@@ -119,12 +120,6 @@ class AssemblerBlockEntity(blockEntityType: BlockEntityType<AssemblerBlockEntity
     }
 
     companion object {
-        fun createContainer(syncId: Int, identifier: Identifier, playerEntity: PlayerEntity,
-                reader: PacketByteBuf): GenericContainer {
-            val pos = reader.readBlockPos()
-            val assemblerEntity = playerEntity.world.getBlockEntity(pos) as AssemblerBlockEntity
-            return AssemblerContainer(syncId, assemblerEntity, playerEntity, assemblerEntity.propertyDelegate)
-        }
 
         fun calculateProgress(craftingTime: Int) = if (craftingTime == -1) 0.0f else 1.0f - craftingTime.toFloat().div(
                 CRAFTING_WORK)
@@ -133,9 +128,10 @@ class AssemblerBlockEntity(blockEntityType: BlockEntityType<AssemblerBlockEntity
 
         const val PROGRESS_PROPERTY = 0
 
-        val OUTPUT_SLOTS = intArrayOf(18, 19, 20, 21)
+        val outputInventoryRange = (inputInventoryRange.endInclusive + 1) until (inputInventoryRange.endInclusive + 5)
+        val OUTPUT_SLOTS = outputInventoryRange.toCollection(mutableListOf()).toIntArray()
 
-        val COMMON_SLOTS = IntArray(18) { it }
+        val COMMON_SLOTS = inputInventoryRange.toCollection(mutableListOf()).toIntArray()
     }
 }
 
