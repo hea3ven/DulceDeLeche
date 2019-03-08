@@ -1,7 +1,6 @@
 package com.hea3ven.dulcedeleche.modules.redstone
 
 import com.hea3ven.dulcedeleche.ModDulceDeLeche
-import com.hea3ven.dulcedeleche.modules.food.item.ItemBucketDulceDeLeche
 import com.hea3ven.dulcedeleche.modules.redstone.block.AssemblerBlock
 import com.hea3ven.dulcedeleche.modules.redstone.block.WorkbenchBlock
 import com.hea3ven.dulcedeleche.modules.redstone.block.entity.AssemblerBlockEntity
@@ -21,7 +20,6 @@ import net.minecraft.item.ItemGroup
 import net.minecraft.item.Items
 import net.minecraft.item.SeedsItem
 import net.minecraft.item.block.BlockItem
-import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 import java.util.function.Supplier
 
@@ -31,12 +29,14 @@ object RedstoneModule : ModModule() {
     lateinit var AssemblerBlockEntityType: BlockEntityType<AssemblerBlockEntity>
 
     override fun onPreInit() {
-        val block = WorkbenchBlock(id("workbench"), Block.Settings.of(Material.STONE))
+        val block = WorkbenchBlock(id("workbench"), Block.Settings.of(Material.WOOD).strength(2.5f, 2.5f))
         addBlock<WorkbenchBlockEntity>("workbench", block, ItemGroup.REDSTONE, { blockEntityTypeSupplier ->
             Supplier({ WorkbenchBlockEntity(blockEntityTypeSupplier.get()) })
         })
         addContainer("workbench", ContainerFactory<Container>(WorkbenchBlockEntity.Companion::createContainer));
-        addBlock<AssemblerBlockEntity>("assembler", AssemblerBlock(id("assembler"), Block.Settings.of(Material.STONE)),
+        addBlock<AssemblerBlockEntity>("assembler", AssemblerBlock(id("assembler"),
+                                                                   Block.Settings.of(Material.STONE).strength(2.5f,
+                                                                                                              2.5f)),
                                        ItemGroup.REDSTONE, { blockEntityTypeSupplier ->
                                            Supplier({ AssemblerBlockEntity(blockEntityTypeSupplier.get()) })
                                        })
