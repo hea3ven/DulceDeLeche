@@ -62,7 +62,7 @@ dependencies {
 
 	modCompile("net.fabricmc:fabric:$version_fabric")
 
-    compileOnly("net.fabricmc:fabric-language-kotlin:$version_fabric_kotlin")
+    modCompile("net.fabricmc:fabric-language-kotlin:$version_fabric_kotlin")
     compileOnly("org.jetbrains.kotlin:kotlin-stdlib:$version_kotlin")
 
     modCompile("com.hea3ven.tools.commonutils:h3nt-commonutils:3.0.0-fabric-3")

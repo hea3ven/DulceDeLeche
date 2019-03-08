@@ -6,34 +6,34 @@ import net.minecraft.client.gui.ContainerScreen
 import net.minecraft.text.TextComponent
 import net.minecraft.util.Identifier
 
-open class CraftingMachineScreen(container: GenericContainer, name: TextComponent,
-        private val bgTex: Identifier) : ContainerScreen<GenericContainer>(container, container.playerInv, name) {
+open class CraftingMachineScreen(container: GenericContainer, name: TextComponent, private val bgTex: Identifier) :
+        ContainerScreen<GenericContainer>(container, container.playerInv, name) {
 
     init {
-        containerHeight = 215
+        height = 215
     }
 
     override fun drawForeground(int_1: Int, int_2: Int) {
         val name = this.name.formattedText
-        this.fontRenderer.draw(name, (this.containerWidth / 2 - this.fontRenderer.getStringWidth(name) / 2).toFloat(),
+        this.fontRenderer.draw(name, (this.width / 2 - this.fontRenderer.getStringWidth(name) / 2).toFloat(),
                                6.0F, 4210752)
         this.fontRenderer.draw(this.playerInventory.displayName.formattedText, 8.0F,
-                               (this.containerHeight - 96 + 2).toFloat(), 4210752)
+                               (this.height - 96 + 2).toFloat(), 4210752)
     }
 
     override fun drawBackground(var1: Float, var2: Int, var3: Int) {
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F)
         client.textureManager.bindTexture(bgTex)
         val x = left
-        val y = (height - containerHeight) / 2
-        this.drawTexturedRect(x, y, 0, 0, containerWidth, containerHeight)
+        val y = (screenHeight - height) / 2
+        this.drawTexturedRect(x, y, 0, 0, width, height)
 
     }
 
     override fun draw(int_1: Int, int_2: Int, float_1: Float) {
         super.draw(int_1, int_2, float_1)
         val x = left
-        val y = (height - containerHeight) / 2
+        val y = (screenHeight - height) / 2
         for (i in 0..8) {
             val slot = container.getSlot(i)
             if (!slot.stack.isEmpty) {

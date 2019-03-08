@@ -3,9 +3,9 @@ package com.hea3ven.dulcedeleche.modules.redstone.inventory
 import com.hea3ven.dulcedeleche.modules.redstone.block.entity.CraftingMachineBlockEntity
 import net.minecraft.container.Container
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.inventory.Inventories
 import net.minecraft.inventory.Inventory
 import net.minecraft.item.ItemStack
-import net.minecraft.util.InventoryUtil
 
 class WorkbenchCraftingInventory(private val workbenchEntity: CraftingMachineBlockEntity,
         private val container: Container) : Inventory {
@@ -24,7 +24,7 @@ class WorkbenchCraftingInventory(private val workbenchEntity: CraftingMachineBlo
         container.onContentChanged(this)
     }
 
-    override fun removeInvStack(index: Int) = InventoryUtil.removeStack(workbenchEntity.getRecipeStacks(), index)!!
+    override fun removeInvStack(index: Int) = Inventories.removeStack(workbenchEntity.getRecipeStacks(), index)!!
 
     override fun canPlayerUseInv(var1: PlayerEntity) = true
 
@@ -33,7 +33,7 @@ class WorkbenchCraftingInventory(private val workbenchEntity: CraftingMachineBlo
     override fun getInvSize() = workbenchEntity.getRecipeStacks().size
 
     override fun takeInvStack(index: Int, amount: Int): ItemStack {
-        val stack = InventoryUtil.splitStack(workbenchEntity.getRecipeStacks(), index, amount)!!
+        val stack = Inventories.splitStack(workbenchEntity.getRecipeStacks(), index, amount)!!
         if (!stack.isEmpty) {
             container.onContentChanged(this)
         }

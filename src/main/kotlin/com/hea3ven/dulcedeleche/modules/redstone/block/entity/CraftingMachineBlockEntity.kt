@@ -8,14 +8,13 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.BasicInventory
 import net.minecraft.inventory.CraftingInventory
+import net.minecraft.inventory.Inventories
 import net.minecraft.inventory.Inventory
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.recipe.RecipeType
 import net.minecraft.recipe.crafting.CraftingRecipe
-import net.minecraft.sortme.ItemScatterer
 import net.minecraft.util.DefaultedList
-import net.minecraft.util.InventoryUtil
 
 abstract class CraftingMachineBlockEntity(additionalSlots: Int, blockEntityType: BlockEntityType<*>) :
         MachineBlockEntity(blockEntityType) {
@@ -26,11 +25,11 @@ abstract class CraftingMachineBlockEntity(additionalSlots: Int, blockEntityType:
 
     override fun getInvStack(index: Int) = inventory[index]
     override fun canPlayerUseInv(player: PlayerEntity) = true
-    override fun removeInvStack(index: Int) = InventoryUtil.removeStack(inventory, index)!!
+    override fun removeInvStack(index: Int) = Inventories.removeStack(inventory, index)!!
     override fun clear() = inventory.clear()
     override fun isInvEmpty() = inventory.all(ItemStack::isEmpty)
     override fun createContainer(syncId: Int, playerInv: PlayerInventory) = null
-    override fun takeInvStack(index: Int, amount: Int) = InventoryUtil.splitStack(inventory, index, amount)!!
+    override fun takeInvStack(index: Int, amount: Int) = Inventories.splitStack(inventory, index, amount)!!
     override fun setInvStack(index: Int, stack: ItemStack) {
         if (stack.amount > invMaxStackAmount) {
             stack.amount = invMaxStackAmount
@@ -44,7 +43,7 @@ abstract class CraftingMachineBlockEntity(additionalSlots: Int, blockEntityType:
 
     override fun toTag(tag: CompoundTag): CompoundTag {
         super.toTag(tag)
-        InventoryUtil.serialize(tag, inventory)
+        Inventories.toTag(tag, inventory)
         InventoryExtraUtil.serialize(tag, recipe, "Recipe")
         return tag
     }
@@ -52,7 +51,7 @@ abstract class CraftingMachineBlockEntity(additionalSlots: Int, blockEntityType:
     override fun fromTag(tag: CompoundTag) {
         super.fromTag(tag)
         inventory.clear()
-        InventoryUtil.deserialize(tag, inventory)
+        Inventories.fromTag(tag, inventory)
         recipe.clear()
         InventoryExtraUtil.deserialize(tag, recipe, "Recipe")
     }
