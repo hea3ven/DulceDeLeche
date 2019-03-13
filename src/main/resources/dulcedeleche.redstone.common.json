@@ -3,7 +3,8 @@
     "package": "com.hea3ven.dulcedeleche.modules.redstone.mixin",
     "compatibilityLevel": "JAVA_8",
     "mixins": [
-        "SurvivesExplosionLootConditionMixin"
+        "SurvivesExplosionLootConditionMixin",
+        "ItemEntityMixin"
     ],
     "injectors": {
         "defaultRequire": 1
