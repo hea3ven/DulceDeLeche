@@ -1,6 +1,6 @@
 package com.hea3ven.dulcedeleche.modules.world.world
 
-import com.hea3ven.dulcedeleche.ModDulceDeLeche
+import com.hea3ven.dulcedeleche.DulceDeLecheMod
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.ListTag
 import net.minecraft.util.math.BlockPos
@@ -19,7 +19,7 @@ class BedPlacements : PersistentState("beds_data") {
 
     fun canSleep(world: World, pos: BlockPos): Boolean {
         val timePlaced = placements[pos] ?: return true
-        if (world.time - timePlaced > ModDulceDeLeche.cfg.modules.world.bedSleepingRestriction) {
+        if (world.time - timePlaced > DulceDeLecheMod.cfg.modules.world.bedSleepingRestriction) {
             placements.remove(pos)
             return true
         }

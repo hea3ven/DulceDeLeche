@@ -3,11 +3,12 @@ package com.hea3ven.dulcedeleche.modules.redstone.client.gui
 import com.hea3ven.tools.commonutils.container.GenericContainer
 import com.mojang.blaze3d.platform.GlStateManager
 import net.minecraft.client.gui.ContainerScreen
+import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.text.TextComponent
 import net.minecraft.util.Identifier
 
-open class CraftingMachineScreen(container: GenericContainer, name: TextComponent, private val bgTex: Identifier) :
-        ContainerScreen<GenericContainer>(container, container.playerInv, name) {
+open class CraftingMachineScreen<T : GenericContainer>(container: T, playerInv: PlayerInventory, name: TextComponent,
+        private val bgTex: Identifier) : ContainerScreen<T>(container, playerInv, name) {
 
     init {
         height = 215

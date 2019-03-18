@@ -1,6 +1,6 @@
 package com.hea3ven.dulcedeleche.modules.redstone.block
 
-import com.hea3ven.dulcedeleche.modules.redstone.RedstoneModule
+import com.hea3ven.dulcedeleche.DulceDeLecheMod
 import com.hea3ven.dulcedeleche.modules.redstone.block.entity.WorkbenchBlockEntity
 import com.hea3ven.tools.commonutils.block.MachineBlock
 import net.minecraft.block.Block
@@ -23,11 +23,11 @@ class WorkbenchBlock(screenId: Identifier, settings: Block.Settings) : MachineBl
     }
 
     override fun createBlockEntity(view: BlockView): BlockEntity {
-        return WorkbenchBlockEntity(RedstoneModule.WorkbenchBlockEntityType)
+        return WorkbenchBlockEntity(DulceDeLecheMod.mod.getBlockInfo("workbench").getBlockEntityType())
     }
 
-    override fun getPlacementState(itemPlacementContext_1: ItemPlacementContext): BlockState {
-        return defaultState.with(FACING, itemPlacementContext_1.playerHorizontalFacing.opposite)
+    override fun getPlacementState(context: ItemPlacementContext): BlockState {
+        return defaultState.with(FACING, context.playerHorizontalFacing.opposite)
 
     }
 

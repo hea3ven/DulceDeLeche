@@ -1,13 +1,8 @@
 package com.hea3ven.dulcedeleche.modules.redstone.container
 
-import com.hea3ven.dulcedeleche.modules.redstone.inventory.WorkbenchCraftingInventory
-import net.minecraft.container.Slot
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.inventory.Inventory
-import net.minecraft.item.ItemStack
-
-class CraftingMachineResultSlot(private val workbenchCraftingInv: WorkbenchCraftingInventory, inventory: Inventory,
-        x: Int, y: Int) : Slot(inventory, 0, x, y) {
+/*
+class CraftingMachineResultSlot(private val craftingMachineCraftingInv: CraftingMachineCraftingInventory,
+        inventory: Inventory, x: Int, y: Int) : Slot(inventory, 0, x, y) {
 
     override fun canInsert(itemStack_1: ItemStack) = false
 
@@ -16,15 +11,16 @@ class CraftingMachineResultSlot(private val workbenchCraftingInv: WorkbenchCraft
     }
 
     override fun canTakeItems(player: PlayerEntity): Boolean {
-        return workbenchCraftingInv.canCraft(player)
+        return craftingMachineCraftingInv.canCraft(player)
     }
 
     override fun onTakeItem(player: PlayerEntity?, craftedStack: ItemStack): ItemStack {
         onCrafted(craftedStack)
-        return workbenchCraftingInv.craftItem(player, craftedStack)
+        return craftingMachineCraftingInv.craftItem(player, craftedStack)
     }
 
     override fun doDrawHoveringEffect(): Boolean {
         return true
     }
 }
+        */
