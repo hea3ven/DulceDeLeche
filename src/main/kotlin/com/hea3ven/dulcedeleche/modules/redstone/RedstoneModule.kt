@@ -14,20 +14,21 @@ import net.minecraft.block.Block
 import net.minecraft.block.DispenserBlock
 import net.minecraft.block.Material
 import net.minecraft.block.PlantBlock
-import net.minecraft.item.FoodItem
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.Items
-import net.minecraft.item.SeedsItem
 import net.minecraft.item.block.BlockItem
 import net.minecraft.util.registry.Registry
 
 abstract class RedstoneModule : ModModule() {
 
     override fun onPreInit() {
-        addBlock<WorkbenchBlockEntity>("workbench", WorkbenchBlock(id("workbench"), Block.Settings.of(Material.WOOD).strength(2.5f, 2.5f)),
+        addBlock<WorkbenchBlockEntity>("workbench", WorkbenchBlock(id("workbench"),
+                                                                   Block.Settings.of(Material.WOOD).strength(2.5f,
+                                                                                                             2.5f)),
                                        ItemGroup.REDSTONE, ::WorkbenchBlockEntity)
         addContainer("workbench", ::WorkbenchContainer)
-        addBlock<AssemblerBlockEntity>("assembler", AssemblerBlock(id("assembler"), Block.Settings.of(Material.STONE).strength(2.5f,
+        addBlock<AssemblerBlockEntity>("assembler", AssemblerBlock(id("assembler"),
+                                                                   Block.Settings.of(Material.STONE).strength(2.5f,
                                                                                                               2.5f)),
                                        ItemGroup.REDSTONE, ::AssemblerBlockEntity)
         addContainer("assembler", ::AssemblerContainer)
@@ -37,7 +38,7 @@ abstract class RedstoneModule : ModModule() {
         if (DulceDeLecheMod.cfg.modules.redstone.dispenserPlantBehaviorEnabled) {
             logger.debug("Registering the planting dispenser behavior")
             // TODO: more generic filter
-            for (plant in Registry.ITEM.filter { it is SeedsItem || (it is BlockItem && it.block is PlantBlock) }) {
+            for (plant in Registry.ITEM.filter { it is BlockItem && it.block is PlantBlock }) {
                 DispenserBlock.registerBehavior(plant, DispenserPlantBehavior())
             }
         }
@@ -45,7 +46,7 @@ abstract class RedstoneModule : ModModule() {
             logger.debug("Registering the breeding dispenser behavior")
             val breedingItems = setOf(Items.WHEAT, Items.CARROT, Items.POTATO, Items.BEETROOT,
                                       Items.GOLDEN_CARROT).union(
-                    Registry.ITEM.filter { it is FoodItem && it.isWolfFood })
+                    Registry.ITEM.filter { it.foodSetting?.isWolfFood ?: false })
             for (breedItem in breedingItems) DispenserBlock.registerBehavior(breedItem, DispenserBreedBehavior())
         }
     }
