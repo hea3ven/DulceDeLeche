@@ -4,12 +4,14 @@ import com.matthewprenger.cursegradle.CurseRelation
 import com.matthewprenger.cursegradle.Options
 import org.gradle.jvm.tasks.Jar
 import org.apache.tools.ant.filters.ReplaceTokens
+import org.ajoberstar.grgit.Grgit
 
 plugins {
     kotlin("jvm") version "1.3.21"
     id("fabric-loom") version "0.2.0-SNAPSHOT"
     id("com.matthewprenger.cursegradle") version "1.1.2"
     id("com.github.breadmoirai.github-release") version "2.2.4"
+    id("org.ajoberstar.grgit") version "3.0.0"
 }
 
 val BUILD_NO: String? by project
@@ -26,7 +28,7 @@ val version_kotlin: String by project
 val version_h3nt_commonutils: String by project
 val curse_api_key: String? by project
 val project_curseforge_id: String by project
-val changelog: String? by project
+/* val changelog: String? by project */
 val github_release_token: String? by project
 
 group = "com.hea3ven.dulcedeleche"
@@ -116,4 +118,21 @@ configure<GithubReleaseExtension> {
     prerelease.set(false)
     releaseAssets.setFrom(tasks.jar.get().outputs.files)
 }
+
+val versionRegex = Regex("v[0-9].*")
+val versionExcludeRegex = Regex("v1.(9(.4)?|10)-.*")
+var repo = Grgit.open()
+val lastVersionTag = repo.tag.list()
+        .map { it.fullName.substring(10) }
+        .filterNot(versionExcludeRegex::matches)
+        .filter(versionRegex::matches)
+        .sortedWith({a, b -> -(a.split('.').zip(b.split('.')).map {  it.first.compareTo(it.second) }.filter { it != 0 }.first() ?: 0) })
+        .first()
+val changelog = repo.log {
+    range(lastVersionTag, "HEAD")
+}.filter {
+    it.parentIds.size > 1
+}.map {
+    it.fullMessage.removeRange(0, it.fullMessage.indexOf('\n')).trim()
+}.joinToString("\r\n")
 

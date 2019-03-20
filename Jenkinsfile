@@ -14,30 +14,36 @@ pipeline {
         stage("Checkout") {
             steps {
                 checkout scm
+                // git branch: 'develop',
+                //     credentialsId: 'GITHUB_CREDENTIALS',
+                //     url: 'https://github.com/Hea3veN/DulceDeLeche'
             }
         }
-        stage("Release") {
+        stage("Clean") {
             steps {
-                withCredentials([
-                        string(credentialsId: 'curse_api_key', variable: 'curse_api_key'),
-                        string(credentialsId: 'github_release_token', variable: 'github_release_token')]) {
-                    script {
-                        sh "if [ ! -z \"\$(ls -A build/libs)\" ]; then rm build/libs/*; fi"
-                        def changes = ""
-                        for (changeLog in currentBuild.changeSets) {
-                            for(entry in changeLog.items) {
-                                if (!entry.msg.startsWith("Release")) {
-                                    changes += "${entry.msg}\r\n".replace('\'', '\\\'')
-                                }
-                            }
-                        }
-                        sh "JAVA_OPTS=-Xmx1024m gradle clean build check curseforge githubRelease --stacktrace --info --no-daemon -PBUILD_NO=$BUILD_NUMBER -Pcurse_api_key=$curse_api_key -Pgithub_release_token=$github_release_token -Pchangelog='$changes'"
-                    }
-                }
+                sh "gradle clean --stacktrace --info -PBUILD_NO=$BUILD_NUMBER -Dorg.gradle.jvmargs=-Xmx1g"
+            }
+        }
+        stage("Build") {
+            steps {
+                sh "gradle build check --stacktrace --info -PBUILD_NO=$BUILD_NUMBER -Dorg.gradle.jvmargs=-Xmx1g"
+            }
+        }
+        stage("Release to curseforge") {
+            steps {
+                withCredentials([string(credentialsId: 'curse_api_key', variable: 'curse_api_key')]) {
+					sh "gradle curseforge -Pcurse_api_key=$curse_api_key --stacktrace --info -PBUILD_NO=$BUILD_NUMBER -Dorg.gradle.jvmargs=-Xmx1g"
+				}
+            }
+        }
+        stage("Release to github") {
+            steps {
+                withCredentials([string(credentialsId: 'github_release_token', variable: 'github_release_token')]) {
+					sh "gradle githubRelease -Pgithub_release_token=$github_release_token --stacktrace --info -PBUILD_NO=$BUILD_NUMBER -Dorg.gradle.jvmargs=-Xmx1g"
+				}
             }
         }
     }
-    
     post {
         success {
             archiveArtifacts 'build/libs/**/*.jar'
