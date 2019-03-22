@@ -15,9 +15,9 @@ object FoodModule : ModModule() {
     override fun onPreInit() {
         if (DulceDeLecheMod.cfg.modules.food.dulceDeLecheEnabled) {
             addItem("dulcedeleche", ItemBucketDulceDeLeche(Item.Settings().itemGroup(ItemGroup.FOOD).food(
-                    FoodItemSetting.Builder().hunger(2).saturation(0.2f).build())))
+                    FoodItemSetting.Builder().hunger(2).saturationModifier(0.2f).build())))
             addItem("vauquita", Item(Item.Settings().itemGroup(ItemGroup.FOOD).food(
-                    FoodItemSetting.Builder().hunger(1).saturation(1.0f).alwaysEdible().statusEffect(
+                    FoodItemSetting.Builder().hunger(1).saturationModifier(1.0f).alwaysEdible().statusEffect(
                             StatusEffectInstance(StatusEffects.HASTE, 15 * 20, 0), 1.0f).build())))
         }
     }

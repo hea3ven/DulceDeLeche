@@ -15,7 +15,7 @@ open class CraftingMachineScreen<T : GenericContainer>(container: T, playerInv: 
     }
 
     override fun drawForeground(int_1: Int, int_2: Int) {
-        val name = this.name.formattedText
+        val name = this.title.formattedText
         this.fontRenderer.draw(name, (this.width / 2 - this.fontRenderer.getStringWidth(name) / 2).toFloat(),
                                6.0F, 4210752)
         this.fontRenderer.draw(this.playerInventory.displayName.formattedText, 8.0F,
@@ -24,15 +24,15 @@ open class CraftingMachineScreen<T : GenericContainer>(container: T, playerInv: 
 
     override fun drawBackground(var1: Float, var2: Int, var3: Int) {
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F)
-        client.textureManager.bindTexture(bgTex)
+        client!!.textureManager.bindTexture(bgTex)
         val x = left
         val y = (screenHeight - height) / 2
         this.drawTexturedRect(x, y, 0, 0, width, height)
 
     }
 
-    override fun draw(int_1: Int, int_2: Int, float_1: Float) {
-        super.draw(int_1, int_2, float_1)
+    override fun render(int_1: Int, int_2: Int, float_1: Float) {
+        super.render(int_1, int_2, float_1)
         val x = left
         val y = (screenHeight - height) / 2
         for (i in 0..8) {
