@@ -107,6 +107,11 @@ curseforge {
 		})
     })
 }
+afterEvaluate {
+    tasks.named("curseforge$project_curseforge_id") {
+        dependsOn(tasks.getByName("remapJar"))
+    }
+}
 
 configure<GithubReleaseExtension> {
     token(github_release_token ?: "")
@@ -118,16 +123,24 @@ configure<GithubReleaseExtension> {
     prerelease.set(false)
     releaseAssets.setFrom(tasks.jar.get().outputs.files)
 }
+tasks.named("githubRelease") {
+    dependsOn(tasks.getByName("remapJar"))
+}
 
 val versionRegex = Regex("v[0-9].*")
 val versionExcludeRegex = Regex("v1.(9(.4)?|10)-.*")
 var repo = Grgit.open()
-val lastVersionTag = repo.tag.list()
+println()
+println("Getting changelog")
+val tags = repo.tag.list()
+println("Tags: $tags")
+val lastVersionTag = tags
         .map { it.fullName.substring(10) }
         .filterNot(versionExcludeRegex::matches)
         .filter(versionRegex::matches)
         .sortedWith({a, b -> -(a.split('.').zip(b.split('.')).map {  it.first.compareTo(it.second) }.filter { it != 0 }.first() ?: 0) })
         .first()
+println("Last Version: $lastVersionTag")
 val changelog = repo.log {
     range(lastVersionTag, "HEAD")
 }.filter {
@@ -135,4 +148,5 @@ val changelog = repo.log {
 }.map {
     it.fullMessage.removeRange(0, it.fullMessage.indexOf('\n')).trim()
 }.joinToString("\r\n")
+println("Changelog: $changelog")
 
