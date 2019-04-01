@@ -14,6 +14,6 @@ class AssemblerScreen(private val assemblerContainer: AssemblerContainer, player
     override fun drawBackground(var1: Float, var2: Int, var3: Int) {
         super.drawBackground(var1, var2, var3)
         val progress = assemblerContainer.progress
-        this.drawTexturedRect(left + 89, top + 34, 176, 0, (24 * progress).roundToInt(), 16)
+        this.blit(left + 89, top + 34, 176, 0, (24 * progress).roundToInt(), 16)
     }
 }

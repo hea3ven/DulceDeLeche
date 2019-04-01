@@ -15,8 +15,13 @@ open class CraftingMachineScreen<T : GenericContainer>(container: T, playerInv: 
     }
 
     override fun drawForeground(int_1: Int, int_2: Int) {
+<<<<<<< HEAD
+        val name = this.title.formattedText
+        this.fontRenderer.draw(name, (this.width / 2 - this.fontRenderer.getStringWidth(name) / 2).toFloat(),
+=======
         val name = title.formattedText
         font.draw(name, (containerWidth / 2 - font.getStringWidth(name) / 2).toFloat(),
+>>>>>>> 2456559... Update to Minecraft 19w13b
                                6.0F, 4210752)
         font.draw(playerInventory.displayName.formattedText, 8.0F,
                                (containerHeight - 96 + 2).toFloat(), 4210752)
@@ -24,7 +29,11 @@ open class CraftingMachineScreen<T : GenericContainer>(container: T, playerInv: 
 
     override fun drawBackground(var1: Float, var2: Int, var3: Int) {
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F)
+<<<<<<< HEAD
+        client!!.textureManager.bindTexture(bgTex)
+=======
         minecraft!!.textureManager.bindTexture(bgTex)
+>>>>>>> 2456559... Update to Minecraft 19w13b
         val x = left
         val y = (height - containerHeight) / 2
         blit(x, y, 0, 0, containerWidth, containerHeight)
