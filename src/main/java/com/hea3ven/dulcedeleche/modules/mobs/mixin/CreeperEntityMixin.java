@@ -24,7 +24,8 @@ public class CreeperEntityMixin extends HostileEntity {
                 .getModules()
                 .getMobs()
                 .getBlockCreeperSpawnInSurface()) {
-            return MobsModule.INSTANCE.onCreeperEntityCanSpawn(this, world, spawnType);
+            return MobsModule.INSTANCE.onCreeperEntityCanSpawn(this, world, spawnType)
+                    && super.canSpawn(world, spawnType);
         } else {
             return super.canSpawn(world, spawnType);
         }
