@@ -20,13 +20,13 @@ public abstract class CaveSpiderEntityMixin extends SpiderEntity {
         super(null, null);
     }
 
-    @Inject(method = "attack(Lnet/minecraft/entity/Entity;)Z", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "tryAttack(Lnet/minecraft/entity/Entity;)Z", at = @At("HEAD"), cancellable = true)
     public void onPrepareEntityAttributes(Entity entity, CallbackInfoReturnable<Boolean> info) {
         if (DulceDeLecheMod.Companion.getCfg()
                 .getModules()
                 .getMobs()
                 .getReplaceCaveSpiderPoison()) {
-            if (super.attack(entity)) {
+            if (super.tryAttack(entity)) {
                 MobsModule.INSTANCE.onCaveSpiderEntityDoAttack(this, entity);
                 info.setReturnValue(true);
             } else {

@@ -10,9 +10,9 @@ import net.minecraft.block.entity.BlockEntity
 import net.minecraft.item.ItemPlacementContext
 import net.minecraft.state.StateFactory
 import net.minecraft.state.property.DirectionProperty
+import net.minecraft.util.BlockMirror
+import net.minecraft.util.BlockRotation
 import net.minecraft.util.Identifier
-import net.minecraft.util.Mirror
-import net.minecraft.util.Rotation
 import net.minecraft.util.math.Direction
 import net.minecraft.world.BlockView
 
@@ -32,11 +32,11 @@ class AssemblerBlock(screenId: Identifier, settings: Block.Settings) : MachineBl
     }
 
     @Suppress("OverridingDeprecatedMember")
-    override fun rotate(state: BlockState, rotation: Rotation): BlockState = state.with(FACING, rotation.rotate(
+    override fun rotate(state: BlockState, rotation: BlockRotation): BlockState = state.with(FACING, rotation.rotate(
             state.get(FACING)))
 
     @Suppress("OverridingDeprecatedMember")
-    override fun mirror(state: BlockState, mirror: Mirror): BlockState = state.rotate(
+    override fun mirror(state: BlockState, mirror: BlockMirror): BlockState = state.rotate(
             mirror.getRotation(state.get(FACING)))
 
     override fun appendProperties(builder: StateFactory.Builder<Block, BlockState>) {
@@ -46,6 +46,6 @@ class AssemblerBlock(screenId: Identifier, settings: Block.Settings) : MachineBl
     // TODO: drop stacks from output inventory
 
     companion object {
-        val FACING: DirectionProperty = HorizontalFacingBlock.field_11177
+        val FACING: DirectionProperty = HorizontalFacingBlock.FACING
     }
 }

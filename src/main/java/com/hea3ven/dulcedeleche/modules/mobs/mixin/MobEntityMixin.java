@@ -19,7 +19,7 @@ public abstract class MobEntityMixin extends LivingEntity {
         super(null, null);
     }
 
-    @Inject(method = "attack(Lnet/minecraft/entity/Entity;)Z", at = @At("RETURN"))
+    @Inject(method = "tryAttack(Lnet/minecraft/entity/Entity;)Z", at = @At("RETURN"))
     public void onPrepareEntityAttributes(Entity entity, CallbackInfoReturnable<Boolean> info) {
         MobsModule.INSTANCE.onMobEntityDoAttack(this, entity);
     }

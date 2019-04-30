@@ -68,7 +68,7 @@ class AssemblerBlockEntity(blockEntityType: BlockEntityType<AssemblerBlockEntity
         if (craftingTime > 0) {
             craftingTime--
         }
-        if (!world.isClient) {
+        if (world?.isClient == false) {
             if (craftingTime == 0) {
                 val result = craftItem(null)
                 if (!result.isEmpty) {

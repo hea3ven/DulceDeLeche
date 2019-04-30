@@ -7,8 +7,8 @@ import org.apache.tools.ant.filters.ReplaceTokens
 import org.ajoberstar.grgit.Grgit
 
 plugins {
-    kotlin("jvm") version "1.3.21"
-    id("fabric-loom") version "0.2.0-SNAPSHOT"
+    kotlin("jvm") version "1.3.30"
+    id("fabric-loom") version "0.2.2-SNAPSHOT"
     id("com.matthewprenger.cursegradle") version "1.1.2"
     id("com.github.breadmoirai.github-release") version "2.2.4"
     id("org.ajoberstar.grgit") version "3.0.0"
@@ -63,7 +63,8 @@ dependencies {
 	mappings("net.fabricmc:yarn:$version_mc_mappings")
 	modCompile("net.fabricmc:fabric-loader:$version_fabric_loader")
 
-	modCompile("net.fabricmc:fabric:$version_fabric")
+	modCompile("net.fabricmc.fabric-api:fabric-lib:0.1.0")
+	modCompile("net.fabricmc.fabric-api:fabric-events-interaction:0.1.0")
 
     modCompile("net.fabricmc:fabric-language-kotlin:$version_fabric_kotlin")
     compileOnly("org.jetbrains.kotlin:kotlin-stdlib:$version_kotlin")
@@ -117,7 +118,6 @@ curseforge {
     project(closureOf<CurseProject> {
         id = project_curseforge_id
         releaseType = "release"
-        println(changes)
         changelog = changes
         addGameVersion(version_mc)
 		relations(closureOf<CurseRelation> {
@@ -142,6 +142,7 @@ configure<GithubReleaseExtension> {
     prerelease.set(false)
     releaseAssets.setFrom(tasks.jar.get().outputs.files)
 }
+
 tasks.named("githubRelease") {
     dependsOn(tasks.getByName("remapJar"))
 }

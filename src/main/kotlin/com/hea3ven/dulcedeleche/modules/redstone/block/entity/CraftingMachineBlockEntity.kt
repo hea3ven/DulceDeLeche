@@ -88,7 +88,7 @@ abstract class CraftingMachineBlockEntity(additionalSlots: Int, blockEntityType:
     }
 
     override fun craftItem(player: PlayerEntity?): ItemStack {
-        if (!world.isClient) {
+        if (world?.isClient == false) {
             markDirty()
             return tryCraftItem(player, this)
         }
@@ -184,7 +184,7 @@ abstract class CraftingMachineBlockEntity(additionalSlots: Int, blockEntityType:
 
     private fun getRecipe(): CraftingRecipe? {
         val craftInv = getCraftingInventory()
-        return world.recipeManager.get(RecipeType.CRAFTING, craftInv, world).orElse(null)
+        return world?.recipeManager?.getFirstMatch(RecipeType.CRAFTING, craftInv, world)?.orElse(null)
 
     }
 
