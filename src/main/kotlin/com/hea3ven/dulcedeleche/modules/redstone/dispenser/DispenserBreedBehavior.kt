@@ -18,7 +18,7 @@ class DispenserBreedBehavior : DispenserBehavior {
         val position = source.blockPos.offset(var3)
         val pos = BlockPos(position.x, position.y, position.z)
         val box = BoundingBox(pos, pos.add(1, 1, 1))
-        val entities = source.world.getEntities(null, box, { it is AnimalEntity }).map { it as AnimalEntity }
+        val entities = source.world.getEntities(AnimalEntity::class.java, box).map { it as AnimalEntity }
                 .toMutableList()
 
         if (entities.size <= 0) return stack

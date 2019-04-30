@@ -13,11 +13,17 @@
         "common": ["dulcedeleche.common.json", "dulcedeleche.mobs.common.json", "dulcedeleche.world.common.json"]
     },
     "requires": {
-        "fabric": {
+        "fabric-lib": {
+            "version": "@version_fabric@"
+        },
+        "fabric-events-interaction": {
             "version": "@version_fabric@"
         },
         "fabric-language-kotlin": {
             "version": ">=@version_kotlin@"
+        },
+        "commonutils": {
+            "version": "@version_fabric@"
         }
     }
 }

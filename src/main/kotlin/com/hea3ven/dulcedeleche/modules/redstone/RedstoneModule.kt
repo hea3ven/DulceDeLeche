@@ -16,7 +16,7 @@ import net.minecraft.block.Material
 import net.minecraft.block.PlantBlock
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.Items
-import net.minecraft.item.block.BlockItem
+import net.minecraft.item.BlockItem
 import net.minecraft.util.registry.Registry
 
 abstract class RedstoneModule : ModModule() {

@@ -48,7 +48,7 @@ object BedManagement {
         }
         val state = itemPlacementContext.world.getBlockState(itemPlacementContext.blockPos)
         if (state.block is BedBlock) {
-            var dir = state.get(BedBlock.field_11177)
+            var dir = state.get(BedBlock.FACING)
             if (state.get(BedBlock.PART) == BedPart.FOOT) {
                 dir = dir.opposite
             }
