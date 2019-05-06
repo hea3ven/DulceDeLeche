@@ -9,7 +9,10 @@ import com.hea3ven.dulcedeleche.modules.redstone.container.AssemblerContainer
 import com.hea3ven.dulcedeleche.modules.redstone.container.WorkbenchContainer
 import com.hea3ven.dulcedeleche.modules.redstone.dispenser.DispenserBreedBehavior
 import com.hea3ven.dulcedeleche.modules.redstone.dispenser.DispenserPlantBehavior
+import com.hea3ven.dulcedeleche.modules.redstone.test.DispenserPlantBehaviorTest
+import com.hea3ven.dulcedeleche.modules.redstone.test.WorkbenchTest
 import com.hea3ven.tools.commonutils.mod.ModModule
+import com.hea3ven.unstainer.api.TestRegistry
 import net.minecraft.block.Block
 import net.minecraft.block.DispenserBlock
 import net.minecraft.block.Material
@@ -49,6 +52,9 @@ abstract class RedstoneModule : ModModule() {
                     Registry.ITEM.filter { it.foodSetting?.isWolfFood ?: false })
             for (breedItem in breedingItems) DispenserBlock.registerBehavior(breedItem, DispenserBreedBehavior())
         }
+
+        TestRegistry.register(DispenserPlantBehaviorTest())
+        TestRegistry.register(WorkbenchTest())
     }
 
 }

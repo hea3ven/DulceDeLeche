@@ -4,7 +4,7 @@ import net.minecraft.enchantment.Enchantment
 import net.minecraft.enchantment.EnchantmentTarget
 import net.minecraft.entity.EquipmentSlot
 
-class AreaEnchantment : Enchantment(Weight.LEGENDARY, EnchantmentTarget.BREAKER, arrayOf(EquipmentSlot.HAND_MAIN)) {
+class AreaEnchantment : Enchantment(Weight.RARE, EnchantmentTarget.DIGGER, arrayOf(EquipmentSlot.MAINHAND)) {
 
     override fun getMaximumLevel(): Int {
         return 2

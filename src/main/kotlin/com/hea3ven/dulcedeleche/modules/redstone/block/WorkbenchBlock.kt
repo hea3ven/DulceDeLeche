@@ -38,7 +38,7 @@ class WorkbenchBlock(screenId: Identifier, settings: Block.Settings) : MachineBl
             mirror.getRotation(state.get(FACING)))
 
     override fun appendProperties(builder: StateFactory.Builder<Block, BlockState>) {
-        builder.with(FACING)
+        builder.add(FACING)
     }
 
 

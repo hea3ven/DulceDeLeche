@@ -13,8 +13,8 @@ import net.minecraft.inventory.Inventories
 import net.minecraft.inventory.Inventory
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.recipe.CraftingRecipe
 import net.minecraft.recipe.RecipeType
-import net.minecraft.recipe.crafting.CraftingRecipe
 import net.minecraft.util.DefaultedList
 
 abstract class CraftingMachineBlockEntity(additionalSlots: Int, blockEntityType: BlockEntityType<*>) :

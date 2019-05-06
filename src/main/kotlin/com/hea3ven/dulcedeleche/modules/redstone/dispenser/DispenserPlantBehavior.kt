@@ -18,9 +18,9 @@ class DispenserPlantBehavior : DispenserBehavior {
         val offset = if (source.world.isAir(position)) 1 else 0
         val pos = BlockPos(position.x, position.y - offset, position.z)
         val player = DulceDeLecheMod.mod.getFakePlayer(source.world)
-        player.setEquippedStack(EquipmentSlot.HAND_MAIN, stack)
+        player.setEquippedStack(EquipmentSlot.MAINHAND, stack)
         ItemStackUtil.useItem(player, stack, pos, Direction.UP)
-        player.setEquippedStack(EquipmentSlot.HAND_MAIN, ItemStack.EMPTY)
+        player.setEquippedStack(EquipmentSlot.MAINHAND, ItemStack.EMPTY)
         return stack
     }
 

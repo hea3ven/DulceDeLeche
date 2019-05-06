@@ -5,8 +5,8 @@ import net.minecraft.block.BedBlock
 import net.minecraft.block.enums.BedPart
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemPlacementContext
+import net.minecraft.network.chat.TranslatableComponent
 import net.minecraft.server.world.ServerWorld
-import net.minecraft.text.TranslatableTextComponent
 import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
 import net.minecraft.util.hit.BlockHitResult
@@ -65,7 +65,7 @@ object BedManagement {
         val state = world.getBlockState(hit.blockPos)
         if (state.block is BedBlock) {
             if (!BedManagement.canSleep(world, hit.blockPos)) {
-                player.addChatMessage(TranslatableTextComponent("block.minecraft.bed.recently_placed"), true)
+                player.addChatMessage(TranslatableComponent("block.minecraft.bed.recently_placed"), true)
                 return ActionResult.FAIL
             }
         }

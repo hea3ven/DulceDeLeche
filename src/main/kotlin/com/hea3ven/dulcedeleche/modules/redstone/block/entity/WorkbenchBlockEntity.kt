@@ -5,7 +5,7 @@ import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.container.Container
 import net.minecraft.container.PropertyDelegate
 import net.minecraft.entity.player.PlayerInventory
-import net.minecraft.text.TranslatableTextComponent
+import net.minecraft.network.chat.TranslatableComponent
 
 class WorkbenchBlockEntity(blockEntityType: BlockEntityType<WorkbenchBlockEntity>) :
         CraftingMachineBlockEntity(0, blockEntityType) {
@@ -25,7 +25,7 @@ class WorkbenchBlockEntity(blockEntityType: BlockEntityType<WorkbenchBlockEntity
         }
     }
 
-    override fun getContainerName() = TranslatableTextComponent("container.workbench")
+    override fun getContainerName() = TranslatableComponent("container.workbench")
 
     override fun createContainer(syncId: Int, player: PlayerInventory): Container {
         return WorkbenchContainer(syncId, player, this, propertyDelegate)

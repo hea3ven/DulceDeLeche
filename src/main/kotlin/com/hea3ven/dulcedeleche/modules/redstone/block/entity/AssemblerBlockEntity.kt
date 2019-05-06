@@ -11,8 +11,8 @@ import net.minecraft.inventory.Inventory
 import net.minecraft.inventory.SidedInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.CompoundTag
-import net.minecraft.recipe.crafting.CraftingRecipe
-import net.minecraft.text.TranslatableTextComponent
+import net.minecraft.network.chat.TranslatableComponent
+import net.minecraft.recipe.CraftingRecipe
 import net.minecraft.util.Tickable
 import net.minecraft.util.math.Direction
 import kotlin.math.min
@@ -41,7 +41,7 @@ class AssemblerBlockEntity(blockEntityType: BlockEntityType<AssemblerBlockEntity
         }
     }
 
-    override fun getContainerName() = TranslatableTextComponent("container.assembler")
+    override fun getContainerName() = TranslatableComponent("container.assembler")
 
     override fun getInvAvailableSlots(direction: Direction): IntArray {
         if (direction == Direction.DOWN) {

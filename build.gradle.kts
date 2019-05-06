@@ -8,7 +8,7 @@ import org.ajoberstar.grgit.Grgit
 
 plugins {
     kotlin("jvm") version "1.3.30"
-    id("fabric-loom") version "0.2.2-SNAPSHOT"
+    id("fabric-loom") version "0.2.3-SNAPSHOT"
     id("com.matthewprenger.cursegradle") version "1.1.2"
     id("com.github.breadmoirai.github-release") version "2.2.4"
     id("org.ajoberstar.grgit") version "3.0.0"
@@ -44,6 +44,7 @@ tasks.compileJava   {
 }
 
 repositories {
+    mavenLocal()
     maven(url="http://mribecky.com.ar/maven") {
         name = "Hea3veN"
     }
@@ -65,12 +66,19 @@ dependencies {
 
 	modCompile("net.fabricmc.fabric-api:fabric-lib:0.1.0")
 	modCompile("net.fabricmc.fabric-api:fabric-events-interaction:0.1.0")
+	modCompile("net.fabricmc.fabric-api:fabric-resource-loader-v0:0.1.1+eff4f58d")
 
     modCompile("net.fabricmc:fabric-language-kotlin:$version_fabric_kotlin")
-    compileOnly("org.jetbrains.kotlin:kotlin-stdlib:$version_kotlin")
+    compileOnly("net.fabricmc:fabric-language-kotlin:$version_fabric_kotlin")
+    /* compileOnly("org.jetbrains.kotlin:kotlin-stdlib:$version_kotlin") */
 
     modCompile("com.hea3ven.tools.commonutils:h3nt-commonutils:$version_h3nt_commonutils")
     shadow("com.hea3ven.tools.commonutils:h3nt-commonutils:$version_h3nt_commonutils")
+
+    modCompile("com.hea3ven.unstainer:unstainer:0.0.1-alpha-SNAPSHOT")
+
+	modCompile("net.fabricmc.fabric-api:fabric-events-lifecycle:0.1.0")
+    api("org.hamcrest:hamcrest:2.1")
 
     compileOnly("com.google.code.findbugs:jsr305:3.0.2")
 }

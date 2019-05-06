@@ -25,7 +25,7 @@ class DispenserBreedBehavior : DispenserBehavior {
 
         val player = DulceDeLecheMod.mod.getFakePlayer(source.world)
 
-        player.setEquippedStack(EquipmentSlot.HAND_MAIN, stack)
+        player.setEquippedStack(EquipmentSlot.MAINHAND, stack)
 
         entities.shuffle()
         while (entities.size > 0) {
@@ -36,12 +36,12 @@ class DispenserBreedBehavior : DispenserBehavior {
                 continue
             }
 
-            if (player.interact(entity, Hand.MAIN) == ActionResult.SUCCESS) {
+            if (player.interact(entity, Hand.MAIN_HAND) == ActionResult.SUCCESS) {
                 break
             }
         }
 
-        player.setEquippedStack(EquipmentSlot.HAND_MAIN, ItemStack.EMPTY)
+        player.setEquippedStack(EquipmentSlot.MAINHAND, ItemStack.EMPTY)
 
         return stack
     }
